@@ -2,9 +2,19 @@
 @tailwind base;
 @tailwind utilities;
 @tailwind components;
-
 #root {
   background-size: 5px 5px;
   background-image: radial-gradient(hsla(var(--bc)/.2) 0.5px,hsla(var(--b2)/1) 0.5px);
   min-height: 100vh;
+}
+
+.recent-tool-btn{
+  @apply bg-blue-500/10;
+  @apply !text-blue-500;
+  @apply border-blue-500;
+}
+.recent-tool-btn:hover {
+  @apply bg-blue-500/10;
+  @apply !text-blue-700;
+  @apply border-blue-500;
 }

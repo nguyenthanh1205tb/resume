@@ -25,7 +25,7 @@ module.exports = {
         analyzerMode: 'server',
         analyzerHost: '127.0.0.1',
         analyzerPort: 8888,
-        openAnalyzer: true,
+        openAnalyzer: false,
         reportFilename: path.resolve(__dirname, `analyzer/index.html`),
       }),
     ],
