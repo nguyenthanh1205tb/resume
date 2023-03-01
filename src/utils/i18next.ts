@@ -39,7 +39,7 @@ export async function loadLanguageAsync(lang: string) {
     return Promise.resolve(setI18nLanguage(lang))
   }
 
-  const msg = await import(`./locales/${lang}.json`)
+  const msg = await import(`src/locales/${lang}.json`)
   i18n.addResources(lang, 'translation', msg.default)
   loadedLanguages.push(lang)
   return setI18nLanguage(lang)
