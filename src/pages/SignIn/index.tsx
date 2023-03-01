@@ -70,7 +70,7 @@ function LoginPage() {
             <div>
               <button
                 type="submit"
-                className="btn w-full !bg-indigo-600 !text-white !border-none flex items-center space-x-4">
+                className="btn w-full !bg-indigo-600 !text-white !border-none flex items-center space-x-2">
                 {loading ? (
                   <progress className="progress progress-secondary w-56"></progress>
                 ) : (
@@ -86,8 +86,8 @@ function LoginPage() {
         <div className="divider">
           <span className="text-gray-400">OR</span>
         </div>
-        <button className="btn !bg-white !text-black !border-gray-300 flex items-center space-x-4" onClick={login}>
-          <FcGoogle className="h-5 w-5" />
+        <button className="btn !bg-white !text-black !border-gray-300 flex items-center space-x-2" onClick={login}>
+          <FcGoogle className="h-6 w-6" />
           <span className="!capitalize">Login with Google</span>
         </button>
       </div>
