@@ -8,7 +8,7 @@ function Privacy() {
         <div className="flex justify-center">
           <p className="text-4xl font-semibold">Privacy Policy</p>
         </div>
-        <div className="shadow-xl bg-dot p-8 mt-16 rounded-lg">
+        <div className=" p-8 mt-16 rounded-lg">
           <div className="text-gray-600 flex flex-col space-y-4">
             <p>Last updated: February 14, 2023</p>
             <p>
