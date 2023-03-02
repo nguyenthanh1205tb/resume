@@ -10,6 +10,7 @@ import Landing from 'src/pages/Landing'
 import FileConvert from 'src/pages/Tools/FileConvert'
 import Profile from 'src/pages/Profile'
 import Privacy from 'src/pages/Privacy'
+import Ocr from './pages/Tools/Ocr'
 
 function Router() {
   return (
@@ -30,6 +31,7 @@ function Router() {
             <Switch>
               <Route exact path="/" component={Landing} />
               <Route exact path="/file-convert" component={FileConvert} />
+              <Route exact path="/ocr" component={Ocr} />
               <Route
                 exact
                 path="/tools"
