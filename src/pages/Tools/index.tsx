@@ -36,7 +36,7 @@ function Tools({}: PropsWithChildren<ToolsProps>) {
           {tools.map((tool, index) => (
             <div
               key={index}
-              className="p-4 bg-slate-50 rounded-xl cursor-pointer drop-shadow-sm h-auto md:h-36"
+              className="p-4 bg-slate-50/30 rounded-xl cursor-pointer drop-shadow-sm h-auto md:h-36"
               onClick={() => history.push('/file-convert')}>
               <div className="flex items-center">
                 <div className={`w-10 h-10 flex items-center justify-center rounded-xl ${randomColorInRangeColors()}`}>

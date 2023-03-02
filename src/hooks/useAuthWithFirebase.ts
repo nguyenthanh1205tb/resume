@@ -43,7 +43,7 @@ const useLoginWithGoogle = () => {
       const result = await signInWithPopup(auth, ggProvider)
       const credential = GoogleAuthProvider.credentialFromResult(result)
       if (credential) setCredential(credential)
-      setUser(result.user)
+      setUser(result.user.providerData[0])
       return true
     } catch (error) {
       throw new Error('Login fail')

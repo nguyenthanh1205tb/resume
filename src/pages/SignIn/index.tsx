@@ -1,15 +1,13 @@
-import React, { FormEvent, useEffect } from 'react'
+import React, { FormEvent } from 'react'
 import { useHistory } from 'react-router'
 import { FiLock } from 'react-icons/fi'
 import { FcGoogle } from 'react-icons/fc'
 import Logo from 'src/components/Common/Logo'
 import { useLoginWithGoogle } from 'src/hooks/useAuthWithFirebase'
-import AuthStore from 'src/stores/AuthStore'
 
 function LoginPage() {
   const loading = false
   const history = useHistory()
-  const { isLogin } = AuthStore
   const { LoginWithGoogle } = useLoginWithGoogle()
   const onSubmit = (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
@@ -20,10 +18,6 @@ function LoginPage() {
     const result = await LoginWithGoogle()
     if (result) history.push('/tools')
   }
-
-  useEffect(() => {
-    if (isLogin()) history.push('/tools')
-  })
 
   return (
     <div className="flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

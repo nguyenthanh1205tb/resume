@@ -8,7 +8,7 @@ function ToolsLayout({ children }: PropsWithChildren<ToolsLayoutProps>) {
   const { toolsSearch } = ToolStore
 
   return (
-    <div className="py-8" style={{ minHeight: '768px' }}>
+    <div className="pt-8 pb-16" style={{ minHeight: '768px' }}>
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-5xl font-bold">.Tools.</h1>
         <p>Every tools you need to work in one place</p>

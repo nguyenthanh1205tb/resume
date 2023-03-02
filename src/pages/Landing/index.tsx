@@ -1,5 +1,5 @@
-import React, { PropsWithChildren } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import PageContainer from 'src/components/Common/Container/Page'
 import HeroSVG from 'src/assets/images/hero.svg'
 import HeroSearch from 'src/components/Common/Search'
@@ -10,8 +10,7 @@ import Group1Img from 'src/assets/images/group1.png'
 import Group2Img from 'src/assets/images/group2.png'
 import { FiArrowRight } from 'react-icons/fi'
 
-interface LandingProps {}
-function Landing({}: PropsWithChildren<LandingProps>) {
+function Landing() {
   const tools = [
     {
       name: 'PDF tools',
@@ -47,6 +46,8 @@ function Landing({}: PropsWithChildren<LandingProps>) {
       },
     },
   ]
+  const history = useHistory()
+  const goToToolsPage = () => history.push('/tools')
 
   return (
     <PageContainer>
@@ -70,7 +71,6 @@ function Landing({}: PropsWithChildren<LandingProps>) {
         <div className="flex flex-col justify-center text-center">
           <p>We offer PDF, file, image and other online tools to make your life easier</p>
           <HeroSearch className="sm:w-128" size="large" />
-          {/* SECTION Tools */}
           <div
             className="w-full md:w-10/12 m-auto
           ">
@@ -107,7 +107,6 @@ function Landing({}: PropsWithChildren<LandingProps>) {
             </div>
           </div>
 
-          {/* SECTION analysis */}
           <div
             className="flex justify-center space-x-8 items-center py-8 rounded-3xl my-16 text-left"
             style={{ background: '#EFF7FD' }}>
@@ -176,7 +175,9 @@ function Landing({}: PropsWithChildren<LandingProps>) {
                 <p className="font-semibold text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
               </div>
               <div className="py-4">
-                <button className="btn !capitalize !bg-blue-500 !border-blue-500">See all tools</button>
+                <button className="btn !capitalize !bg-blue-500 !border-blue-500 !text-white" onClick={goToToolsPage}>
+                  See all tools
+                </button>
               </div>
             </div>
           </div>

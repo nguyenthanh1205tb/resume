@@ -1,5 +1,5 @@
 import { action, computed, makeAutoObservable, observable, toJS } from 'mobx'
-import { OAuthCredential, UserInfo } from '@firebase/auth'
+import { OAuthCredential, User, UserInfo } from '@firebase/auth'
 import jscookie from 'js-cookie'
 
 class AuthStore {
@@ -12,6 +12,10 @@ class AuthStore {
 
   @computed get user() {
     return toJS(this._user)
+  }
+
+  @computed get credentials() {
+    return toJS(this._credentials)
   }
 
   @action setUser = (user: UserInfo) => {

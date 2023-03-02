@@ -10,7 +10,7 @@ interface HeroSearchProps {
 function HeroSearch({ className, size, ...props }: PropsWithChildren<HeroSearchProps>) {
   return (
     <div className="flex flex-col justify-center items-center py-8 px-8">
-      <div className={classNames('"form-control drop-shadow-sm w-full sm:w-96"', className)}>
+      <div className={classNames('"form-control drop-shadow-xl w-full sm:w-96"', className)}>
         <label className={classNames('input-group input-group-lg', { 'h-16': size === 'large' })}>
           <label className="input-group">
             <span className="!bg-white !rounded-l-full">
@@ -26,9 +26,12 @@ function HeroSearch({ className, size, ...props }: PropsWithChildren<HeroSearchP
             />
             <div className="bg-white !rounded-r-full pr-2 flex items-center">
               <button
-                className={classNames('btn border-none !bg-blue-500 btn-sm !rounded-full !text-md !capitalize', {
-                  '!btn-md': size === 'large',
-                })}>
+                className={classNames(
+                  'btn border-none !bg-blue-500 btn-sm !rounded-full !text-md !capitalize !text-white',
+                  {
+                    '!btn-md': size === 'large',
+                  },
+                )}>
                 Search
               </button>
             </div>

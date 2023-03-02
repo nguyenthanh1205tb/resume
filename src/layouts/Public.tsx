@@ -18,7 +18,7 @@ function PublicLayout({ children }: PropsWithChildren<PublicLayoutProps>) {
         <button className="btn btn-sm btn-outline !border-white !text-white !capitalize !text-xs">Subscribe</button>
       </div>
       {children}
-      <div className="bg-blue-400 text-white mt-8">
+      <div className="bg-blue-400 text-white pt-8">
         <PageContainer>
           <div className="grid grid-cols-2 text-left py-8">
             <div className="pt-32 flex flex-col space-y-4">
