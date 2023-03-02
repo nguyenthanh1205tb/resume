@@ -17,3 +17,15 @@
   @apply !text-blue-700;
   @apply border-blue-500;
 }
+.menu .active {
+  @apply bg-blue-500;
+  @apply text-white
+}
+@media screen and (min-width: 1024px) {
+  .menu .active {
+    @apply bg-transparent;
+    @apply text-black;
+    @apply border-b-2;
+    @apply border-blue-500;
+  }
+}

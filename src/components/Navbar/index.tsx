@@ -1,7 +1,7 @@
 import React, { Fragment, PropsWithChildren } from 'react'
 import Logo from 'src/components/Common/Logo'
 
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import UserNav from './UserNav'
 import { observer } from 'mobx-react-lite'
 
@@ -47,7 +47,7 @@ function Navbar({}: PropsWithChildren<NavbarProps>) {
                 style={{ marginTop: '0.8rem' }}>
                 {navs.map((nav, index) => (
                   <li key={index}>
-                    <Link to={nav.link}>{nav.name}</Link>
+                    <NavLink to={nav.link}>{nav.name}</NavLink>
                   </li>
                 ))}
               </ul>
@@ -85,7 +85,9 @@ function Navbar({}: PropsWithChildren<NavbarProps>) {
             <ul className="menu menu-horizontal px-1">
               {navs.map((nav, index) => (
                 <li key={index}>
-                  <Link to={nav.link}>{nav.name}</Link>
+                  <NavLink className="hover:bg-transparent !rounded-none border-b-2 border-transparent" to={nav.link}>
+                    {nav.name}
+                  </NavLink>
                 </li>
               ))}
             </ul>
