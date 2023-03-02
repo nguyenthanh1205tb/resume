@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   UserCredential,
   signOut,
+  getIdToken,
 } from '@firebase/auth'
 import { useState } from 'react'
 import AuthStore from 'src/stores/AuthStore'
@@ -15,6 +16,7 @@ type LoginResponse = {
 }
 
 const useLoginWithEmailPwd = () => {
+  const { setCredential, setUser } = AuthStore
   const [response, setResponse] = useState<LoginResponse>({
     loading: false,
     data: null,
@@ -26,7 +28,11 @@ const useLoginWithEmailPwd = () => {
     setResponse({ loading: true, data: null, error: null })
     try {
       const result = await signInWithEmailAndPassword(auth, email, password)
+      const token = await getIdToken(result.user)
+      setCredential(token)
+      setUser(result.user.providerData[0])
       setResponse({ loading: false, data: result, error: null })
+      return true
     } catch (error) {
       setResponse({ loading: false, data: null, error: new Error('Login fail') })
     }

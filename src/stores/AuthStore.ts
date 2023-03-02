@@ -1,10 +1,10 @@
 import { action, computed, makeAutoObservable, observable, toJS } from 'mobx'
-import { OAuthCredential, User, UserInfo } from '@firebase/auth'
+import { IdTokenResult, OAuthCredential, User, UserInfo } from '@firebase/auth'
 import jscookie from 'js-cookie'
 
 class AuthStore {
   @observable private _user: UserInfo | null = null
-  @observable private _credentials: OAuthCredential | null = null
+  @observable private _credentials: OAuthCredential | string | null = null
 
   constructor() {
     makeAutoObservable(this)
@@ -23,9 +23,14 @@ class AuthStore {
     localStorage.setItem('user', JSON.stringify(user))
   }
 
-  @action setCredential = (cre: OAuthCredential) => {
+  @action setCredential = (cre: OAuthCredential | string) => {
+    if (!cre) return
     this._credentials = cre
-    jscookie.set('token', JSON.stringify(cre.accessToken))
+    if (typeof cre === 'string') {
+      jscookie.set('token', JSON.stringify(cre))
+    } else {
+      jscookie.set('token', JSON.stringify(cre.idToken))
+    }
   }
 
   @action logOut = () => {

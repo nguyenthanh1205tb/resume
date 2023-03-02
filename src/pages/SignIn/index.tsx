@@ -1,17 +1,24 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useState } from 'react'
 import { useHistory } from 'react-router'
 import { FiLock } from 'react-icons/fi'
 import { FcGoogle } from 'react-icons/fc'
 import Logo from 'src/components/Common/Logo'
-import { useLoginWithGoogle } from 'src/hooks/useAuthWithFirebase'
+import { useLoginWithEmailPwd, useLoginWithGoogle } from 'src/hooks/useAuthWithFirebase'
 
 function LoginPage() {
-  const loading = false
   const history = useHistory()
   const { LoginWithGoogle } = useLoginWithGoogle()
-  const onSubmit = (ev: FormEvent<HTMLFormElement>) => {
+  const { response, LoginWithEmailPwd } = useLoginWithEmailPwd()
+
+  const [loginForm] = useState({ email: 'test@gmail.com', password: '123123' })
+
+  const onSubmit = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
-    return false
+    const result = await LoginWithEmailPwd({
+      email: loginForm.email,
+      password: loginForm.password,
+    })
+    if (result) history.push('/tools')
   }
 
   const login = async () => {
@@ -39,8 +46,18 @@ function LoginPage() {
           <form className="mt-8 space-y-6" onSubmit={onSubmit}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="space-y-4 rounded-md shadow-sm">
-              <input type="text" placeholder="Username" className="input input-bordered w-full max-w" />
-              <input type="text" placeholder="Password" className="input input-bordered w-full max-w" />
+              <input
+                defaultValue={loginForm.email}
+                type="text"
+                placeholder="Email address"
+                className="input input-bordered w-full max-w"
+              />
+              <input
+                defaultValue={loginForm.password}
+                type="password"
+                placeholder="Password"
+                className="input input-bordered w-full max-w"
+              />
             </div>
 
             <div className="flex items-center justify-between">
@@ -65,7 +82,7 @@ function LoginPage() {
               <button
                 type="submit"
                 className="btn w-full !bg-indigo-600 !text-white !border-none flex items-center space-x-2">
-                {loading ? (
+                {response.loading ? (
                   <progress className="progress progress-secondary w-56"></progress>
                 ) : (
                   <>
