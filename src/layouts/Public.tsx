@@ -25,7 +25,7 @@ function PublicLayout({ children }: PropsWithChildren<PublicLayoutProps>) {
               <p className="text-3xl font-semibold">Support Sota-Conversion</p>
               <div className="w-4/5 flex flex-col space-y-4">
                 <p>
-                  TinyWow is 100% free to use (even OCR), with no pesky registration required. For our most loyal
+                  SotaConversion is 100% free to use (even OCR), with no pesky registration required. For our most loyal
                   supporters, a $5.99/month plan unlocks an ad and captcha free experience.
                 </p>
               </div>

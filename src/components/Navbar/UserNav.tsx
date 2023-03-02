@@ -32,9 +32,6 @@ function UserNav() {
           </p>
         </li>
         <li>
-          <p>Settings</p>
-        </li>
-        <li>
           <p onClick={logOut}>Logout</p>
         </li>
       </ul>

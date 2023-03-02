@@ -9,6 +9,7 @@ import SignIn from 'src/pages/SignIn'
 import Landing from 'src/pages/Landing'
 import FileConvert from 'src/pages/Tools/FileConvert'
 import Profile from 'src/pages/Profile'
+import Privacy from 'src/pages/Privacy'
 
 function Router() {
   return (
@@ -47,6 +48,7 @@ function Router() {
                   </PrivateAuth>
                 )}
               />
+              <Route exact path="/privacy" component={Privacy} />
               <Route path="*" render={() => <Redirect to="/" />} />
             </Switch>
           </PublicLayout>
