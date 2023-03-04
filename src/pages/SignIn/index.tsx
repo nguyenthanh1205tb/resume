@@ -106,4 +106,4 @@ function LoginPage() {
   )
 }
 
-export default React.memo(LoginPage)
+export default LoginPage

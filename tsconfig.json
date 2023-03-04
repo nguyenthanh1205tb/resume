@@ -17,6 +17,7 @@
     "jsx": "react-jsx",
     "types": ["node", "webpack-env"],
     "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
     "baseUrl": "./"
   },
   "include": ["src"]

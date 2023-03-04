@@ -19,4 +19,4 @@ function ToolsLayout({ children }: PropsWithChildren<ToolsLayoutProps>) {
   )
 }
 
-export default React.memo(ToolsLayout)
+export default ToolsLayout

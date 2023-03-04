@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react'
+import { useGetProfile } from './hooks/useUserRequest'
 import Router from './Router'
-import AuthStore from './stores/AuthStore'
+import jscookie from 'js-cookie'
 
 function App() {
-  const { setUser } = AuthStore
+  const { getProfile } = useGetProfile()
 
   useEffect(() => {
-    const user = localStorage.getItem('user')
-    if (user && user !== 'undefined') {
-      setUser(JSON.parse(user))
+    const token = jscookie.get('token')
+    if (token && token !== 'undefined') {
+      getProfile()
     }
   }, [])
 
   return <Router />
 }
 
-export default React.memo(App)
+export default App

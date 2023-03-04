@@ -1,42 +1,38 @@
 import { action, computed, makeAutoObservable, observable, toJS } from 'mobx'
-import { IdTokenResult, OAuthCredential, User, UserInfo } from '@firebase/auth'
 import jscookie from 'js-cookie'
+import { Profile } from 'src/configs/Types'
 
 class AuthStore {
-  @observable private _user: UserInfo | null = null
-  @observable private _credentials: OAuthCredential | string | null = null
+  @observable private _profile: Profile | null = null
+  @observable private _credentials: string | null = null
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  @computed get user() {
-    return toJS(this._user)
+  @computed get profile() {
+    return toJS(this._profile)
   }
 
   @computed get credentials() {
     return toJS(this._credentials)
   }
 
-  @action setUser = (user: UserInfo) => {
-    this._user = user
-    localStorage.setItem('user', JSON.stringify(user))
+  @action setProfile = (p: Profile) => {
+    this._profile = p
+    localStorage.setItem('p', JSON.stringify(p))
   }
 
-  @action setCredential = (cre: OAuthCredential | string) => {
+  @action setCredential = (cre: string) => {
     if (!cre) return
     this._credentials = cre
-    if (typeof cre === 'string') {
-      jscookie.set('token', JSON.stringify(cre))
-    } else {
-      jscookie.set('token', JSON.stringify(cre.idToken))
-    }
+    jscookie.set('token', JSON.stringify(cre))
   }
 
-  @action logOut = () => {
-    localStorage.removeItem('user')
+  @action removeCredentials = () => {
+    localStorage.removeItem('p')
     jscookie.remove('token')
-    this._user = null
+    this._profile = null
   }
 
   @action isLogin = () => {

@@ -1,12 +1,12 @@
 import classNames from 'classnames'
-import React, { PropsWithChildren, useState } from 'react'
+import React, { useState } from 'react'
 import PageContainer from 'src/components/Common/Container/Page'
 import AuthStore from 'src/stores/AuthStore'
 import ProfileImg from 'src/assets/images/profile.png'
 import { observer } from 'mobx-react-lite'
 
 function Profile() {
-  const { user } = AuthStore
+  const { profile } = AuthStore
   const navs = [
     {
       key: 1,
@@ -28,15 +28,15 @@ function Profile() {
   const [personalDetails] = useState([
     {
       name: 'display name',
-      value: user?.displayName ?? '',
+      value: profile?.name ?? '',
     },
     {
       name: 'email',
-      value: user?.email ?? '',
+      value: profile?.email ?? '',
     },
     {
-      name: 'phone number',
-      value: user?.phoneNumber ?? '',
+      name: 'Status',
+      value: profile?.status ?? '',
     },
   ])
 
@@ -61,14 +61,14 @@ function Profile() {
           </ul>
         </div>
         <div className="flex-1">
-          {user ? (
+          {profile ? (
             <div className="min-h-screen">
               <div className="mb-8">
                 <div tabIndex={-1} className="bg-gray-50 rounded-tl-3xl" style={{ height: '200px' }}></div>
                 <div className="-mt-8 pl-8 flex w-full">
                   <div className="avatar">
                     <div className="w-32 rounded-full">
-                      <img src={user.photoURL ?? ProfileImg} />
+                      <img src={profile.picture ?? ProfileImg} />
                     </div>
                   </div>
                   <div className="flex-1 p-5 flex justify-end flex-col space-y-1">

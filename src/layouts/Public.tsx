@@ -108,4 +108,4 @@ function PublicLayout({ children }: PropsWithChildren<PublicLayoutProps>) {
   )
 }
 
-export default React.memo(PublicLayout)
+export default PublicLayout

@@ -9,6 +9,7 @@ import {
 } from '@firebase/auth'
 import { useState } from 'react'
 import AuthStore from 'src/stores/AuthStore'
+import { useGetProfile } from './useUserRequest'
 type LoginResponse = {
   loading: boolean
   data: null | UserCredential
@@ -16,7 +17,8 @@ type LoginResponse = {
 }
 
 const useLoginWithEmailPwd = () => {
-  const { setCredential, setUser } = AuthStore
+  const { setCredential, setProfile } = AuthStore
+  const { getProfile } = useGetProfile()
   const [response, setResponse] = useState<LoginResponse>({
     loading: false,
     data: null,
@@ -30,7 +32,8 @@ const useLoginWithEmailPwd = () => {
       const result = await signInWithEmailAndPassword(auth, email, password)
       const token = await getIdToken(result.user)
       setCredential(token)
-      setUser(result.user.providerData[0])
+      const profile = await getProfile()
+      profile && setProfile(profile)
       setResponse({ loading: false, data: result, error: null })
       return true
     } catch (error) {
@@ -42,14 +45,16 @@ const useLoginWithEmailPwd = () => {
 }
 
 const useLoginWithGoogle = () => {
-  const { setCredential, setUser } = AuthStore
+  const { setCredential, setProfile } = AuthStore
+  const { getProfile } = useGetProfile()
   const ggProvider = new GoogleAuthProvider()
   const LoginWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, ggProvider)
-      const credential = GoogleAuthProvider.credentialFromResult(result)
-      if (credential) setCredential(credential)
-      setUser(result.user.providerData[0])
+      const token = await getIdToken(result.user)
+      setCredential(token)
+      const profile = await getProfile()
+      profile && setProfile(profile)
       return true
     } catch (error) {
       throw new Error('Login fail')
@@ -60,8 +65,8 @@ const useLoginWithGoogle = () => {
 }
 
 const useLogout = () => {
-  const { logOut: _logOut } = AuthStore
-  const logOut = async () => {
+  const { removeCredentials: _logOut } = AuthStore
+  const removeCredentials = async () => {
     try {
       await signOut(auth)
       _logOut()
@@ -70,7 +75,7 @@ const useLogout = () => {
     }
   }
 
-  return { logOut }
+  return { removeCredentials }
 }
 
 export { useLoginWithEmailPwd, useLoginWithGoogle, useLogout }

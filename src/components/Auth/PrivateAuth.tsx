@@ -9,7 +9,9 @@ function PrivateAuth({ children, history }: PropsWithChildren<PrivateAuth>) {
   const { isLogin } = AuthStore
 
   useEffect(() => {
-    if (!isLogin()) history.push('/tools')
+    if (!isLogin()) {
+      history.push('/tools')
+    }
   }, [])
 
   return <Fragment>{children}</Fragment>

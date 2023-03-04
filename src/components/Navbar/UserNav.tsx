@@ -7,13 +7,13 @@ import AuthStore from 'src/stores/AuthStore'
 
 function UserNav() {
   const history = useHistory()
-  const { user } = AuthStore
-  const { logOut } = useLogout()
+  const { profile } = AuthStore
+  const { removeCredentials } = useLogout()
 
   const goToLoginPage = () => history.push('/sign-in')
   const goToProfilePage = () => history.push('/profile')
 
-  return !user ? (
+  return !profile ? (
     <button className="btn btn-md btn-ghost" onClick={goToLoginPage}>
       Sign in
     </button>
@@ -21,7 +21,7 @@ function UserNav() {
     <div className="dropdown dropdown-end">
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
-          <img src={user.photoURL ?? ProfileImg} />
+          <img src={profile.picture ?? ProfileImg} />
         </div>
       </label>
       <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
@@ -32,7 +32,7 @@ function UserNav() {
           </p>
         </li>
         <li>
-          <p onClick={logOut}>Logout</p>
+          <p onClick={removeCredentials}>Logout</p>
         </li>
       </ul>
     </div>
