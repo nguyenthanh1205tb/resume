@@ -17,3 +17,11 @@ export interface Profile {
 export interface GetProfileResponse {
   data: Profile
 }
+
+export type ListFilesConversion = Record<string, Array<string>>
+
+export interface GetListFilesConversionResponse {
+  data: ListFilesConversion
+  message: string
+  statusCode: number
+}

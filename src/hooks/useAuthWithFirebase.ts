@@ -9,14 +9,14 @@ import {
 } from '@firebase/auth'
 import { useState } from 'react'
 import AuthStore from 'src/stores/AuthStore'
-import { useGetProfile } from './useUserRequest'
+import { useGetProfile } from './useUserAPI'
 type LoginResponse = {
   loading: boolean
   data: null | UserCredential
   error: Error | null
 }
 
-const useLoginWithEmailPwd = () => {
+export const useLoginWithEmailPwd = () => {
   const { setCredential, setProfile } = AuthStore
   const { getProfile } = useGetProfile()
   const [response, setResponse] = useState<LoginResponse>({
@@ -44,7 +44,7 @@ const useLoginWithEmailPwd = () => {
   return { response, LoginWithEmailPwd }
 }
 
-const useLoginWithGoogle = () => {
+export const useLoginWithGoogle = () => {
   const { setCredential, setProfile } = AuthStore
   const { getProfile } = useGetProfile()
   const ggProvider = new GoogleAuthProvider()
@@ -64,7 +64,7 @@ const useLoginWithGoogle = () => {
   return { LoginWithGoogle }
 }
 
-const useLogout = () => {
+export const useLogout = () => {
   const { removeCredentials: _logOut } = AuthStore
   const removeCredentials = async () => {
     try {
@@ -77,5 +77,3 @@ const useLogout = () => {
 
   return { removeCredentials }
 }
-
-export { useLoginWithEmailPwd, useLoginWithGoogle, useLogout }

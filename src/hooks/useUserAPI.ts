@@ -4,8 +4,8 @@ import { GetProfileResponse, Profile } from 'src/configs/Types'
 import { useState } from 'react'
 import AuthStore from 'src/stores/AuthStore'
 
-const useGetProfile = () => {
-  const { setProfile } = AuthStore
+export const useGetProfile = () => {
+  const { setProfile, removeCredentials } = AuthStore
   const [response, setResponse] = useState({
     loading: false,
     error: null as Error | null,
@@ -23,10 +23,9 @@ const useGetProfile = () => {
       return result.data
     } catch (error) {
       setResponse({ loading: false, error: new Error('Get profile fail'), data: null })
+      removeCredentials()
     }
   }
 
   return { response, getProfile }
 }
-
-export { useGetProfile }

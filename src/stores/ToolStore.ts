@@ -12,8 +12,8 @@ import WatermarkImg from 'src/assets/images/watermark.png'
 import DocumentImg from 'src/assets/images/document.png'
 import SortImg from 'src/assets/images/sort.png'
 import ExtractImg from 'src/assets/images/extract.png'
-import { FILE_TYPES } from 'src/configs/Types'
-import _find from 'lodash/find'
+import { FILE_TYPES, ListFilesConversion } from 'src/configs/Types'
+import { organizeListFilesConvertibles } from 'src/helpers/Tools'
 
 const tools = [
   {
@@ -115,6 +115,9 @@ const tools = [
 ]
 class ToolStore {
   @observable private _tools = tools
+  @observable private _listFilesConversion: ListFilesConversion | null = null
+  @observable private _filesConvertible: ListFilesConversion | null = null
+  @observable private _filesAccepted: Array<string> | null = null
 
   constructor() {
     makeAutoObservable(this)
@@ -122,6 +125,18 @@ class ToolStore {
 
   @computed get tools() {
     return toJS(this._tools)
+  }
+
+  @computed get listFilesConversion() {
+    return toJS(this._listFilesConversion)
+  }
+
+  @computed get filesConvertible() {
+    return toJS(this._filesConvertible)
+  }
+
+  @computed get filesAccepted() {
+    return toJS(this._filesAccepted)
   }
 
   @action toolsFilter = (t: FILE_TYPES) => {
@@ -138,6 +153,13 @@ class ToolStore {
     if (t === '') return (this._tools = tools)
     const _tools = this._tools.filter(o => o.name.toLowerCase().indexOf(t) > -1)
     this._tools = _tools
+  }
+
+  @action setListFilesConversion = async (lfc: ListFilesConversion) => {
+    const f = await organizeListFilesConvertibles(lfc)
+    this._listFilesConversion = lfc
+    this._filesConvertible = f.ListFilesConvertibles
+    this._filesAccepted = f.listFileAccepted
   }
 }
 

@@ -81,7 +81,7 @@ const getQueryString = (params: Record<string, any>): string => {
   return ''
 }
 
-export const getUrl = (config: APIConfig, options: ApiRequestOptions): string => {
+const getUrl = (config: APIConfig, options: ApiRequestOptions): string => {
   const encoder = config.ENCODE_PATH || encodeURI
 
   const path = options.url
@@ -193,7 +193,7 @@ const getRequestBody = (options: ApiRequestOptions): any => {
   return
 }
 
-export const sendRequest = async (
+const sendRequest = async (
   config: APIConfig,
   options: ApiRequestOptions,
   url: string,
@@ -271,7 +271,6 @@ const catchErrorCodes = (options: ApiRequestOptions, result: ApiResult): void =>
   /* Handle 401 code */
   if (error == errors[401]) {
     console.log('request error')
-    // window.location.href = loginUrl
   }
 
   if (error) {
