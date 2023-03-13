@@ -2,6 +2,15 @@
 @tailwind base;
 @tailwind utilities;
 @tailwind components;
+* {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
 .bg-dot {
   background-size: 10px 10px;
   background-image: radial-gradient(hsla(0 0% 20%/.2) 0.8px, hsla(0 0% 90%/1) 0.8px);

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useCallback } from 'react'
+import React, { PropsWithChildren } from 'react'
 import { useDropzone, Accept } from 'react-dropzone'
 import classNames from 'classnames'
 import UploadImg from 'src/assets/images/upload.png'

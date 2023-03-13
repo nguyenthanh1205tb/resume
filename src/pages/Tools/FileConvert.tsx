@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import PageContainer from 'src/components/Common/Container/Page'
 import Dropzone from 'src/components/Common/Dropzone'
 import mime from 'mime'
@@ -10,9 +10,16 @@ import Select from 'react-select'
 import DownloadPng from 'src/assets/images/download.png'
 import ClosePng from 'src/assets/images/close.png'
 import { BsArrowRight } from 'react-icons/bs'
+import { useConvertFileToAny } from 'src/hooks/useToolAPI'
+import classNames from 'classnames'
+import SpinLoadingSVG from 'src/assets/images/spin.svg'
+import DownloadWhitePng from 'src/assets/images/download-white.png'
+import { CancelablePromise } from 'src/utils/request/core/CancelablePromise'
+import { ConvertFileToAnyResponse } from 'src/configs/Types'
 
 function FileConvert() {
   const { filesAccepted, filesConvertible } = ToolStore
+  const { convertFileToAny } = useConvertFileToAny()
   const [accept, setAccept] = useState<Accept>()
   const [dataSources, setDataSources] = useState<TableDataSources>([])
 
@@ -28,7 +35,7 @@ function FileConvert() {
           fileSize: size,
           file: f,
           converting: false,
-          downloading: false,
+          downloadable: false,
         }
       })
       if (dataSources.length) {
@@ -40,9 +47,77 @@ function FileConvert() {
     [dataSources],
   )
 
+  const setFileConverting = (index: number, b = false) => {
+    return setDataSources(prev => prev.map((o, i) => (i === index ? { ...o, converting: b } : o)))
+  }
+
+  const setFileDownloadable = (index: number, b = false) => {
+    return setDataSources(prev => prev.map((o, i) => (i === index ? { ...o, downloadable: b } : o)))
+  }
+
+  const setLinkDownloadable = (index: number, link: string | undefined) => {
+    return setDataSources(prev => prev.map((o, i) => (i === index ? { ...o, link: link } : o)))
+  }
+
+  const setConvertTypeSelectedError = (index: number, e = false) => {
+    return setDataSources(prev => prev.map((o, i) => (i === index ? { ...o, convertTypeSelectedError: e } : o)))
+  }
+
   const removeFile = (index: number) => {
     const _d = dataSources.filter((_, i) => i !== index)
     setDataSources(_d)
+  }
+
+  const cancelRequest = (req: CancelablePromise<ConvertFileToAnyResponse> | undefined, index?: number) => {
+    if (req) req.cancel()
+    if (typeof index === 'number') setFileConverting(index)
+  }
+
+  const setFileReq = (index: number, req: CancelablePromise<ConvertFileToAnyResponse> | undefined) => {
+    return setDataSources(prev => prev.map((o, i) => (i === index ? { ...o, req: req } : o)))
+  }
+
+  const isHaveConvertingFile = () => {
+    const _d = dataSources.slice(0).filter(o => o.converting === true)
+    return _d.length > 0 ? true : false
+  }
+
+  const selectConvertType = (index: number, type: string) => {
+    const _d = dataSources
+      .slice(0)
+      .map((o, i) => (i === index ? { ...o, convertTypeSelected: type, convertTypeSelectedError: false } : o))
+    setDataSources(_d)
+  }
+
+  const convert = async (f: File, format: string, index: number) => {
+    if (dataSources[index].converting) {
+      cancelRequest(dataSources[index].req, index)
+      return
+    }
+    if (!format || format === '') {
+      setConvertTypeSelectedError(index, true)
+      return
+    }
+
+    setFileConverting(index, true)
+    const req = convertFileToAny({ file: f, toFormat: format })
+    setFileReq(index, req)
+    const result = await req
+    if (result && result.data.link) {
+      setFileDownloadable(index, true)
+      setLinkDownloadable(index, result.data.link)
+    }
+    setFileConverting(index)
+  }
+
+  const download = (link: string) => {
+    const l = document.createElement('a')
+    l.download = link
+    l.href = link
+    l.setAttribute('target', '_blank')
+    document.body.appendChild(l)
+    l.click()
+    document.body.removeChild(l)
   }
 
   const cols: TableColumns[] = [
@@ -55,16 +130,16 @@ function FileConvert() {
       },
     },
     {
-      label: 'File type',
-      dataIndex: 'fileType',
-      key: 'fileType',
-      render: (v: any) => '.' + v.fileType,
-    },
-    {
       label: 'File size',
       dataIndex: 'fileSize',
       key: 'fileSize',
       render: (v: any) => v.fileSize + 'MB',
+    },
+    {
+      label: 'File type',
+      dataIndex: 'fileType',
+      key: 'fileType',
+      render: (v: any) => '.' + v.fileType,
     },
     {
       label: '',
@@ -92,12 +167,45 @@ function FileConvert() {
         }
         return (
           <div className="flex items-center">
-            <Select className="flex-1" options={op} />
-            <div className="w-9 h-9 flex items-center justify-center bg-gray-100 rounded-md ml-8 cursor-pointer">
-              <img className="w-6" src={DownloadPng} />
+            <Select
+              isDisabled={v.converting || v.link}
+              styles={{
+                container: base => ({ ...base, width: '100px' }),
+                control: base => ({ ...base, borderColor: v.convertTypeSelectedError ? '#ff3f3f' : '#dadada' }),
+              }}
+              className="flex-1"
+              options={op}
+              classNames={{
+                control: () =>
+                  classNames({
+                    'animate__shakeX animate__animated animate__faster': v.convertTypeSelectedError,
+                  }),
+              }}
+              onChange={v => v && selectConvertType(index, v.value)}
+            />
+            <div
+              className={classNames(
+                'w-9 h-9 flex items-center justify-center bg-gray-100 rounded-md ml-8 cursor-pointer border border-transparent',
+                {
+                  '!bg-emerald-500': v.link,
+                  'hover:border-red-500': v.converting,
+                },
+              )}
+              onClick={() => (v.link ? download(v.link) : convert(v.file, v.convertTypeSelected, index))}>
+              <img
+                className={classNames('w-6', { 'animate-spin': v.converting })}
+                src={v.converting ? SpinLoadingSVG : v.link ? DownloadWhitePng : DownloadPng}
+              />
             </div>
-            <div className="w-9 h-9 flex items-center justify-center bg-gray-100 rounded-md ml-2 cursor-pointer">
-              <img className="w-4" src={ClosePng} onClick={() => removeFile(index)} />
+            <div
+              className={classNames(
+                'w-9 h-9 flex items-center justify-center bg-gray-100 rounded-md ml-2 cursor-pointer transition-all',
+                {
+                  'opacity-30 cursor-not-allowed': isHaveConvertingFile(),
+                },
+              )}
+              onClick={() => !isHaveConvertingFile() && removeFile(index)}>
+              <img className="w-4" src={ClosePng} />
             </div>
           </div>
         )

@@ -25,3 +25,15 @@ export interface GetListFilesConversionResponse {
   message: string
   statusCode: number
 }
+
+export interface ConvertFileToAnyRequest {
+  file: File
+  toFormat: string
+  lang?: string
+}
+
+export interface ConvertFileToAnyResponse {
+  data: { link: string }
+  message: string
+  statusCode: number
+}

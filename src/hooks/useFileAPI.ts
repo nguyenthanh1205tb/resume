@@ -36,7 +36,7 @@ export const useGetListFilesConversion = () => {
   })
 
   const getListFilesConversion = async () => {
-    setResponse({ loading: false, data: null, error: null })
+    setResponse({ loading: true, data: null, error: null })
     try {
       const result = await request<GetListFilesConversionResponse>(APIConfigs(), {
         url: '/conversion',
@@ -44,6 +44,7 @@ export const useGetListFilesConversion = () => {
       })
       setListFilesConversion(result.data)
       setResponse({ loading: false, data: result.data, error: null })
+      return result.data
       return result.data
     } catch (error) {
       setResponse({ loading: false, data: null, error: new Error('Get lis file conversion fail') })

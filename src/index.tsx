@@ -7,6 +7,7 @@ import App from './App'
 import i18next from './utils/i18next'
 import reportWebVitals from './reportWebVitals'
 import 'tailwindcss/tailwind.css'
+import 'animate.css'
 import './index.css'
 
 const container = document.getElementById('root')
