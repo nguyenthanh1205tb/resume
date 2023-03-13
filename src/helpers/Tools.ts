@@ -20,3 +20,17 @@ export const organizeListFilesConvertibles = async (files: ListFilesConversion) 
   })
   return { listFileAccepted: f, ListFilesConvertibles: l }
 }
+
+export const createDownload = (link: string) => {
+  const l = document.createElement('a')
+  l.download = link
+  l.href = link
+  l.setAttribute('target', '_blank')
+  document.body.appendChild(l)
+  return {
+    download: () => {
+      l.dispatchEvent(new MouseEvent('click'))
+      return document.body.removeChild(l)
+    },
+  }
+}

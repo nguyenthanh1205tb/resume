@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import PageContainer from 'src/components/Common/Container/Page'
 import Dropzone from 'src/components/Common/Dropzone'
 import mime from 'mime'
@@ -16,6 +16,7 @@ import SpinLoadingSVG from 'src/assets/images/spin.svg'
 import DownloadWhitePng from 'src/assets/images/download-white.png'
 import { CancelablePromise } from 'src/utils/request/core/CancelablePromise'
 import { ConvertFileToAnyResponse } from 'src/configs/Types'
+import { createDownload } from 'src/helpers/Tools'
 
 function FileConvert() {
   const { filesAccepted, filesConvertible } = ToolStore
@@ -110,16 +111,6 @@ function FileConvert() {
     setFileConverting(index)
   }
 
-  const download = (link: string) => {
-    const l = document.createElement('a')
-    l.download = link
-    l.href = link
-    l.setAttribute('target', '_blank')
-    document.body.appendChild(l)
-    l.click()
-    document.body.removeChild(l)
-  }
-
   const cols: TableColumns[] = [
     {
       label: 'File name',
@@ -191,7 +182,9 @@ function FileConvert() {
                   'hover:border-red-500': v.converting,
                 },
               )}
-              onClick={() => (v.link ? download(v.link) : convert(v.file, v.convertTypeSelected, index))}>
+              onClick={() =>
+                v.link ? createDownload(v.link).download() : convert(v.file, v.convertTypeSelected, index)
+              }>
               <img
                 className={classNames('w-6', { 'animate-spin': v.converting })}
                 src={v.converting ? SpinLoadingSVG : v.link ? DownloadWhitePng : DownloadPng}
