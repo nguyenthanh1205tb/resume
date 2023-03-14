@@ -61,6 +61,7 @@ export const useLoginWithGoogle = () => {
       setLoadingPage(false)
       return true
     } catch (error) {
+      console.log({ error })
       setLoadingPage(false)
       throw new Error('Login fail')
     }
