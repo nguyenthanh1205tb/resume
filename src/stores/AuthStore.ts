@@ -37,7 +37,7 @@ class AuthStore {
 
   @action isLogin = () => {
     const token = jscookie.get('token')
-    if (token) {
+    if (token && this._profile) {
       return true
     }
     return false

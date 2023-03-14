@@ -17,8 +17,11 @@ import DownloadWhitePng from 'src/assets/images/download-white.png'
 import { CancelablePromise } from 'src/utils/request/core/CancelablePromise'
 import { ConvertFileToAnyResponse } from 'src/configs/Types'
 import { createDownload } from 'src/helpers/Tools'
+import AuthStore from 'src/stores/AuthStore'
+import { toast } from 'react-toastify'
 
 function FileConvert() {
+  const { isLogin } = AuthStore
   const { filesAccepted, filesConvertible } = ToolStore
   const { convertFileToAny } = useConvertFileToAny()
   const [accept, setAccept] = useState<Accept>()
@@ -91,6 +94,10 @@ function FileConvert() {
   }
 
   const convert = async (f: File, format: string, index: number) => {
+    if (!isLogin()) {
+      toast('You need login to use this feature', { type: 'error' })
+      return
+    }
     if (dataSources[index].converting) {
       cancelRequest(dataSources[index].req, index)
       return
