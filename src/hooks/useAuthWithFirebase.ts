@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
   UserCredential,
   signOut,
   getIdToken,
@@ -49,10 +50,10 @@ export const useLoginWithGoogle = () => {
   const { setLoadingPage } = CommonStore
   const { setCredential, setProfile } = AuthStore
   const { getProfile } = useGetProfile()
-  const ggProvider = new GoogleAuthProvider()
   const LoginWithGoogle = async () => {
     setLoadingPage(true)
     try {
+      const ggProvider = new GoogleAuthProvider()
       const result = await signInWithPopup(auth, ggProvider)
       const token = await getIdToken(result.user)
       setCredential(token)
