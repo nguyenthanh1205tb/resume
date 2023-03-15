@@ -47,13 +47,14 @@ export const useLoginWithEmailPwd = () => {
 }
 
 export const useLoginWithGoogle = () => {
+  const ggProvider = new GoogleAuthProvider()
   const { setLoadingPage } = CommonStore
   const { setCredential, setProfile } = AuthStore
   const { getProfile } = useGetProfile()
   const LoginWithGoogle = async () => {
     setLoadingPage(true)
     try {
-      const ggProvider = new GoogleAuthProvider()
+      ggProvider.setCustomParameters({ prompt: 'select_account' })
       const result = await signInWithPopup(auth, ggProvider)
       const token = await getIdToken(result.user)
       setCredential(token)
