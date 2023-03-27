@@ -11,6 +11,7 @@ import FileConvert from 'src/pages/Tools/FileConvert'
 import Profile from 'src/pages/Profile'
 import Privacy from 'src/pages/Privacy'
 import Ocr from './pages/Tools/Ocr'
+import PdfTool from './pages/Tools/Pdf'
 
 function Router() {
   return (
@@ -30,6 +31,7 @@ function Router() {
           <PublicLayout>
             <Switch>
               <Route exact path="/" component={Landing} />
+              <Route exact path="/pdf" component={PdfTool} />
               <Route exact path="/file-convert" component={FileConvert} />
               <Route exact path="/ocr" component={Ocr} />
               <Route

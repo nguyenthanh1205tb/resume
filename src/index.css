@@ -38,3 +38,38 @@
     @apply border-blue-500;
   }
 }
+
+.watermarked {
+  overflow: hidden;
+}
+
+.watermarked::before {
+  position: absolute;
+  top: -75%;
+  left: -75%;
+
+  display: block;
+  width: 150%;
+  height: 150%;
+
+  transform: rotate(-45deg);
+  content: attr(data-watermark);
+
+  opacity: 0.2;
+  line-height: 3em;
+  letter-spacing: 2px;
+  color: #000;
+  font-size: 14px;
+}
+
+.st-toast-container .Toastify__toast {
+  min-height: unset;
+  padding: 5px 8px;
+  border-radius: 5px;
+}
+/* .st-toast-container .Toastify__toast .st-toast-body {
+  font-size: 13.5px;
+} */
+.st-toast-container .Toastify__toast .Toastify__close-button {
+  display: none;
+}

@@ -15,7 +15,7 @@ function App() {
   const { loadingPage, setLoadingPage } = CommonStore
 
   useEffect(() => {
-    if (!response.loading) {
+    if (!response.loading && !profileResponse.loading) {
       setLoadingPage(false)
     }
   }, [response, profileResponse])
@@ -32,7 +32,20 @@ function App() {
   return (
     <>
       {loadingPage && <LoadingPage />}
-      <ToastContainer />
+      <ToastContainer
+        position="bottom-left"
+        hideProgressBar
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        className="st-toast-container"
+        bodyClassName="st-toast-body"
+        theme="colored"
+        limit={5}
+      />
       <Router />
     </>
   )

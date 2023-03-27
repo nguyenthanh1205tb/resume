@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react-lite'
-import React, { PropsWithChildren, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import PageContainer from 'src/components/Common/Container/Page'
 import { FILE_TYPES } from 'src/configs/Types'
 import ToolStore from 'src/stores/ToolStore'
 import EmptyImg from 'src/assets/images/empty.png'
+import { getParams } from 'src/helpers'
+import classNames from 'classnames'
 
-interface ToolsProps {}
-
-function Tools({}: PropsWithChildren<ToolsProps>) {
+function Tools() {
   const { tools, toolsFilter } = ToolStore
   const history = useHistory()
 
@@ -21,8 +21,10 @@ function Tools({}: PropsWithChildren<ToolsProps>) {
     return colors[randomNumber()]
   }
 
+  const goToPdf = (path: string) => history.push(path)
+
   useEffect(() => {
-    const queries = new URLSearchParams(history.location.search)
+    const queries = getParams(history.location.search)
     const tool = queries.get('t')
     if (tool && tool !== '') {
       toolsFilter(tool as FILE_TYPES)
@@ -36,8 +38,10 @@ function Tools({}: PropsWithChildren<ToolsProps>) {
           {tools.map((tool, index) => (
             <div
               key={index}
-              className="p-4 bg-slate-50/30 rounded-xl cursor-pointer drop-shadow-sm h-auto md:h-36"
-              onClick={() => history.push('/file-convert')}>
+              className={classNames('p-4 bg-slate-50/30 rounded-xl cursor-pointer drop-shadow-sm h-auto md:h-36', {
+                'opacity-20 cursor-default': tool.disabled,
+              })}
+              onClick={() => !tool.disabled && goToPdf(tool.path)}>
               <div className="flex items-center">
                 <div className={`w-10 h-10 flex items-center justify-center rounded-xl ${randomColorInRangeColors()}`}>
                   <img src={tool.img} className="w-5" />

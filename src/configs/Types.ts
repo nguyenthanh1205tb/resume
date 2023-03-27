@@ -1,7 +1,48 @@
+export type RecordKS<D = unknown> = Record<string, D>
+
+export interface CommonResponse {
+  statusCode: number
+  message: string
+  data: string
+}
+
+export enum TOOLS {
+  merge = 'merge',
+  delete = 'delete',
+  split = 'split',
+  watermark = 'watermark',
+  rotate = 'rotate',
+  unlock = 'unlock',
+  protect = 'protect',
+  organize = 'organize',
+  'to-word' = 'to-word',
+  sort = 'sort',
+  extract = 'extract',
+  sign = 'sign',
+}
+
 export enum FILE_TYPES {
   pdf = 'pdf',
   image = 'image',
   file = 'file',
+}
+
+export interface UploadedFileInformation {
+  id: string
+  file_path: string
+  name: string
+  size: number
+  mime_type: string
+  provider: string
+  uploader: string
+  image_content: unknown
+  text_locale: unknown
+  download_link: unknown
+  tags: Array<unknown>
+  metadata: unknown
+  created_at: string
+  updated_at: unknown
+  deleted_at: unknown
 }
 
 export interface Profile {
@@ -37,3 +78,41 @@ export interface ConvertFileToAnyResponse {
   message: string
   statusCode: number
 }
+
+export interface AddWatermarkPDFRequest {
+  file: File
+  msg: string
+  lang?: string
+}
+
+export interface AddWatermarkPDFResponse {
+  statusCode: number
+  message: string
+  data: {
+    file: UploadedFileInformation
+    link: string
+  }
+}
+
+export interface WatermarkListLinkDownload {
+  fileName: string
+  text: string
+  link?: string
+  err?: boolean
+  loading: boolean
+}
+
+export interface SortPDFPagesRequest {
+  file: File
+  lang?: string
+}
+
+export interface ProtectPDFRequest {
+  file: File
+  password: string
+  lang?: string
+}
+
+export interface SortPDFPagesResponse extends CommonResponse {}
+export interface ProtectPDFResponse extends CommonResponse {}
+export interface RotatePDFResponse extends CommonResponse {}

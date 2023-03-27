@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import classNames from 'classnames'
 import React, { PropsWithChildren, ReactNode } from 'react'
 
 export interface TableColumns {
@@ -13,10 +14,11 @@ export type TableDataSources = Array<Record<string, any>> | Array<any>
 interface TableProps {
   cols: TableColumns[]
   dataSources: TableDataSources
+  className?: string
 }
-function Table({ cols, dataSources }: PropsWithChildren<TableProps>) {
+function Table({ cols, dataSources, className }: PropsWithChildren<TableProps>) {
   return (
-    <div className="overflow-x-auto w-full min-h-screen">
+    <div className={classNames('overflow-x-auto w-full min-h-screen', className)}>
       <table className="table w-full text-xs">
         <thead>
           <tr>

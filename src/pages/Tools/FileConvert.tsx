@@ -215,10 +215,12 @@ function FileConvert() {
 
   useEffect(() => {
     if (filesAccepted && filesAccepted.length) {
+      const acp: Accept = {}
       filesAccepted.map(f => {
         const t = mime.getType(f)
-        if (t) setAccept(prev => ({ ...prev, [t]: [`.${f}`] }))
+        if (t) acp[t] = [`.${f}`]
       })
+      setAccept(acp)
     }
   }, [filesAccepted])
 

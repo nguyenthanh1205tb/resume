@@ -25,6 +25,7 @@ class AuthStore {
 
   @action setCredential = (cre: string) => {
     if (!cre) return
+    console.log(cre)
     this._credentials = cre
     jscookie.set('token', JSON.stringify(cre))
   }

@@ -2,10 +2,12 @@ import classNames from 'classnames'
 import React, { useState } from 'react'
 import PageContainer from 'src/components/Common/Container/Page'
 import AuthStore from 'src/stores/AuthStore'
-import ProfileImg from 'src/assets/images/profile.png'
-import { observer } from 'mobx-react-lite'
+import Profile from './Profile'
 
-function Profile() {
+import { observer } from 'mobx-react-lite'
+import Storages from './Storages'
+
+function ProfileSettings() {
   const { profile } = AuthStore
   const navs = [
     {
@@ -21,24 +23,14 @@ function Profile() {
     {
       key: 3,
       name: 'storages',
-      disabled: true,
+      disabled: false,
     },
   ]
-  const [navSelected] = useState(1)
-  const [personalDetails] = useState([
-    {
-      name: 'display name',
-      value: profile?.name ?? '',
-    },
-    {
-      name: 'email',
-      value: profile?.email ?? '',
-    },
-    {
-      name: 'Status',
-      value: profile?.status ?? '',
-    },
-  ])
+  const [navSelected, setNavSelected] = useState(1)
+
+  const onChangeTab = (k: number) => {
+    setNavSelected(k)
+  }
 
   return (
     <PageContainer>
@@ -54,51 +46,19 @@ function Profile() {
                   'bg-gray-100': navSelected === nav.key,
                   'text-gray-400': nav.disabled,
                 })}
-                key={nav.key}>
+                key={nav.key}
+                onClick={() => onChangeTab(nav.key)}>
                 <p className="capitalize font-semibold">{nav.name}</p>
               </li>
             ))}
           </ul>
         </div>
-        <div className="flex-1">
-          {profile ? (
-            <div className="min-h-screen">
-              <div className="mb-8">
-                <div tabIndex={-1} className="bg-gray-50 rounded-tl-3xl" style={{ height: '200px' }}></div>
-                <div className="-mt-8 pl-8 flex w-full">
-                  <div className="avatar">
-                    <div className="w-32 rounded-full">
-                      <img src={profile.picture ?? ProfileImg} />
-                    </div>
-                  </div>
-                  <div className="flex-1 p-5 flex justify-end flex-col space-y-1">
-                    <p className="text-2xl font-semibold">Profile</p>
-                    <p className="text-sm text-gray-600">See all your personal details</p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col space-y-8">
-                {personalDetails.map((p, index) => (
-                  <div key={index} className="grid grid-cols-12 grid-rows-1 border-b pb-8 border-gray-100">
-                    <div className="col-span-4 flex items-center">
-                      <p className="capitalize text-sm font-semibold">{p.name}:</p>
-                    </div>
-                    <div className="col-span-8">
-                      <input
-                        type="text"
-                        className="input !text-sm input-bordered border-none w-full max-w-xs !bg-gray-50"
-                        disabled
-                        defaultValue={p.value}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : null}
+        <div className="flex-1 min-h-screen">
+          {navSelected === 1 ? <Profile /> : null}
+          {navSelected === 3 ? <Storages /> : null}
         </div>
       </div>
     </PageContainer>
   )
 }
-export default observer(Profile)
+export default observer(ProfileSettings)

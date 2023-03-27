@@ -1,15 +1,15 @@
 import React, { PropsWithChildren } from 'react'
-import { useDropzone, Accept } from 'react-dropzone'
+import { useDropzone, Accept, DropzoneOptions } from 'react-dropzone'
 import classNames from 'classnames'
 import UploadImg from 'src/assets/images/upload.png'
 
-interface DropzoneProps {
+interface DropzoneProps extends DropzoneOptions {
   onDrop?: (file: File[]) => void
   accept?: Accept
   small?: boolean
 }
-function Dropzone({ onDrop, accept, small }: PropsWithChildren<DropzoneProps>) {
-  const { getInputProps, getRootProps, isDragActive } = useDropzone({ onDrop, accept })
+function Dropzone({ onDrop, accept, small, ...props }: PropsWithChildren<DropzoneProps>) {
+  const { getInputProps, getRootProps, isDragActive } = useDropzone({ onDrop, accept, ...props })
 
   return (
     <div
