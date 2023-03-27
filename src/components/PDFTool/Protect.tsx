@@ -93,7 +93,7 @@ function Protect({ files }: PropsWithChildren<ProtectProps>) {
 
   return (
     <>
-      <Table className="min-h-fit" cols={cols} dataSources={dataSource} />
+      <Table className="!min-h-fit" cols={cols} dataSources={dataSource} />
       <div className="flex justify-end">
         <ButtonSave className="w-48 mt-8 !capitalize" onClick={onSave}>
           protect all files
