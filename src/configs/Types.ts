@@ -6,6 +6,11 @@ export interface CommonResponse {
   data: string
 }
 
+export interface CommonDataResponse {
+  file: UploadedFileInformation
+  link: string
+}
+
 export enum TOOLS {
   merge = 'merge',
   delete = 'delete',
@@ -113,6 +118,10 @@ export interface ProtectPDFRequest {
   lang?: string
 }
 
-export interface SortPDFPagesResponse extends CommonResponse {}
-export interface ProtectPDFResponse extends CommonResponse {}
+export interface SortPDFPagesResponse extends Omit<CommonResponse, 'data'> {
+  data: CommonDataResponse
+}
+export interface ProtectPDFResponse extends Omit<CommonResponse, 'data'> {
+  data: CommonDataResponse
+}
 export interface RotatePDFResponse extends CommonResponse {}

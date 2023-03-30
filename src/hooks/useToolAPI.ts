@@ -2,6 +2,7 @@
 import {
   AddWatermarkPDFRequest,
   AddWatermarkPDFResponse,
+  CommonDataResponse,
   ConvertFileToAnyRequest,
   ConvertFileToAnyResponse,
   ProtectPDFRequest,
@@ -125,7 +126,7 @@ export const useAddWatermarkPDFFile = () => {
 export const useSortPDFPages = () => {
   const [response, setResponse] = useState({
     loading: false as boolean,
-    data: null as SortPDFPagesResponse | null,
+    data: null as CommonDataResponse | null,
     error: null as Error | null,
   })
 
@@ -140,15 +141,19 @@ export const useSortPDFPages = () => {
         },
         formData: payload,
       })
-      setResponse({ loading: false, data: result, error: null })
-      return result.data
+      setResponse({ loading: false, data: result.data, error: null })
+      return result.data.link
     } catch (error) {
       const text = 'Sort PDF pages fail'
       setResponse({ loading: false, data: null, error: new Error(text, { cause: { error } }) })
     }
   }
 
-  return { sortPDFPages, response }
+  const clean = () => {
+    setResponse({ loading: false, data: null, error: null })
+  }
+
+  return { sortPDFPages, response, clean }
 }
 
 export const useProtectPDF = () => {
@@ -165,8 +170,8 @@ export const useProtectPDF = () => {
         method: 'POST',
         formData: payload,
       })
-      setResponse({ loading: true, data: result, error: null })
-      return result.data
+      setResponse({ loading: false, data: result, error: null })
+      return result.data.link
     } catch (error) {
       const text = 'error'
       setResponse({ loading: false, data: null, error: new Error(text, { cause: { error } }) })

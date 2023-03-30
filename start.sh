@@ -1,0 +1,1 @@
+yarn format && docker-compose -f ./devOps/docker-compose.yml up --build && docker-compose rm -fsv

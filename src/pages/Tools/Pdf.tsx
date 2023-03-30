@@ -41,7 +41,11 @@ function PdfTool() {
 
   const onDrop = (f: File[]) => {
     if (isMulti) {
-      setListPDFFiles(f)
+      if (listPDFFiles.length) {
+        setListPDFFiles(prev => [...prev, ...f])
+      } else {
+        setListPDFFiles(f)
+      }
     } else {
       setPDFFile(f[0])
     }
@@ -89,9 +93,9 @@ function PdfTool() {
                       <p className="text-sm font-medium whitespace-nowrap text-emerald-500">{pdfFile.name}</p>
                     </div>
                     {loadingProgress < 100 ? (
-                      <FiLoader size={30} className="animate-spin text-yellow-500" />
+                      <FiLoader size={20} className="animate-spin text-yellow-500" />
                     ) : (
-                      <AiFillCheckCircle size={30} color="#37d399" />
+                      <AiFillCheckCircle size={20} color="#37d399" />
                     )}
                   </div>
                   <Document

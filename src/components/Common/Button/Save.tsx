@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { FiLoader } from 'react-icons/fi'
 
 interface ButtonSaveProps {
-  type?: 'save' | 'delete'
+  type?: 'save' | 'delete' | 'success'
   onClick: () => void
   disabled?: boolean
   loading?: boolean
@@ -17,6 +17,7 @@ function ButtonSave({ onClick, disabled, loading, className, type, children }: P
         '!btn-disabled': disabled,
         '!bg-blue-500': !type || type === 'save',
         '!bg-red-500': type && type === 'delete',
+        '!bg-emerald-500': type && type === 'success',
       })}>
       {loading ? <FiLoader size={24} className="animate-spin text-white" /> : null}
       <div>{children}</div>

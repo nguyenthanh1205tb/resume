@@ -27,12 +27,14 @@ function Protect({ files }: PropsWithChildren<ProtectProps>) {
       const d = dataSource[key]
       if (d.password !== '') {
         setValueDataSources(parseInt(key), { loading: true, error: false, link: '' })
-        const result = await protectPDF({ file: d.file, password: d.password })
-        if (result) {
-          setValueDataSources(parseInt(key), { link: result, loading: false })
-        } else {
-          setValueDataSources(parseInt(key), { loading: false, error: true })
-        }
+        const result = protectPDF({ file: d.file, password: d.password })
+        result.then(res => {
+          if (res) {
+            setValueDataSources(parseInt(key), { link: res, loading: false })
+          } else {
+            setValueDataSources(parseInt(key), { loading: false, error: true })
+          }
+        })
       }
     }
   }
@@ -56,7 +58,11 @@ function Protect({ files }: PropsWithChildren<ProtectProps>) {
             className={classNames('input input-bordered input-sm w-full')}
             type="text"
             value={v.password}
-            onChange={e => setValueDataSources(index, { password: e.target.value })}
+            onChange={e =>
+              setValueDataSources(index, {
+                password: e.target.value,
+              })
+            }
           />
         )
       },
@@ -71,7 +77,7 @@ function Protect({ files }: PropsWithChildren<ProtectProps>) {
             <div className="w-6">
               <div
                 onClick={() => v.link !== '' && createDownload(v.link).download()}
-                className={classNames('w-8 h-8 rounded-md flex items-center justify-center', {
+                className={classNames('w-8 h-8 rounded-md flex items-center justify-center cursor-pointer', {
                   'bg-emerald-500': !v.error,
                   'bg-red-500': v.error,
                 })}>
@@ -87,7 +93,7 @@ function Protect({ files }: PropsWithChildren<ProtectProps>) {
   ]
 
   useEffect(() => {
-    const d = files.map(f => ({ filename: f.name, file: f, loading: false, link: '', password: '' }))
+    const d = files.map(f => ({ filename: f.name, file: f, loading: false, link: '', password: '', error: false }))
     setDataSources(d)
   }, [files])
 
