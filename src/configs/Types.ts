@@ -124,4 +124,6 @@ export interface SortPDFPagesResponse extends Omit<CommonResponse, 'data'> {
 export interface ProtectPDFResponse extends Omit<CommonResponse, 'data'> {
   data: CommonDataResponse
 }
-export interface RotatePDFResponse extends CommonResponse {}
+export interface RotatePDFResponse extends Omit<CommonResponse, 'data'> {
+  data: CommonDataResponse
+}

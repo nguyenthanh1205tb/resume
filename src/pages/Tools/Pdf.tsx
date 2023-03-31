@@ -116,9 +116,7 @@ function PdfTool() {
                       {nameTool === TOOLS.sort ? (
                         <Sort file={pdfFile} totalPages={totalPages} loading={loadingProgress < 100} />
                       ) : null}
-                      {nameTool === TOOLS.rotate ? (
-                        <Rotate file={pdfFile} totalPages={totalPages} loading={loadingProgress < 100} />
-                      ) : null}
+                      {nameTool === TOOLS.rotate ? <Rotate file={pdfFile} loading={loadingProgress < 100} /> : null}
                     </>
                   ) : null}
                 </>

@@ -186,17 +186,17 @@ export const useRotatePDF = () => {
     data: null as RotatePDFResponse | null,
     error: null as Error | null,
   })
-  const rotatePDF = async (q: string, payload: { file: File; lang?: string }) => {
+  const rotatePDF = async (angle: number, payload: { file: File; lang?: string }) => {
     setResponse({ loading: true, data: null, error: null })
     try {
       const result = await request<RotatePDFResponse>(APIConfigs(), {
-        url: '/pdf/rotate',
+        url: '/pdf/rotation',
         method: 'POST',
-        query: { angle: q },
+        query: { angle },
         formData: payload,
       })
       setResponse({ loading: false, data: result, error: null })
-      return result.data
+      return result.data.link
     } catch (error) {
       const text = 'error'
       setResponse({ loading: false, data: null, error: new Error(text, { cause: { error } }) })
