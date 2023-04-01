@@ -33,7 +33,7 @@ function App() {
     <>
       {loadingPage && <LoadingPage />}
       <ToastContainer
-        position="bottom-left"
+        position="top-right"
         hideProgressBar
         newestOnTop={true}
         closeOnClick

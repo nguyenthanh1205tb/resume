@@ -13,10 +13,11 @@ import {
 } from 'src/configs/Types'
 import { request } from 'src/utils/request'
 import { APIConfigs } from 'src/utils/request/core/ApiConfig'
-import { toast } from 'react-toastify'
 import { useState } from 'react'
+import { useErrorHandle } from './useErrorHandle'
 
 export const useConvertFileToAny = () => {
+  const { showError } = useErrorHandle()
   const convertFileToAny = (payload: ConvertFileToAnyRequest) => {
     try {
       const req = request<ConvertFileToAnyResponse>(APIConfigs(), {
@@ -26,11 +27,8 @@ export const useConvertFileToAny = () => {
       })
       return req
     } catch (error: any) {
-      if (error.status && error.status === 403) {
-        toast('Please login to use this feature.', { type: 'error' })
-      } else {
-        toast('Convert fail, please try again later.', { type: 'error' })
-      }
+      const msg = 'Convert fail'
+      showError(error, msg)
     }
   }
 
@@ -38,6 +36,7 @@ export const useConvertFileToAny = () => {
 }
 
 export const useDeletePDFPages = () => {
+  const { showError } = useErrorHandle()
   const [response, setResponse] = useState({
     loading: false,
     data: null as null | boolean,
@@ -86,15 +85,16 @@ export const useDeletePDFPages = () => {
       setResponse({ loading: false, data: true, error: null })
       return true
     } catch (error) {
-      const text = 'Delete pages fail'
-      setResponse({ loading: false, data: false, error: new Error(text, { cause: { error } }) })
-      toast(text, { type: 'error' })
+      const msg = 'Delete pages fail'
+      setResponse({ loading: false, data: false, error: new Error(msg, { cause: { error } }) })
+      showError(error, msg)
     }
   }
   return { deletePDFPages, response }
 }
 
 export const useAddWatermarkPDFFile = () => {
+  const { showError } = useErrorHandle()
   const [response, setResponse] = useState({
     loading: false as boolean,
     data: null as AddWatermarkPDFResponse | null,
@@ -111,19 +111,16 @@ export const useAddWatermarkPDFFile = () => {
       setResponse({ loading: false, data: result, error: null })
       return result
     } catch (error: any) {
-      const status = error.status
-      if (status && status === 403) {
-        toast('You need login to use this feature', { type: 'error' })
-      } else {
-        toast('Add watermark fail, try again', { type: 'error' })
-      }
-      setResponse({ loading: false, data: null, error: new Error('Add watermark fail', { cause: { error } }) })
+      const msg = 'Add watermark fail'
+      setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
+      showError(error, msg)
     }
   }
   return { response, addWatermarkPDFFile }
 }
 
 export const useSortPDFPages = () => {
+  const { showError } = useErrorHandle()
   const [response, setResponse] = useState({
     loading: false as boolean,
     data: null as CommonDataResponse | null,
@@ -144,8 +141,9 @@ export const useSortPDFPages = () => {
       setResponse({ loading: false, data: result.data, error: null })
       return result.data.link
     } catch (error) {
-      const text = 'Sort PDF pages fail'
-      setResponse({ loading: false, data: null, error: new Error(text, { cause: { error } }) })
+      const msg = 'Sort PDF pages fail'
+      setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
+      showError(error, msg)
     }
   }
 
@@ -157,6 +155,7 @@ export const useSortPDFPages = () => {
 }
 
 export const useProtectPDF = () => {
+  const { showError } = useErrorHandle()
   const [response, setResponse] = useState({
     loading: false as boolean,
     data: null as ProtectPDFResponse | null,
@@ -173,14 +172,16 @@ export const useProtectPDF = () => {
       setResponse({ loading: false, data: result, error: null })
       return result.data.link
     } catch (error) {
-      const text = 'error'
-      setResponse({ loading: false, data: null, error: new Error(text, { cause: { error } }) })
+      const msg = 'Add password to PDF fail'
+      setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
+      showError(error, msg)
     }
   }
   return { protectPDF, response }
 }
 
 export const useRotatePDF = () => {
+  const { showError } = useErrorHandle()
   const [response, setResponse] = useState({
     loading: false as boolean,
     data: null as RotatePDFResponse | null,
@@ -198,8 +199,9 @@ export const useRotatePDF = () => {
       setResponse({ loading: false, data: result, error: null })
       return result.data.link
     } catch (error) {
-      const text = 'error'
-      setResponse({ loading: false, data: null, error: new Error(text, { cause: { error } }) })
+      const msg = 'Rotate PDF page fail'
+      setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
+      showError(error, msg)
     }
   }
   return { rotatePDF, response }

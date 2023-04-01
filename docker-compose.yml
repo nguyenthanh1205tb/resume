@@ -6,11 +6,11 @@ services:
     tty: true
     container_name: web-sota-conversion
     build:
-      context: ..
+      context: .
       dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
     volumes:
-      - ..:/app
+      - .:/app
       - /app/node_modules
 
