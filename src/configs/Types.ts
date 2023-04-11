@@ -27,8 +27,9 @@ export enum TOOLS {
   organize = 'organize',
   'to-word' = 'to-word',
   sort = 'sort',
-  extract = 'extract',
+  'extract-images' = 'extract-images',
   sign = 'sign',
+  'remove-images' = 'remove-images',
 }
 
 export enum FILE_TYPES {
@@ -132,3 +133,46 @@ export interface ProtectPDFResponse extends Omit<CommonResponse, 'data'> {
 export interface RotatePDFResponse extends Omit<CommonResponse, 'data'> {
   data: CommonDataResponse
 }
+
+export interface PageSwap {
+  id: number
+  selected: boolean
+  file: File
+}
+
+export interface MergePDFRequest {
+  files: Array<File>
+  lang?: string
+}
+export interface MergePDFResponse extends CommonResponse {}
+
+export interface UnlockPDFRequest {
+  file: File
+  password: string
+  lang?: string
+}
+export interface UnlockPDFResponse extends CommonResponse {}
+
+export interface SplitPDFRequest {
+  ranges: string[]
+  file: File
+  lang?: string
+}
+export interface SplitPDFResponse extends CommonResponse {}
+
+export interface PDFToWordRequest {
+  file: File
+}
+export interface PDFToWordResponse extends CommonResponse {}
+
+export interface ExtractImageRequest {
+  file: File
+  lang?: string
+}
+export interface ExtractImageResponse extends CommonResponse {}
+
+export interface RemoveImageRequest {
+  file: File
+  lang?: string
+}
+export interface RemoveImageResponse extends CommonResponse {}

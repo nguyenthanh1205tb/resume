@@ -5,11 +5,23 @@ import {
   CommonDataResponse,
   ConvertFileToAnyRequest,
   ConvertFileToAnyResponse,
+  ExtractImageRequest,
+  ExtractImageResponse,
+  MergePDFRequest,
+  MergePDFResponse,
+  PDFToWordRequest,
+  PDFToWordResponse,
   ProtectPDFRequest,
   ProtectPDFResponse,
+  RemoveImageRequest,
+  RemoveImageResponse,
   RotatePDFResponse,
   SortPDFPagesRequest,
   SortPDFPagesResponse,
+  SplitPDFRequest,
+  SplitPDFResponse,
+  UnlockPDFRequest,
+  UnlockPDFResponse,
 } from 'src/configs/Types'
 import { request } from 'src/utils/request'
 import { APIConfigs } from 'src/utils/request/core/ApiConfig'
@@ -205,4 +217,165 @@ export const useRotatePDF = () => {
     }
   }
   return { rotatePDF, response }
+}
+
+export const useMergePDF = () => {
+  const { showError } = useErrorHandle()
+  const [response, setResponse] = useState({
+    loading: false as boolean,
+    data: null as MergePDFResponse | null,
+    error: null as Error | null,
+  })
+  const mergePDF = async (payload: MergePDFRequest) => {
+    setResponse({ loading: true, data: null, error: null })
+    try {
+      const result = await request<MergePDFResponse>(APIConfigs(), {
+        url: '/pdf/mergers',
+        method: 'POST',
+        formData: payload,
+      })
+      setResponse({ loading: false, data: result, error: null })
+      return result.data
+    } catch (error) {
+      const msg = 'Merge files fail'
+      setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
+      showError(error, msg)
+    }
+  }
+  return { mergePDF, response }
+}
+
+export const useUnlockPDF = () => {
+  const { showError } = useErrorHandle()
+  const [response, setResponse] = useState({
+    loading: false as boolean,
+    data: null as UnlockPDFResponse | null,
+    error: null as Error | null,
+  })
+  const unlockPDF = async (payload: UnlockPDFRequest) => {
+    setResponse({ loading: true, data: null, error: null })
+    try {
+      const result = await request<UnlockPDFResponse>(APIConfigs(), {
+        url: '/pdf/reset-password',
+        method: 'POST',
+        formData: payload,
+      })
+      setResponse({ loading: false, data: result, error: null })
+      return result.data
+    } catch (error) {
+      const msg = 'Unlock pdf fail'
+      setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
+      showError(error, msg)
+    }
+  }
+  return { unlockPDF, response }
+}
+
+export const useSplitPDF = () => {
+  const { showError } = useErrorHandle()
+  const [response, setResponse] = useState({
+    loading: false as boolean,
+    data: null as SplitPDFResponse | null,
+    error: null as Error | null,
+  })
+  const splitPDF = async (payload: SplitPDFRequest) => {
+    setResponse({ loading: true, data: null, error: null })
+    try {
+      // const ranges =
+      const result = await request<SplitPDFResponse>(APIConfigs(), {
+        url: '/pdf/reset-password',
+        method: 'POST',
+        query: {},
+        formData: {
+          file: payload.file,
+          lang: payload.lang,
+        },
+      })
+      setResponse({ loading: false, data: result, error: null })
+      return result
+    } catch (error) {
+      const msg = 'Split pdf fail'
+      setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
+      showError(error, msg)
+    }
+  }
+  return { splitPDF, response }
+}
+
+export const usePDFToWord = () => {
+  const { showError } = useErrorHandle()
+  const [response, setResponse] = useState({
+    loading: false as boolean,
+    data: null as PDFToWordResponse | null,
+    error: null as Error | null,
+  })
+  const pdfToWord = async (payload: PDFToWordRequest) => {
+    setResponse({ loading: true, data: null, error: null })
+    try {
+      const result = await request<PDFToWordResponse>(APIConfigs(), {
+        url: '/pdf/docx',
+        method: 'POST',
+        formData: payload,
+      })
+      setResponse({ loading: false, data: result, error: null })
+      return result
+    } catch (error) {
+      const msg = 'Convert PDF to word fail'
+      setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
+      showError(error, msg)
+    }
+  }
+  return { pdfToWord, response }
+}
+
+export const useExtractImage = () => {
+  const { showError } = useErrorHandle()
+  const [response, setResponse] = useState({
+    loading: false as boolean,
+    data: null as ExtractImageResponse | null,
+    error: null as Error | null,
+  })
+  const extractImage = async (payload: ExtractImageRequest) => {
+    setResponse({ loading: true, data: null, error: null })
+    try {
+      const result = await request<ExtractImageResponse>(APIConfigs(), {
+        url: '/pdf/extract-images',
+        method: 'POST',
+        formData: payload,
+      })
+      setResponse({ loading: false, data: result, error: null })
+      return result
+    } catch (error) {
+      const msg = 'Extract image fail'
+      setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
+      showError(error, msg)
+    }
+  }
+  return { extractImage, response }
+}
+
+export const useRemoveImage = () => {
+  const { showError } = useErrorHandle()
+  const [response, setResponse] = useState({
+    loading: false as boolean,
+    data: null as RemoveImageResponse | null,
+    error: null as Error | null,
+  })
+  const removeImage = async (payload: RemoveImageRequest) => {
+    setResponse({ loading: true, data: null, error: null })
+    try {
+      const result = await request<RemoveImageResponse>(APIConfigs(), {
+        url: '/pdf/remove-images',
+        method: 'POST',
+        formData: payload,
+      })
+      setResponse({ loading: false, data: result, error: null })
+      return result
+    } catch (error) {
+      const msg = 'Extract image fail'
+      setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
+      showError(error, msg)
+    }
+  }
+  return { removeImage, response }
 }

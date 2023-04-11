@@ -1,4 +1,4 @@
-import { ListFilesConversion } from 'src/configs/Types'
+import { ListFilesConversion, PageSwap } from 'src/configs/Types'
 import _uniq from 'lodash/uniq'
 
 export const organizeListFilesConvertibles = async (files: ListFilesConversion) => {
@@ -32,5 +32,20 @@ export const createDownload = (link: string) => {
       l.dispatchEvent(new MouseEvent('click'))
       return document.body.removeChild(l)
     },
+  }
+}
+
+export const swapTwoPages = (id: number, list: PageSwap[]) => {
+  const i_first = list.findIndex(o => o.selected)
+  const i_swap = list.findIndex(o => o.id === id)
+  if (i_first >= 0) {
+    const _list = list.slice(0)
+    const first = list[i_first]
+    const swap = list[i_swap]
+    _list[i_first] = swap
+    _list[i_swap] = { ...first, selected: false }
+    return _list
+  } else {
+    return list.map(o => (o.id === id ? { ...o, selected: !o.selected } : o))
   }
 }

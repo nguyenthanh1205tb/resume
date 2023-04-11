@@ -14,7 +14,7 @@ function Dropzone({ onDrop, accept, small, ...props }: PropsWithChildren<Dropzon
   return (
     <div
       {...getRootProps()}
-      className={classNames('w-full mt-8 flex items-center cursor-pointer', {
+      className={classNames('w-full mt-4 flex items-center cursor-pointer', {
         'border-blue-500': isDragActive,
         'bg-gray-50 rounded-xl border-dashed border-2 justify-center': !small,
       })}
@@ -35,7 +35,7 @@ function Dropzone({ onDrop, accept, small, ...props }: PropsWithChildren<Dropzon
           <p>
             <span className="font-semibold">Click to upload</span> or drag and drop
           </p>
-          <p className="text-sm text-gray-500">Any documentation files (MAX. 2 MB per file)</p>
+          <p className="text-sm text-gray-500">(MAX. 2 MB per file)</p>
         </div>
       </div>
     </div>

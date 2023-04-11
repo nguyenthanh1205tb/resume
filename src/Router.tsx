@@ -36,7 +36,7 @@ function Router() {
               <Route exact path="/ocr" component={Ocr} />
               <Route
                 exact
-                path="/tools"
+                path="/pdf-tools"
                 render={() => (
                   <ToolsLayout>
                     <Tools />

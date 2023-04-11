@@ -1,11 +1,12 @@
 import classNames from 'classnames'
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren, ReactNode } from 'react'
 import { RecordKS } from 'src/configs/Types'
 
 interface PDFPageProps {
   className?: string | RecordKS<boolean | undefined>
+  primaryText?: string | ReactNode
 }
-function PDFPage({ children, className }: PropsWithChildren<PDFPageProps>) {
+function PDFPage({ children, className, primaryText }: PropsWithChildren<PDFPageProps>) {
   return (
     <div
       className={classNames(
@@ -13,7 +14,7 @@ function PDFPage({ children, className }: PropsWithChildren<PDFPageProps>) {
         className,
       )}>
       <div className="flex flex-col space-y-2 justify-center items-center text-sm font-semibold">
-        <span>Page</span>
+        {primaryText ? primaryText : <span>Page</span>}
         <span className="text-4xl">{children}</span>
       </div>
     </div>

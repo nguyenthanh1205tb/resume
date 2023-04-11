@@ -73,3 +73,9 @@
 .st-toast-container .Toastify__toast .Toastify__close-button {
   display: none;
 }
+
+.dot-bg {
+  background-size: 10px 10px;
+  background-image: radial-gradient(hsla(var(--bc)/.2) 0.5px, hsla(var(--b2)/1) 2px);
+  min-height: 100vh;
+}

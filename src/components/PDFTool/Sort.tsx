@@ -1,9 +1,10 @@
 import classNames from 'classnames'
 import React, { PropsWithChildren, useEffect, useState } from 'react'
-import { createDownload } from 'src/helpers/Tools'
+import { createDownload, swapTwoPages } from 'src/helpers/Tools'
 import { useSortPDFPages } from 'src/hooks/useToolAPI'
 import ButtonSave from '../Common/Button/Save'
 import PDFPage from './page'
+import { PageSwap } from 'src/configs/Types'
 
 interface SortProps {
   file: File
@@ -12,26 +13,16 @@ interface SortProps {
 }
 function Sort({ totalPages, ...props }: PropsWithChildren<SortProps>) {
   const { sortPDFPages, response, clean } = useSortPDFPages()
-  const [list, setList] = useState<{ id: number; selected: boolean }[]>([])
+  const [list, setList] = useState<PageSwap[]>([])
 
   useEffect(() => {
-    setList(Array.from(Array(totalPages)).map((_, i) => ({ id: i, selected: false })))
+    setList(Array.from(Array(totalPages)).map((f, i) => ({ id: i, selected: false, file: f })))
   }, [totalPages])
 
   const select = (id: number) => {
     if (response.loading) return
-    const i_first = list.findIndex(o => o.selected)
-    const i_swap = list.findIndex(o => o.id === id)
-    if (i_first >= 0) {
-      const _list = list.slice(0)
-      const first = list[i_first]
-      const swap = list[i_swap]
-      _list[i_first] = swap
-      _list[i_swap] = { ...first, selected: false }
-      setList(_list)
-    } else {
-      setList(prev => prev.map(o => (o.id === id ? { ...o, selected: !o.selected } : o)))
-    }
+    const d = swapTwoPages(id, list)
+    setList(d)
   }
 
   const onSave = () => {
@@ -46,7 +37,7 @@ function Sort({ totalPages, ...props }: PropsWithChildren<SortProps>) {
 
   return (
     <>
-      <p className="mb-8 italic text-gray-500">Click any pages to select and click the second page to swap them</p>
+      <p className="mb-8 italic text-gray-500">Click any page to select and click the second page to swap them</p>
       <div className="grid grid-cols-4 gap-8">
         {list.map((o, i) => (
           <div className="relative" key={i} onClick={() => select(o.id)}>

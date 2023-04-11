@@ -1,16 +1,15 @@
-import React, { Fragment, PropsWithChildren } from 'react'
+import React, { Fragment } from 'react'
 import Logo from 'src/components/Common/Logo'
 
 import { NavLink } from 'react-router-dom'
 import UserNav from './UserNav'
 import { observer } from 'mobx-react-lite'
 
-interface NavbarProps {}
-function Navbar({}: PropsWithChildren<NavbarProps>) {
+function Navbar() {
   const navs = [
     {
-      name: 'Tools',
-      link: '/tools',
+      name: 'PDF Tools',
+      link: '/pdf-tools',
     },
     {
       name: 'OCR',

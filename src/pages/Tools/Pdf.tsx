@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import PageContainer from 'src/components/Common/Container/Page'
 import Dropzone from 'src/components/Common/Dropzone'
-import { Document, pdfjs } from 'react-pdf'
+import { Document, Page, pdfjs } from 'react-pdf'
 import mime from 'mime'
 import { PDFDocumentProxy } from 'pdfjs-dist'
 import { useHistory } from 'react-router-dom'
 import { getParams } from 'src/helpers'
 import { RecordKS, TOOLS } from 'src/configs/Types'
-import DeletePDFPages from 'src/components/PDFTool/Delete'
-import Watermark from 'src/components/PDFTool/Watermark'
 import { AiFillCheckCircle } from 'react-icons/ai'
 import { FiLoader } from 'react-icons/fi'
+// PDF TOOLS IMPORT FILE
+import Watermark from 'src/components/PDFTool/Watermark'
 import Sort from 'src/components/PDFTool/Sort'
 import Rotate from 'src/components/PDFTool/Rotate'
 import Protect from 'src/components/PDFTool/Protect'
+import DeletePDFPages from 'src/components/PDFTool/Delete'
+import Merge from 'src/components/PDFTool/Merge'
+import Unlock from 'src/components/PDFTool/Unlock'
+import ToWord from 'src/components/PDFTool/ToWord'
+import SignPDF from 'src/components/PDFTool/Sign'
+import ExtractImage from 'src/components/PDFTool/ExtractImage'
+import RemoveImage from 'src/components/PDFTool/RemoveImage'
+import ToolStore from 'src/stores/ToolStore'
 
 const TITLE_TOOLS: RecordKS<string> = {
   [TOOLS.merge]: 'Merge',
@@ -26,11 +34,13 @@ const TITLE_TOOLS: RecordKS<string> = {
   [TOOLS.organize]: 'Organize',
   [TOOLS['to-word']]: 'Convert PDF to Word',
   [TOOLS.sort]: 'Sort',
-  [TOOLS.extract]: 'Extract',
+  [TOOLS['extract-images']]: 'Extract Images',
   [TOOLS.sign]: 'Sign PDF',
+  [TOOLS['remove-images']]: 'Remove Images',
 }
 
 function PdfTool() {
+  const { tools } = ToolStore
   const history = useHistory()
   const [pdfFile, setPDFFile] = useState<File | File>()
   const [listPDFFiles, setListPDFFiles] = useState<File[]>([])
@@ -41,11 +51,7 @@ function PdfTool() {
 
   const onDrop = (f: File[]) => {
     if (isMulti) {
-      if (listPDFFiles.length) {
-        setListPDFFiles(prev => [...prev, ...f])
-      } else {
-        setListPDFFiles(f)
-      }
+      setListPDFFiles(f)
     } else {
       setPDFFile(f[0])
     }
@@ -63,6 +69,10 @@ function PdfTool() {
     setLoadingProgress((p.loaded / p.total) * 100)
   }
 
+  const findDesc = (tool: string) => {
+    return tools.filter(o => o.key === tool)[0].desc
+  }
+
   useEffect(() => {
     pdfjs.GlobalWorkerOptions.workerSrc = '//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js'
     const queries = getParams(history.location.search)
@@ -76,7 +86,10 @@ function PdfTool() {
     <PageContainer>
       <div className="my-8 md:my-16">
         <div className="lg:w-4/5 bg-white m-auto rounded-xl px-4 md:px-8 py-8">
-          <p className="text-2xl font-semibold">{nameTool ? TITLE_TOOLS[nameTool] : 'Undefined tool'}</p>
+          <div className="mb-8 flex flex-col space-y-1">
+            <p className="text-2xl font-semibold">{nameTool ? TITLE_TOOLS[nameTool] : 'Undefined tool'}</p>
+            <p className="text-sm text-gray-500">{nameTool ? findDesc(nameTool) : null}</p>
+          </div>
           <p>Click to upload or drag and drop file(s) to zone bellow to use.</p>
           <Dropzone
             onDrop={onDrop}
@@ -98,13 +111,6 @@ function PdfTool() {
                       <AiFillCheckCircle size={20} color="#37d399" />
                     )}
                   </div>
-                  <Document
-                    file={pdfFile}
-                    onLoadSuccess={onLoadPDFSuccess}
-                    onLoadError={onLoadPDFFailure}
-                    onLoadProgress={onLoadingPDF}
-                    loading=""
-                  />
                   {totalPages ? (
                     <>
                       {nameTool === TOOLS.delete ? (
@@ -117,11 +123,29 @@ function PdfTool() {
                         <Sort file={pdfFile} totalPages={totalPages} loading={loadingProgress < 100} />
                       ) : null}
                       {nameTool === TOOLS.rotate ? <Rotate file={pdfFile} loading={loadingProgress < 100} /> : null}
+                      {nameTool === TOOLS.sign ? <SignPDF file={pdfFile} loading={loadingProgress < 100} /> : null}
                     </>
                   ) : null}
+                  <Document
+                    file={pdfFile}
+                    onLoadSuccess={onLoadPDFSuccess}
+                    onLoadError={onLoadPDFFailure}
+                    onLoadProgress={onLoadingPDF}
+                    loading="">
+                    {/* <Page pageNumber={totalPages} /> */}
+                  </Document>
                 </>
               ) : null}
-              {listPDFFiles.length ? <>{nameTool === TOOLS.protect ? <Protect files={listPDFFiles} /> : null}</> : null}
+              {listPDFFiles.length ? (
+                <>
+                  {nameTool === TOOLS.protect ? <Protect files={listPDFFiles} /> : null}
+                  {nameTool === TOOLS.merge ? <Merge files={listPDFFiles} /> : null}
+                  {nameTool === TOOLS.unlock ? <Unlock files={listPDFFiles} /> : null}
+                  {nameTool === TOOLS['to-word'] ? <ToWord files={listPDFFiles} /> : null}
+                  {nameTool === TOOLS['extract-images'] ? <ExtractImage files={listPDFFiles} /> : null}
+                  {nameTool === TOOLS['remove-images'] ? <RemoveImage files={listPDFFiles} /> : null}
+                </>
+              ) : null}
             </div>
           ) : null}
         </div>

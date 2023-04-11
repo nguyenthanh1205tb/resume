@@ -3,7 +3,7 @@ import MergeImg from 'src/assets/images/merge.png'
 import CutImg from 'src/assets/images/cut.png'
 import DeleteImg from 'src/assets/images/bin.png'
 import ConvertImg from 'src/assets/images/convert.png'
-import OrganizeImg from 'src/assets/images/layers.png'
+// import OrganizeImg from 'src/assets/images/layers.png'
 import RotateImg from 'src/assets/images/rotate.png'
 import ProtectImg from 'src/assets/images/protect.png'
 import SignImg from 'src/assets/images/sign.png'
@@ -11,6 +11,7 @@ import UnlockImg from 'src/assets/images/unlock.png'
 import WatermarkImg from 'src/assets/images/watermark.png'
 import SortImg from 'src/assets/images/sort.png'
 import ExtractImg from 'src/assets/images/extract.png'
+import RemoveImg from 'src/assets/images/remove-img.png'
 import { FILE_TYPES, ListFilesConversion } from 'src/configs/Types'
 import { organizeListFilesConvertibles } from 'src/helpers/Tools'
 
@@ -21,8 +22,8 @@ const tools = [
     img: MergeImg,
     type: FILE_TYPES.pdf,
     key: 'merge',
-    disabled: true,
-    path: '/pdf?tool=merge',
+    disabled: false,
+    path: '/pdf?tool=merge&multi=true',
   },
   {
     name: 'Split PDF',
@@ -30,7 +31,7 @@ const tools = [
     img: CutImg,
     type: FILE_TYPES.pdf,
     key: 'split',
-    disabled: true,
+    disabled: false,
     path: '/pdf?tool=split',
   },
   {
@@ -57,8 +58,8 @@ const tools = [
     img: UnlockImg,
     type: FILE_TYPES.pdf,
     key: 'unlock',
-    disabled: true,
-    path: '/pdf?tool=unlock',
+    disabled: false,
+    path: '/pdf?tool=unlock&&multi=true',
   },
   {
     name: 'Protect PDF',
@@ -69,23 +70,23 @@ const tools = [
     disabled: false,
     path: '/pdf?tool=protect&multi=true',
   },
-  {
-    name: 'Organize PDF',
-    desc: 'Sort pages of your PDF file however you like. Delete PDF pages or add PDF pages to your document at your convenience.',
-    img: OrganizeImg,
-    type: FILE_TYPES.pdf,
-    key: 'organize',
-    disabled: true,
-    path: '/pdf?tool=organize',
-  },
+  // {
+  //   name: 'Organize PDF',
+  //   desc: 'Sort pages of your PDF file however you like. Delete PDF pages or add PDF pages to your document at your convenience.',
+  //   img: OrganizeImg,
+  //   type: FILE_TYPES.pdf,
+  //   key: 'organize',
+  //   disabled: true,
+  //   path: '/pdf?tool=organize',
+  // },
   {
     name: 'PDF to Word',
     desc: 'Easily convert your PDF files into easy to edit DOCX documents. The converted WORD document is almost 100% accurate.',
     img: ConvertImg,
     type: FILE_TYPES.pdf,
     key: 'to-word',
-    disabled: true,
-    path: '/pdf?tool=to-word',
+    disabled: false,
+    path: '/pdf?tool=to-word&&multi=true',
   },
   {
     name: 'Delete pages PDF',
@@ -106,13 +107,22 @@ const tools = [
     path: '/pdf?tool=sort',
   },
   {
-    name: 'Extract PDF',
-    desc: 'Extract PDF pages from your PDF document.',
+    name: 'Extract Images',
+    desc: 'Extract images from your PDF document.',
     img: ExtractImg,
     type: FILE_TYPES.pdf,
-    key: 'extract',
-    disabled: true,
-    path: '/pdf?tool=extract',
+    key: 'extract-images',
+    disabled: false,
+    path: '/pdf?tool=extract-images&&multi=true',
+  },
+  {
+    name: 'Remove Images',
+    desc: 'Remove images from your PDF document.',
+    img: RemoveImg,
+    type: FILE_TYPES.pdf,
+    key: 'remove-images',
+    disabled: false,
+    path: '/pdf?tool=remove-images&&multi=true',
   },
   {
     name: 'Sign PDF',
@@ -120,7 +130,7 @@ const tools = [
     img: SignImg,
     type: FILE_TYPES.pdf,
     key: 'sign',
-    disabled: true,
+    disabled: false,
     path: '/pdf?tool=sign',
   },
 ]
