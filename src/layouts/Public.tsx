@@ -16,7 +16,9 @@ function PublicLayout({ children }: PropsWithChildren<PublicLayoutProps>) {
   return (
     <Fragment>
       {getSubDomain() === 'dev' ? (
-        <div className="flex justify-center items-center w-full bg-blue-400 text-white py-4">Dev environment</div>
+        <div className="flex justify-center items-center w-full bg-gray-50 text-gray-600 py-1 text-xs font-bold uppercase">
+          dev environment
+        </div>
       ) : null}
       <Navbar />
       <div className="flex items-center justify-center p-4 bg-blue-500 text-white space-x-4">
