@@ -10,9 +10,12 @@ import Navbar from 'src/components/Navbar'
 interface PublicLayoutProps {}
 
 function PublicLayout({ children }: PropsWithChildren<PublicLayoutProps>) {
+  const getSubDomain = () => {
+    return window.location.hostname.split('.')[0]
+  }
   return (
     <Fragment>
-      {!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? (
+      {getSubDomain() === 'dev' ? (
         <div className="flex justify-center items-center w-full bg-blue-400 text-white py-4">Dev environment</div>
       ) : null}
       <Navbar />
