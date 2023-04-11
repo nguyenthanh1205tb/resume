@@ -12,6 +12,9 @@ interface PublicLayoutProps {}
 function PublicLayout({ children }: PropsWithChildren<PublicLayoutProps>) {
   return (
     <Fragment>
+      {!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? (
+        <div className="flex justify-center items-center w-full bg-blue-400 text-white py-4">Dev environment</div>
+      ) : null}
       <Navbar />
       <div className="flex items-center justify-center p-4 bg-blue-500 text-white space-x-4">
         <p>Want new updates? No Spam.</p>
