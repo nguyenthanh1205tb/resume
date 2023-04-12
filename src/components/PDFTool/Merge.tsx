@@ -25,7 +25,7 @@ function Merge({ files }: PropsWithChildren<MergeProps>) {
 
   useEffect(() => {
     if (!response.loading && response.data) {
-      setLink(response.data.data)
+      setLink(response.data.data.link)
     }
   }, [response])
 
@@ -60,7 +60,7 @@ function Merge({ files }: PropsWithChildren<MergeProps>) {
         ))}
       </div>
       <div className="mt-8">
-        <ButtonSave type={link ? 'success' : 'save'} onClick={onSave} className="w-full">
+        <ButtonSave type={link ? 'success' : 'save'} onClick={onSave} className="w-full" loading={response.loading}>
           {link ? 'Download now' : 'Merge'}
         </ButtonSave>
       </div>

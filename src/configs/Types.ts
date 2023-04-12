@@ -27,7 +27,7 @@ export enum TOOLS {
   organize = 'organize',
   'to-word' = 'to-word',
   sort = 'sort',
-  'extract-images' = 'extract-images',
+  'extract-images' = 'extract-io9ikimages',
   sign = 'sign',
   'remove-images' = 'remove-images',
 }
@@ -144,7 +144,12 @@ export interface MergePDFRequest {
   files: Array<File>
   lang?: string
 }
-export interface MergePDFResponse extends CommonResponse {}
+export interface MergePDFResponse extends Omit<CommonResponse, 'data'> {
+  data: {
+    file: UploadedFileInformation
+    link: string
+  }
+}
 
 export interface UnlockPDFRequest {
   file: File
