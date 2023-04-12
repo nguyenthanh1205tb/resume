@@ -27,7 +27,7 @@ export enum TOOLS {
   organize = 'organize',
   'to-word' = 'to-word',
   sort = 'sort',
-  'extract-images' = 'extract-io9ikimages',
+  'extract-images' = 'extract-images',
   sign = 'sign',
   'remove-images' = 'remove-images',
 }

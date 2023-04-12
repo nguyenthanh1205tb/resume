@@ -31,7 +31,7 @@ const tools = [
     img: CutImg,
     type: FILE_TYPES.pdf,
     key: 'split',
-    disabled: false,
+    disabled: true,
     path: '/pdf?tool=split',
   },
   {
@@ -130,7 +130,7 @@ const tools = [
     img: SignImg,
     type: FILE_TYPES.pdf,
     key: 'sign',
-    disabled: false,
+    disabled: true,
     path: '/pdf?tool=sign',
   },
 ]
