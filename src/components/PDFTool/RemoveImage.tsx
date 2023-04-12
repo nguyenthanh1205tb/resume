@@ -29,7 +29,7 @@ function RemoveImage({ files }: PropsWithChildren<RemoveImageProps>) {
       const result = removeImage({ file: d.file })
       result.then(res => {
         if (res) {
-          setValueDataSources(parseInt(key), { link: res, loading: false })
+          setValueDataSources(parseInt(key), { link: res.link, loading: false })
         } else {
           setValueDataSources(parseInt(key), { loading: false, error: true })
         }

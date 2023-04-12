@@ -156,28 +156,53 @@ export interface UnlockPDFRequest {
   password: string
   lang?: string
 }
-export interface UnlockPDFResponse extends CommonResponse {}
+export interface UnlockPDFResponse extends Omit<CommonResponse, 'data'> {
+  data: {
+    file: UploadedFileInformation
+    link: string
+  }
+}
 
 export interface SplitPDFRequest {
   ranges: string[]
   file: File
   lang?: string
 }
-export interface SplitPDFResponse extends CommonResponse {}
+export interface SplitPDFResponse extends Omit<CommonResponse, 'data'> {
+  data: {
+    file: UploadedFileInformation
+    link: string
+  }
+}
 
 export interface PDFToWordRequest {
   file: File
 }
-export interface PDFToWordResponse extends CommonResponse {}
+export interface PDFToWordResponse extends Omit<CommonResponse, 'data'> {
+  data: {
+    file: UploadedFileInformation
+    link: string
+  }
+}
 
 export interface ExtractImageRequest {
   file: File
   lang?: string
 }
-export interface ExtractImageResponse extends CommonResponse {}
+export interface ExtractImageResponse extends Omit<CommonResponse, 'data'> {
+  data: {
+    file: UploadedFileInformation
+    link: string
+  }
+}
 
 export interface RemoveImageRequest {
   file: File
   lang?: string
 }
-export interface RemoveImageResponse extends CommonResponse {}
+export interface RemoveImageResponse extends Omit<CommonResponse, 'data'> {
+  data: {
+    file: UploadedFileInformation
+    link: string
+  }
+}

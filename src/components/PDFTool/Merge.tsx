@@ -16,11 +16,7 @@ function Merge({ files }: PropsWithChildren<MergeProps>) {
 
   useEffect(() => {
     const l: PageSwap[] = files.map((f, i) => ({ id: list.length + i, selected: false, file: f }))
-    if (list.length) {
-      setList(prev => [...prev, ...l])
-    } else {
-      setList(l)
-    }
+    setList(l)
   }, [files])
 
   useEffect(() => {

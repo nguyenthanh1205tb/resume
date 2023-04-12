@@ -292,7 +292,7 @@ export const useSplitPDF = () => {
         },
       })
       setResponse({ loading: false, data: result, error: null })
-      return result
+      return result.data
     } catch (error) {
       const msg = 'Split pdf fail'
       setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
@@ -318,7 +318,7 @@ export const usePDFToWord = () => {
         formData: payload,
       })
       setResponse({ loading: false, data: result, error: null })
-      return result
+      return result.data
     } catch (error) {
       const msg = 'Convert PDF to word fail'
       setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
@@ -344,7 +344,7 @@ export const useExtractImage = () => {
         formData: payload,
       })
       setResponse({ loading: false, data: result, error: null })
-      return result
+      return result.data
     } catch (error) {
       const msg = 'Extract image fail'
       setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
@@ -370,7 +370,7 @@ export const useRemoveImage = () => {
         formData: payload,
       })
       setResponse({ loading: false, data: result, error: null })
-      return result
+      return result.data
     } catch (error) {
       const msg = 'Extract image fail'
       setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })

@@ -30,7 +30,7 @@ function Unlock({ files }: PropsWithChildren<UnlockProps>) {
         const result = unlockPDF({ file: d.file, password: d.password })
         result.then(res => {
           if (res) {
-            setValueDataSources(parseInt(key), { link: res, loading: false })
+            setValueDataSources(parseInt(key), { link: res.link, loading: false })
           } else {
             setValueDataSources(parseInt(key), { loading: false, error: true })
           }
