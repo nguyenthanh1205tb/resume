@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PageContainer from 'src/components/Common/Container/Page'
 import Dropzone from 'src/components/Common/Dropzone'
-import { Document, Page, pdfjs } from 'react-pdf'
+import { Document, LoadingProcessData, pdfjs } from 'react-pdf'
 import mime from 'mime'
 import { PDFDocumentProxy } from 'pdfjs-dist'
 import { useHistory } from 'react-router-dom'
@@ -22,6 +22,8 @@ import SignPDF from 'src/components/PDFTool/Sign'
 import ExtractImage from 'src/components/PDFTool/ExtractImage'
 import RemoveImage from 'src/components/PDFTool/RemoveImage'
 import ToolStore from 'src/stores/ToolStore'
+import { toast } from 'react-toastify'
+import Split from 'src/components/PDFTool/Split'
 
 const TITLE_TOOLS: RecordKS<string> = {
   [TOOLS.merge]: 'Merge',
@@ -62,10 +64,12 @@ function PdfTool() {
   }
 
   const onLoadPDFFailure = (err: Error) => {
-    console.log('upload file failure', err)
+    // eslint-disable-next-line no-console
+    console.log('upload file failure', { err })
+    toast('Can not load file, please try again')
   }
 
-  const onLoadingPDF = async (p: any) => {
+  const onLoadingPDF = async (p: LoadingProcessData) => {
     setLoadingProgress((p.loaded / p.total) * 100)
   }
 
@@ -124,6 +128,9 @@ function PdfTool() {
                       ) : null}
                       {nameTool === TOOLS.rotate ? <Rotate file={pdfFile} loading={loadingProgress < 100} /> : null}
                       {nameTool === TOOLS.sign ? <SignPDF file={pdfFile} loading={loadingProgress < 100} /> : null}
+                      {nameTool === TOOLS.split ? (
+                        <Split file={pdfFile} totalPages={totalPages} loading={loadingProgress < 100} />
+                      ) : null}
                     </>
                   ) : null}
                   <Document
@@ -131,9 +138,8 @@ function PdfTool() {
                     onLoadSuccess={onLoadPDFSuccess}
                     onLoadError={onLoadPDFFailure}
                     onLoadProgress={onLoadingPDF}
-                    loading="">
-                    {/* <Page pageNumber={totalPages} /> */}
-                  </Document>
+                    loading=""
+                  />
                 </>
               ) : null}
               {listPDFFiles.length ? (

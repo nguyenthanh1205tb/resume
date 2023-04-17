@@ -14,6 +14,7 @@ export type APIConfig = {
   PASSWORD?: string | Resolver<string>
   HEADERS?: Headers | Resolver<Headers>
   ENCODE_PATH?: (path: string) => string
+  X_API_KEY: string
 }
 
 export const APIConfigs = () =>
@@ -27,4 +28,5 @@ export const APIConfigs = () =>
     PASSWORD: undefined,
     HEADERS: undefined,
     ENCODE_PATH: undefined,
+    X_API_KEY: 'Vc3XORbwEbGBI_8OxRMyRK9bJ4XFNivlGcoPmarE5h0',
   } as APIConfig)

@@ -141,6 +141,7 @@ const getHeaders = async (config: APIConfig, options: ApiRequestOptions): Promis
   const username = await resolve(options, config.USERNAME)
   const password = await resolve(options, config.PASSWORD)
   const additionalHeaders = await resolve(options, config.HEADERS)
+  const XAPIkey = await resolve(options, config.X_API_KEY)
 
   const headers = Object.entries({
     Accept: 'application/json',
@@ -155,7 +156,9 @@ const getHeaders = async (config: APIConfig, options: ApiRequestOptions): Promis
       }),
       {} as Record<string, string>,
     )
-
+  if (isStringWithValue(XAPIkey)) {
+    headers['x-api-key'] = XAPIkey
+  }
   if (isStringWithValue(token)) {
     headers['Authorization'] = `Bearer ${token.replaceAll('"', '')}`
   }
@@ -176,6 +179,8 @@ const getHeaders = async (config: APIConfig, options: ApiRequestOptions): Promis
       headers['Content-Type'] = 'application/json'
     }
   }
+
+  console.log(headers)
 
   return new Headers(headers)
 }

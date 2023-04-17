@@ -31,7 +31,7 @@ const tools = [
     img: CutImg,
     type: FILE_TYPES.pdf,
     key: 'split',
-    disabled: true,
+    disabled: false,
     path: '/pdf?tool=split',
   },
   {
