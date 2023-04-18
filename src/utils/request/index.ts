@@ -180,8 +180,6 @@ const getHeaders = async (config: APIConfig, options: ApiRequestOptions): Promis
     }
   }
 
-  console.log(headers)
-
   return new Headers(headers)
 }
 

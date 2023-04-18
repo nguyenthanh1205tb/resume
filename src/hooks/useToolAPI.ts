@@ -28,6 +28,31 @@ import { APIConfigs } from 'src/utils/request/core/ApiConfig'
 import { useState } from 'react'
 import { useErrorHandle } from './useErrorHandle'
 
+const splitPagesQueries = (p: number[]) => {
+  const queries: string[] = []
+  const pages: Array<number[]> = []
+  for (let i = 0; i < p.length; i++) {
+    if (i === 0) {
+      pages.push([p[i]])
+    } else {
+      if (p[i] - 1 === p[i - 1]) {
+        pages[pages.length - 1].push(p[i])
+      } else {
+        pages.push([p[i]])
+      }
+    }
+  }
+  // change to queries [number || number-number]
+  pages.map(o => {
+    if (o.length > 1) {
+      queries.push(`${o[0]}-${o[o.length - 1]}`)
+    } else {
+      queries.push(`${o[0]}`)
+    }
+  })
+  return queries
+}
+
 export const useConvertFileToAny = () => {
   const { showError } = useErrorHandle()
   const convertFileToAny = (payload: ConvertFileToAnyRequest) => {
@@ -54,31 +79,6 @@ export const useDeletePDFPages = () => {
     data: null as null | boolean,
     error: null as Error | null,
   })
-
-  const splitPagesQueries = (p: number[]) => {
-    const queries: string[] = []
-    const pages: Array<number[]> = []
-    for (let i = 0; i < p.length; i++) {
-      if (i === 0) {
-        pages.push([p[i]])
-      } else {
-        if (p[i] - 1 === p[i - 1]) {
-          pages[pages.length - 1].push(p[i])
-        } else {
-          pages.push([p[i]])
-        }
-      }
-    }
-    // change to queries [number || number-number]
-    pages.map(o => {
-      if (o.length > 1) {
-        queries.push(`${o[0]}-${o[o.length - 1]}`)
-      } else {
-        queries.push(`${o[0]}`)
-      }
-    })
-    return queries
-  }
 
   const deletePDFPages = async (p: number[], payload: { file: File; lang?: string }) => {
     setResponse({ loading: true, data: null, error: null })
@@ -281,20 +281,22 @@ export const useSplitPDF = () => {
   const splitPDF = async (payload: SplitPDFRequest) => {
     setResponse({ loading: true, data: null, error: null })
     try {
-      // const ranges =
+      const rangesSorted = payload.ranges.map(o => o.map(l => l.id).sort((a, b) => (a as number) - (b as number)))
+      const ranges = rangesSorted.map(o => splitPagesQueries(o as number[]))
+      if (!ranges.length) throw new Error('please, drag and drop the page which you want to split into the box')
       const result = await request<SplitPDFResponse>(APIConfigs(), {
-        url: '/pdf/reset-password',
+        url: '/pdf/split',
         method: 'POST',
-        query: {},
         formData: {
           file: payload.file,
           lang: payload.lang,
+          ranges,
         },
       })
       setResponse({ loading: false, data: result, error: null })
       return result.data
-    } catch (error) {
-      const msg = 'Split pdf fail'
+    } catch (error: any) {
+      const msg = error.message ?? 'Split pdf fail'
       setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
       showError(error, msg)
     }

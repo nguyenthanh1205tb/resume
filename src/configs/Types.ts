@@ -164,7 +164,7 @@ export interface UnlockPDFResponse extends Omit<CommonResponse, 'data'> {
 }
 
 export interface SplitPDFRequest {
-  ranges: string[]
+  ranges: RecordKS[][]
   file: File
   lang?: string
 }
