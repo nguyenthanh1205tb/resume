@@ -130,7 +130,7 @@ const tools = [
     img: SignImg,
     type: FILE_TYPES.pdf,
     key: 'sign',
-    disabled: true,
+    disabled: false,
     path: '/pdf?tool=sign',
   },
 ]
@@ -139,6 +139,7 @@ class ToolStore {
   @observable private _listFilesConversion: ListFilesConversion | null = null
   @observable private _filesConvertible: ListFilesConversion | null = null
   @observable private _filesAccepted: Array<string> | null = null
+  @observable private _listSignatures: Array<string> = []
 
   constructor() {
     makeAutoObservable(this)
@@ -160,6 +161,10 @@ class ToolStore {
     return toJS(this._filesAccepted)
   }
 
+  @computed get listSignatures() {
+    return toJS(this._listSignatures)
+  }
+
   @action toolsFilter = (t: FILE_TYPES) => {
     if (!t && t === '') return
     const _tools = this._tools.filter(o => o.type === t)
@@ -174,6 +179,10 @@ class ToolStore {
     if (t === '') return (this._tools = tools)
     const _tools = this._tools.filter(o => o.name.toLowerCase().indexOf(t) > -1)
     this._tools = _tools
+  }
+
+  @action setListSignatures = (list: Array<string>) => {
+    this._listSignatures = list
   }
 
   @action setListFilesConversion = async (lfc: ListFilesConversion) => {

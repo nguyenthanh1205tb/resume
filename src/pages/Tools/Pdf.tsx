@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PageContainer from 'src/components/Common/Container/Page'
 import Dropzone from 'src/components/Common/Dropzone'
-import { Document, LoadingProcessData, pdfjs } from 'react-pdf'
+import { Document, LoadingProcessData, pdfjs, Page } from 'react-pdf'
 import mime from 'mime'
 import { PDFDocumentProxy } from 'pdfjs-dist'
 import { useHistory } from 'react-router-dom'
@@ -9,6 +9,9 @@ import { getParams } from 'src/helpers'
 import { RecordKS, TOOLS } from 'src/configs/Types'
 import { AiFillCheckCircle } from 'react-icons/ai'
 import { FiLoader } from 'react-icons/fi'
+import { BsArrowLeftCircle } from 'react-icons/bs'
+import { BsArrowRightCircle } from 'react-icons/bs'
+import { AiFillCloseCircle } from 'react-icons/ai'
 // PDF TOOLS IMPORT FILE
 import Watermark from 'src/components/PDFTool/Watermark'
 import Sort from 'src/components/PDFTool/Sort'
@@ -24,6 +27,7 @@ import RemoveImage from 'src/components/PDFTool/RemoveImage'
 import ToolStore from 'src/stores/ToolStore'
 import { toast } from 'react-toastify'
 import Split from 'src/components/PDFTool/Split'
+import classNames from 'classnames'
 
 const TITLE_TOOLS: RecordKS<string> = {
   [TOOLS.merge]: 'Merge',
@@ -47,9 +51,30 @@ function PdfTool() {
   const [pdfFile, setPDFFile] = useState<File | File>()
   const [listPDFFiles, setListPDFFiles] = useState<File[]>([])
   const [totalPages, setTotalPages] = useState<number>()
+  const [page, setPage] = useState<number>(1)
   const [nameTool, setNameTool] = useState<string>()
   const [isMulti, setIsMulti] = useState<boolean>(false)
   const [loadingProgress, setLoadingProgress] = useState<number>(0)
+  const [openPDFDocument, setOpenPDFDocument] = useState<boolean>(false)
+
+  useEffect(() => {
+    pdfjs.GlobalWorkerOptions.workerSrc = '//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js'
+    const queries = getParams(history.location.search)
+    const nt = queries.get('tool')
+    const multi = queries.get('multi')
+    if (nt) setNameTool(nt)
+    if (multi) setIsMulti(multi === 'true' ? true : false)
+  }, [])
+
+  useEffect(() => {
+    const body = document.querySelector('body')
+    if (!body) return
+    if (openPDFDocument) {
+      body.style.overflow = 'hidden'
+    } else {
+      body.style.overflow = 'auto'
+    }
+  }, [openPDFDocument])
 
   const onDrop = (f: File[]) => {
     if (isMulti) {
@@ -77,14 +102,9 @@ function PdfTool() {
     return tools.filter(o => o.key === tool)[0].desc
   }
 
-  useEffect(() => {
-    pdfjs.GlobalWorkerOptions.workerSrc = '//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js'
-    const queries = getParams(history.location.search)
-    const nt = queries.get('tool')
-    const multi = queries.get('multi')
-    if (nt) setNameTool(nt)
-    if (multi) setIsMulti(multi === 'true' ? true : false)
-  }, [])
+  const closePDF = () => {
+    setOpenPDFDocument(false)
+  }
 
   return (
     <PageContainer>
@@ -127,19 +147,47 @@ function PdfTool() {
                         <Sort file={pdfFile} totalPages={totalPages} loading={loadingProgress < 100} />
                       ) : null}
                       {nameTool === TOOLS.rotate ? <Rotate file={pdfFile} loading={loadingProgress < 100} /> : null}
-                      {nameTool === TOOLS.sign ? <SignPDF file={pdfFile} loading={loadingProgress < 100} /> : null}
+                      {nameTool === TOOLS.sign ? (
+                        <SignPDF
+                          file={pdfFile}
+                          loading={loadingProgress < 100}
+                          openPDFDocument={(b: boolean) => setOpenPDFDocument(b)}
+                        />
+                      ) : null}
                       {nameTool === TOOLS.split ? (
                         <Split file={pdfFile} totalPages={totalPages} loading={loadingProgress < 100} />
                       ) : null}
                     </>
                   ) : null}
-                  <Document
-                    file={pdfFile}
-                    onLoadSuccess={onLoadPDFSuccess}
-                    onLoadError={onLoadPDFFailure}
-                    onLoadProgress={onLoadingPDF}
-                    loading=""
-                  />
+                  <div
+                    className={classNames('fixed hidden overflow-auto bg-white w-full h-full top-0 left-0 z-10 p-4', {
+                      '!block': openPDFDocument,
+                    })}>
+                    <div className="flex text-2xl pl-20 space-x-4">
+                      <div className="cursor-pointer" onClick={closePDF}>
+                        <AiFillCloseCircle size={36} />
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <div className="cursor-pointer">
+                          <BsArrowLeftCircle size={30} />
+                        </div>
+                        <p>Page 1/{totalPages}</p>
+                        <div className="cursor-pointer">
+                          <BsArrowRightCircle size={30} />
+                        </div>
+                      </div>
+                    </div>
+                    <Document
+                      file={pdfFile}
+                      onLoadSuccess={onLoadPDFSuccess}
+                      onLoadError={onLoadPDFFailure}
+                      onLoadProgress={onLoadingPDF}
+                      loading="">
+                      {nameTool === TOOLS.sign ? (
+                        <Page scale={1.5} pageNumber={page} renderTextLayer={false} renderAnnotationLayer={false} />
+                      ) : null}
+                    </Document>
+                  </div>
                 </>
               ) : null}
               {listPDFFiles.length ? (
