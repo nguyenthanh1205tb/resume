@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { PropsWithChildren, useEffect, useState } from 'react'
-import { usePDFToWord } from 'src/hooks/useToolAPI'
 import ButtonSave from '../Common/Button/Save'
 import Table, { TableColumns, TableDataSources } from '../Common/Table'
 import DownloadWhitePng from 'src/assets/images/download-white.png'
@@ -8,12 +8,28 @@ import classNames from 'classnames'
 import { RecordKS } from 'src/configs/Types'
 import { BiError } from 'react-icons/bi'
 import { createDownload } from 'src/helpers/Tools'
+import mime from 'mime'
+import Select from 'react-select'
+import { BsArrowRight } from 'react-icons/bs'
+import { useImgToPDF, useImgToWord } from 'src/hooks/useOcrAPI'
+
+const CONVERT_OPTIONS = [
+  {
+    label: 'Docx',
+    value: 'docx',
+  },
+  {
+    label: 'PDF',
+    value: 'pdf',
+  },
+]
 
 interface ToWordProps {
   files: File[]
 }
 function ToWord({ files }: PropsWithChildren<ToWordProps>) {
-  const { pdfToWord, response } = usePDFToWord()
+  const { convertImgToWord } = useImgToWord()
+  const { convertImgToPDF } = useImgToPDF()
   const [dataSource, setDataSources] = useState<TableDataSources>([])
 
   const setValueDataSources = (i: number, data: RecordKS) => {
@@ -21,20 +37,52 @@ function ToWord({ files }: PropsWithChildren<ToWordProps>) {
     setDataSources(prev => prev.slice(0).map((o, index) => (index === i ? { ...o, ...data } : o)))
   }
 
+  const toWord = async (k: number, d: RecordKS) => {
+    if (d.loading) return
+    const result = convertImgToWord({ clientImage: d.file as File })
+    result.then(link => {
+      if (link) {
+        setValueDataSources(k, { link: link, loading: false })
+      } else {
+        setValueDataSources(k, { loading: false, error: true })
+      }
+    })
+  }
+
+  const toPDF = async (k: number, d: RecordKS) => {
+    if (d.loading) return
+    const result = convertImgToPDF({ clientImage: d.file as File })
+    result.then(link => {
+      if (link) {
+        setValueDataSources(k, { link: link, loading: false })
+      } else {
+        setValueDataSources(k, { loading: false, error: true })
+      }
+    })
+  }
+
   const onSave = async () => {
-    if (response.loading) return
     for (const key in dataSource) {
       const d = dataSource[key]
-      setValueDataSources(parseInt(key), { loading: true, error: false, link: '' })
-      const result = pdfToWord({ file: d.file })
-      result.then(res => {
-        if (res) {
-          setValueDataSources(parseInt(key), { link: res.link, loading: false })
-        } else {
-          setValueDataSources(parseInt(key), { loading: false, error: true })
+      const to = d.to
+      if (!to || to === '') {
+        setValueDataSources(parseInt(key), { loading: false, error: true, link: '' })
+      } else {
+        setValueDataSources(parseInt(key), { loading: true, error: false, link: '' })
+        switch (to) {
+          case 'docx':
+            toWord(parseInt(key), d)
+            break
+          case 'pdf':
+            toPDF(parseInt(key), d)
+            break
         }
-      })
+      }
     }
+  }
+
+  const setConversionTool = (i: number, v: string) => {
+    setValueDataSources(i, { to: v })
   }
 
   const cols: TableColumns[] = [
@@ -50,16 +98,43 @@ function ToWord({ files }: PropsWithChildren<ToWordProps>) {
       label: 'From',
       dataIndex: '',
       key: 'from',
-      render: () => {
-        return 'PDF'
+      render: (v: any) => {
+        return mime.getExtension(v.file.type)
       },
+    },
+    {
+      label: '',
+      dataIndex: 'to',
+      key: 'to',
+      render: () => (
+        <div className="flex items-center justify-center">
+          <BsArrowRight size={15} />
+        </div>
+      ),
     },
     {
       label: 'To',
       dataIndex: '',
-      key: 'to',
-      render: () => {
-        return 'Docx'
+      key: 'to-conversion',
+      render: (v: any, i: number) => {
+        return (
+          <Select
+            isDisabled={v.loading || v.link}
+            styles={{
+              container: base => ({ ...base, width: '150px' }),
+              control: base => ({ ...base, borderColor: v.error ? '#ff3f3f' : '#dadada' }),
+            }}
+            className="flex-1"
+            options={CONVERT_OPTIONS}
+            classNames={{
+              control: () =>
+                classNames({
+                  'animate__shakeX animate__animated animate__faster': v.error,
+                }),
+            }}
+            onChange={v => v && setConversionTool(i, v.value)}
+          />
+        )
       },
     },
     {

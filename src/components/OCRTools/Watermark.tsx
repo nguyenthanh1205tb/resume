@@ -1,22 +1,24 @@
-import classNames from 'classnames'
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
 import { FiLoader } from 'react-icons/fi'
-import { useAddWatermarkPDFFile } from 'src/hooks/useToolAPI'
-import PDFPage from './page'
 import { FaRegDotCircle } from 'react-icons/fa'
 import { WatermarkListLinkDownload } from 'src/configs/Types'
 import { BiError } from 'react-icons/bi'
 import ButtonSave from '../Common/Button/Save'
+import { useImgWatermark } from 'src/hooks/useOcrAPI'
 
-interface WatermarkProps {
+interface ImgWatermarkProps {
   file: File
-  loading: boolean
 }
-function Watermark({ file, loading }: PropsWithChildren<WatermarkProps>) {
+function ImgWatermark({ file }: PropsWithChildren<ImgWatermarkProps>) {
+  const { addImgWatermark, response } = useImgWatermark()
   const [text, setText] = useState<string>()
   const watermarkEl = useRef<HTMLDivElement>(null)
-  const { addWatermarkPDFFile } = useAddWatermarkPDFFile()
   const [linkDownload, setLinkDownload] = useState<WatermarkListLinkDownload[]>([])
+  const [imgUrl, setImgUrl] = useState<string>()
+
+  useEffect(() => {
+    convertFileToLink(file)
+  }, [])
 
   useEffect(() => {
     const wEl = watermarkEl.current
@@ -36,16 +38,24 @@ function Watermark({ file, loading }: PropsWithChildren<WatermarkProps>) {
     )
   }
 
+  const convertFileToLink = (f: File) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(f)
+    reader.onload = function () {
+      setImgUrl(reader.result as string)
+    }
+  }
+
   const addWatermark = async () => {
-    if (!text || !text.length || loading) return
+    if (!text || !text.length) return
     const length = linkDownload.slice(0).length
     setLinkDownload(prev => [...prev, { fileName: file.name, text: text, loading: true, link: '', err: false }])
-    const result = await addWatermarkPDFFile({
-      file: file,
+    const result = await addImgWatermark({
+      clientImage: file,
       msg: text,
     })
     if (result) {
-      updateLinkDownload(length, { link: result.data.link, loading: false })
+      updateLinkDownload(length, { link: result, loading: false })
     } else {
       updateLinkDownload(length, { err: true })
     }
@@ -53,14 +63,15 @@ function Watermark({ file, loading }: PropsWithChildren<WatermarkProps>) {
 
   return (
     <div className="mt-4 divide-y">
-      <div className="flex items-center space-x-8">
-        <div className="w-48">
-          <PDFPage>
+      <div className="flex flex-col items-center space-y-8">
+        <div className="w-full">
+          <div className="relative">
+            <img src={imgUrl} className="w-full rounded-lg" />
             <div
               ref={watermarkEl}
               data-watermark={text ?? ''}
               className="absolute w-full h-full top-0 left-0 watermarked"></div>
-          </PDFPage>
+          </div>
         </div>
         <div className="form-control w-full">
           <p className="mb-2 text-sm text-gray-500">Write your watermark here:</p>
@@ -74,7 +85,7 @@ function Watermark({ file, loading }: PropsWithChildren<WatermarkProps>) {
       </div>
       <div className="mt-8 pt-8">
         <div className="flex w-full justify-start items-center">
-          <ButtonSave type="save" onClick={addWatermark} disabled={!text || !text.length || loading}>
+          <ButtonSave type="save" onClick={addWatermark} disabled={!text || !text.length}>
             Add watermark
           </ButtonSave>
         </div>
@@ -85,7 +96,7 @@ function Watermark({ file, loading }: PropsWithChildren<WatermarkProps>) {
               {linkDownload.map((l, index) => (
                 <li key={index} className="w-full pt-1">
                   <a
-                    className="flex items-center space-x-2 whitespace-nowrap overflow-hidden text-ellipsis"
+                    className="flex items-center space-x-2 whitespace-nowrap overflow-hidden text-ellipsis hover:text-blue-400 transition-all"
                     rel="noreferrer"
                     href={l.link === '' ? '#' : l.link}
                     target="_blank">
@@ -109,4 +120,4 @@ function Watermark({ file, loading }: PropsWithChildren<WatermarkProps>) {
     </div>
   )
 }
-export default Watermark
+export default ImgWatermark

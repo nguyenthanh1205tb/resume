@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react'
-import { useProtectPDF } from 'src/hooks/useToolAPI'
+import { useExtractImage } from 'src/hooks/usePdfAPI'
 import ButtonSave from '../Common/Button/Save'
 import Table, { TableColumns, TableDataSources } from '../Common/Table'
 import DownloadWhitePng from 'src/assets/images/download-white.png'
@@ -9,11 +9,11 @@ import { RecordKS } from 'src/configs/Types'
 import { BiError } from 'react-icons/bi'
 import { createDownload } from 'src/helpers/Tools'
 
-interface ProtectProps {
+interface ExtractImageProps {
   files: File[]
 }
-function Protect({ files }: PropsWithChildren<ProtectProps>) {
-  const { protectPDF, response } = useProtectPDF()
+function ExtractImage({ files }: PropsWithChildren<ExtractImageProps>) {
+  const { extractImage, response } = useExtractImage()
   const [dataSource, setDataSources] = useState<TableDataSources>([])
 
   const setValueDataSources = (i: number, data: RecordKS) => {
@@ -25,17 +25,15 @@ function Protect({ files }: PropsWithChildren<ProtectProps>) {
     if (response.loading) return
     for (const key in dataSource) {
       const d = dataSource[key]
-      if (d.password !== '') {
-        setValueDataSources(parseInt(key), { loading: true, error: false, link: '' })
-        const result = protectPDF({ file: d.file, password: d.password })
-        result.then(res => {
-          if (res) {
-            setValueDataSources(parseInt(key), { link: res, loading: false })
-          } else {
-            setValueDataSources(parseInt(key), { loading: false, error: true })
-          }
-        })
-      }
+      setValueDataSources(parseInt(key), { loading: true, error: false, link: '' })
+      const result = extractImage({ file: d.file })
+      result.then(res => {
+        if (res) {
+          setValueDataSources(parseInt(key), { link: res.link, loading: false })
+        } else {
+          setValueDataSources(parseInt(key), { loading: false, error: true })
+        }
+      })
     }
   }
 
@@ -45,26 +43,7 @@ function Protect({ files }: PropsWithChildren<ProtectProps>) {
       dataIndex: 'filename',
       key: 'filename',
       render: (v: any) => {
-        return <div title={v.filename}>{(v.filename as string).slice(0, 25) + '...'}</div>
-      },
-    },
-    {
-      label: 'Password',
-      dataIndex: 'password',
-      key: 'password',
-      render: (v: any, index: number) => {
-        return (
-          <input
-            className={classNames('input input-bordered input-sm w-full')}
-            type="text"
-            value={v.password}
-            onChange={e =>
-              setValueDataSources(index, {
-                password: e.target.value,
-              })
-            }
-          />
-        )
+        return <div title={v.filename}>{v.filename}</div>
       },
     },
     {
@@ -93,7 +72,7 @@ function Protect({ files }: PropsWithChildren<ProtectProps>) {
   ]
 
   useEffect(() => {
-    const d = files.map(f => ({ filename: f.name, file: f, loading: false, link: '', password: '', error: false }))
+    const d = files.map(f => ({ filename: f.name, file: f, loading: false, link: '', error: false }))
     setDataSources(d)
   }, [files])
 
@@ -101,11 +80,11 @@ function Protect({ files }: PropsWithChildren<ProtectProps>) {
     <>
       <Table className="!min-h-fit" cols={cols} dataSources={dataSource} />
       <div className="flex justify-end">
-        <ButtonSave className="w-48 mt-8 !capitalize" onClick={onSave}>
-          protect all files
+        <ButtonSave className="mt-8 !capitalize" onClick={onSave}>
+          extract images of all files
         </ButtonSave>
       </div>
     </>
   )
 }
-export default Protect
+export default ExtractImage

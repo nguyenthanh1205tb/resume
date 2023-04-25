@@ -8,7 +8,7 @@ import { RecordKS } from 'src/configs/Types'
 // import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
 import { IoIosCloseCircle } from 'react-icons/io'
 import ButtonSave from '../Common/Button/Save'
-import { useSplitPDF } from 'src/hooks/useToolAPI'
+import { useSplitPDF } from 'src/hooks/usePdfAPI'
 
 interface SplitProps {
   file: File

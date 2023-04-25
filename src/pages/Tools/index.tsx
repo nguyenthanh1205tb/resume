@@ -12,15 +12,6 @@ function Tools() {
   const { tools, toolsFilter } = ToolStore
   const history = useHistory()
 
-  const randomNumber = () => {
-    return Math.floor(Math.random() * 3)
-  }
-
-  const randomColorInRangeColors = () => {
-    const colors = ['bg-indigo-400', 'bg-blue-400', 'bg-pink-400']
-    return colors[randomNumber()]
-  }
-
   const goToPdf = (path: string) => history.push(path)
 
   useEffect(() => {
@@ -43,12 +34,12 @@ function Tools() {
               })}
               onClick={() => !tool.disabled && goToPdf(tool.path)}>
               <div className="flex items-center">
-                <div className={`w-10 h-10 flex items-center justify-center rounded-xl ${randomColorInRangeColors()}`}>
+                <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-600">
                   <img src={tool.img} className="w-5" />
                 </div>
                 <p className="ml-4 text-md font-semibold">{tool.name}</p>
               </div>
-              <p className="text-xs mt-2 text-gray-400 font-light">{tool.desc}</p>
+              <p className="text-xs mt-2 text-gray-500 font-normal overflow-hidden text-ellipsis">{tool.desc}</p>
             </div>
           ))}
         </div>

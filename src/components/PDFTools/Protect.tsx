@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react'
-import { useUnlockPDF } from 'src/hooks/useToolAPI'
+import { useProtectPDF } from 'src/hooks/usePdfAPI'
 import ButtonSave from '../Common/Button/Save'
 import Table, { TableColumns, TableDataSources } from '../Common/Table'
 import DownloadWhitePng from 'src/assets/images/download-white.png'
@@ -9,11 +9,11 @@ import { RecordKS } from 'src/configs/Types'
 import { BiError } from 'react-icons/bi'
 import { createDownload } from 'src/helpers/Tools'
 
-interface UnlockProps {
+interface ProtectProps {
   files: File[]
 }
-function Unlock({ files }: PropsWithChildren<UnlockProps>) {
-  const { unlockPDF, response } = useUnlockPDF()
+function Protect({ files }: PropsWithChildren<ProtectProps>) {
+  const { protectPDF, response } = useProtectPDF()
   const [dataSource, setDataSources] = useState<TableDataSources>([])
 
   const setValueDataSources = (i: number, data: RecordKS) => {
@@ -27,10 +27,10 @@ function Unlock({ files }: PropsWithChildren<UnlockProps>) {
       const d = dataSource[key]
       if (d.password !== '') {
         setValueDataSources(parseInt(key), { loading: true, error: false, link: '' })
-        const result = unlockPDF({ file: d.file, password: d.password })
+        const result = protectPDF({ file: d.file, password: d.password })
         result.then(res => {
           if (res) {
-            setValueDataSources(parseInt(key), { link: res.link, loading: false })
+            setValueDataSources(parseInt(key), { link: res, loading: false })
           } else {
             setValueDataSources(parseInt(key), { loading: false, error: true })
           }
@@ -102,10 +102,10 @@ function Unlock({ files }: PropsWithChildren<UnlockProps>) {
       <Table className="!min-h-fit" cols={cols} dataSources={dataSource} />
       <div className="flex justify-end">
         <ButtonSave className="w-48 mt-8 !capitalize" onClick={onSave}>
-          unlock all files
+          protect all files
         </ButtonSave>
       </div>
     </>
   )
 }
-export default Unlock
+export default Protect

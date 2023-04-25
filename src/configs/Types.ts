@@ -30,6 +30,8 @@ export enum TOOLS {
   'extract-images' = 'extract-images',
   sign = 'sign',
   'remove-images' = 'remove-images',
+  'img-convert-to-word&pdf' = 'img-conversions',
+  'img-watermark' = 'img-watermark',
 }
 
 export enum FILE_TYPES {
@@ -203,6 +205,36 @@ export interface RemoveImageRequest {
 export interface RemoveImageResponse extends Omit<CommonResponse, 'data'> {
   data: {
     file: UploadedFileInformation
+    link: string
+  }
+}
+
+export interface ImgToWordRequest {
+  clientImage: File
+  lang?: string
+}
+export interface ImgToWordResponse extends Omit<CommonResponse, 'data'> {
+  data: {
+    downloadLink: string
+  }
+}
+
+export interface ImgToPDFRequest {
+  clientImage: File
+  lang?: string
+}
+export interface ImgToPDFResponse extends Omit<CommonResponse, 'data'> {
+  data: {
+    downloadLink: string
+  }
+}
+
+export interface ImgToWatermarkRequest {
+  clientImage: File
+  msg: string
+}
+export interface ImgToWatermarkResponse extends Omit<CommonResponse, 'data'> {
+  data: {
     link: string
   }
 }

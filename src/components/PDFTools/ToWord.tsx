@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react'
-import { useRemoveImage } from 'src/hooks/useToolAPI'
+import { usePDFToWord } from 'src/hooks/usePdfAPI'
 import ButtonSave from '../Common/Button/Save'
 import Table, { TableColumns, TableDataSources } from '../Common/Table'
 import DownloadWhitePng from 'src/assets/images/download-white.png'
@@ -9,11 +9,11 @@ import { RecordKS } from 'src/configs/Types'
 import { BiError } from 'react-icons/bi'
 import { createDownload } from 'src/helpers/Tools'
 
-interface RemoveImageProps {
+interface ToWordProps {
   files: File[]
 }
-function RemoveImage({ files }: PropsWithChildren<RemoveImageProps>) {
-  const { removeImage, response } = useRemoveImage()
+function ToWord({ files }: PropsWithChildren<ToWordProps>) {
+  const { pdfToWord, response } = usePDFToWord()
   const [dataSource, setDataSources] = useState<TableDataSources>([])
 
   const setValueDataSources = (i: number, data: RecordKS) => {
@@ -26,7 +26,7 @@ function RemoveImage({ files }: PropsWithChildren<RemoveImageProps>) {
     for (const key in dataSource) {
       const d = dataSource[key]
       setValueDataSources(parseInt(key), { loading: true, error: false, link: '' })
-      const result = removeImage({ file: d.file })
+      const result = pdfToWord({ file: d.file })
       result.then(res => {
         if (res) {
           setValueDataSources(parseInt(key), { link: res.link, loading: false })
@@ -44,6 +44,22 @@ function RemoveImage({ files }: PropsWithChildren<RemoveImageProps>) {
       key: 'filename',
       render: (v: any) => {
         return <div title={v.filename}>{v.filename}</div>
+      },
+    },
+    {
+      label: 'From',
+      dataIndex: '',
+      key: 'from',
+      render: () => {
+        return 'PDF'
+      },
+    },
+    {
+      label: 'To',
+      dataIndex: '',
+      key: 'to',
+      render: () => {
+        return 'Docx'
       },
     },
     {
@@ -80,11 +96,11 @@ function RemoveImage({ files }: PropsWithChildren<RemoveImageProps>) {
     <>
       <Table className="!min-h-fit" cols={cols} dataSources={dataSource} />
       <div className="flex justify-end">
-        <ButtonSave className="mt-8 !capitalize" onClick={onSave}>
-          remove images of all files
+        <ButtonSave className="w-48 mt-8 !capitalize" onClick={onSave}>
+          convert all files
         </ButtonSave>
       </div>
     </>
   )
 }
-export default RemoveImage
+export default ToWord

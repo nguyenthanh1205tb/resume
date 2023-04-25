@@ -3,7 +3,7 @@ import PDFPage from './page'
 import { createDownload, swapTwoPages } from 'src/helpers/Tools'
 import classNames from 'classnames'
 import { PageSwap } from 'src/configs/Types'
-import { useMergePDF } from 'src/hooks/useToolAPI'
+import { useMergePDF } from 'src/hooks/usePdfAPI'
 import ButtonSave from '../Common/Button/Save'
 
 interface MergeProps {

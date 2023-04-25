@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react'
-import { useDeletePDFPages } from 'src/hooks/useToolAPI'
+import { useDeletePDFPages } from 'src/hooks/usePdfAPI'
 import ButtonSave from '../Common/Button/Save'
 import PDFPage from './page'
 
