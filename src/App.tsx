@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
-import { useGetProfile } from './hooks/useUserAPI'
-import Router from './Router'
 import jscookie from 'js-cookie'
-import { useGetListFilesConversion } from './hooks/useFileAPI'
-import 'react-toastify/dist/ReactToastify.css'
-import { ToastContainer } from 'react-toastify'
-import LoadingPage from './components/Common/Loading/Page'
-import CommonStore from './stores/CommonStore'
 import { observer } from 'mobx-react'
+import React, { useEffect } from 'react'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+import Router from './Router'
+import LoadingPage from './components/Common/Loading/Page'
+import { useGetListFilesConversion } from './hooks/useFileAPI'
+import { useGetProfile } from './hooks/useUserAPI'
+import CommonStore from './stores/CommonStore'
 
 function App() {
   const { getProfile, response: profileResponse } = useGetProfile()

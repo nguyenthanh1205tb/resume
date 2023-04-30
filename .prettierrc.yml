@@ -9,3 +9,7 @@ bracketSameLine: true
 insertPragma: false
 htmlWhitespaceSensitivity: "strict"
 endOfLine: "lf"
+importOrderSeparation: true
+importOrderSortSpecifiers: true
+importOrder: ["<THIRD_PARTY_MODULES>", "^src/(.*)$", "^[./]"]
+importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"]

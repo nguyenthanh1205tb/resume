@@ -1,5 +1,6 @@
-import type { ApiRequestOptions } from './ApiRequestOptions'
 import jscookie from 'js-cookie'
+
+import type { ApiRequestOptions } from './ApiRequestOptions'
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>
 type Headers = Record<string, string>

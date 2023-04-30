@@ -1,9 +1,10 @@
+import { observer } from 'mobx-react-lite'
 import React, { Fragment } from 'react'
+import { NavLink } from 'react-router-dom'
+
 import Logo from 'src/components/Common/Logo'
 
-import { NavLink } from 'react-router-dom'
 import UserNav from './UserNav'
-import { observer } from 'mobx-react-lite'
 
 function Navbar() {
   const navs = [

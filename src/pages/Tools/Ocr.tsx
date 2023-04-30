@@ -1,15 +1,16 @@
+import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
-import PageContainer from 'src/components/Common/Container/Page'
-import Dropzone from 'src/components/Common/Dropzone'
-import { RecordKS, TOOLS } from 'src/configs/Types'
+import { useHistory } from 'react-router-dom'
+
 import ImgWatermark from 'src/assets/images/img-watermark.png'
 import ImgConversion from 'src/assets/images/transfer.png'
-import { getParams } from 'src/helpers'
-import { useHistory } from 'react-router-dom'
-import classNames from 'classnames'
+import PageContainer from 'src/components/Common/Container/Page'
+import Dropzone from 'src/components/Common/Dropzone'
 // OCR TOOLS IMPORT FILE
 import ImageToWord from 'src/components/OCRTools/Conversion'
 import ImageWatermark from 'src/components/OCRTools/Watermark'
+import { RecordKS, TOOLS } from 'src/configs/Types'
+import { getParams } from 'src/helpers'
 
 const listOCRTools = [
   {

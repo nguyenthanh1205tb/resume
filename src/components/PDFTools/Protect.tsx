@@ -1,13 +1,15 @@
+import classNames from 'classnames'
 import React, { PropsWithChildren, useEffect, useState } from 'react'
+import { BiError } from 'react-icons/bi'
+import { CgSpinner } from 'react-icons/cg'
+
+import DownloadWhitePng from 'src/assets/images/download-white.png'
+import { RecordKS } from 'src/configs/Types'
+import { createDownload } from 'src/helpers/Tools'
 import { useProtectPDF } from 'src/hooks/usePdfAPI'
+
 import ButtonSave from '../Common/Button/Save'
 import Table, { TableColumns, TableDataSources } from '../Common/Table'
-import DownloadWhitePng from 'src/assets/images/download-white.png'
-import { CgSpinner } from 'react-icons/cg'
-import classNames from 'classnames'
-import { RecordKS } from 'src/configs/Types'
-import { BiError } from 'react-icons/bi'
-import { createDownload } from 'src/helpers/Tools'
 
 interface ProtectProps {
   files: File[]

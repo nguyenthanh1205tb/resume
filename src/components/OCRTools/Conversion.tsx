@@ -1,17 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import classNames from 'classnames'
+import mime from 'mime'
 import React, { PropsWithChildren, useEffect, useState } from 'react'
+import { BiError } from 'react-icons/bi'
+import { BsArrowRight } from 'react-icons/bs'
+import { CgSpinner } from 'react-icons/cg'
+import Select from 'react-select'
+
+import DownloadWhitePng from 'src/assets/images/download-white.png'
+import { RecordKS } from 'src/configs/Types'
+import { createDownload } from 'src/helpers/Tools'
+import { useImgToPDF, useImgToWord } from 'src/hooks/useOcrAPI'
+
 import ButtonSave from '../Common/Button/Save'
 import Table, { TableColumns, TableDataSources } from '../Common/Table'
-import DownloadWhitePng from 'src/assets/images/download-white.png'
-import { CgSpinner } from 'react-icons/cg'
-import classNames from 'classnames'
-import { RecordKS } from 'src/configs/Types'
-import { BiError } from 'react-icons/bi'
-import { createDownload } from 'src/helpers/Tools'
-import mime from 'mime'
-import Select from 'react-select'
-import { BsArrowRight } from 'react-icons/bs'
-import { useImgToPDF, useImgToWord } from 'src/hooks/useOcrAPI'
 
 const CONVERT_OPTIONS = [
   {

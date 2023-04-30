@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { Fragment, PropsWithChildren, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
+
 import AuthStore from 'src/stores/AuthStore'
 
 interface AuthProps extends RouteComponentProps {}

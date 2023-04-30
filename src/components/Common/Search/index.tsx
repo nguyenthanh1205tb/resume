@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import React, { PropsWithChildren } from 'react'
+
 import SearchImg from 'src/assets/images/search.png'
 
 interface HeroSearchProps {

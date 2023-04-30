@@ -1,13 +1,16 @@
 /* Custom request file for generated/core/request.ts*/
+
 /* istanbul ignore file */
+
 /* tslint:disable */
+
 /* eslint-disable */
+import type { APIConfig } from 'src/utils/request/core/ApiConfig'
 import { ApiError } from 'src/utils/request/core/ApiError'
 import type { ApiRequestOptions } from 'src/utils/request/core/ApiRequestOptions'
 import type { ApiResult } from 'src/utils/request/core/ApiResult'
 import { CancelablePromise } from 'src/utils/request/core/CancelablePromise'
 import type { OnCancel } from 'src/utils/request/core/CancelablePromise'
-import type { APIConfig } from 'src/utils/request/core/ApiConfig'
 
 const isDefined = <T>(value: T | null | undefined): value is Exclude<T, null | undefined> => {
   return value !== undefined && value !== null

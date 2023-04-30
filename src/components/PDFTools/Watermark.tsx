@@ -1,11 +1,13 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
-import { FiLoader } from 'react-icons/fi'
-import { useAddWatermarkPDFFile } from 'src/hooks/usePdfAPI'
-import PDFPage from './page'
-import { FaRegDotCircle } from 'react-icons/fa'
-import { WatermarkListLinkDownload } from 'src/configs/Types'
 import { BiError } from 'react-icons/bi'
+import { FaRegDotCircle } from 'react-icons/fa'
+import { FiLoader } from 'react-icons/fi'
+
+import { WatermarkListLinkDownload } from 'src/configs/Types'
+import { useAddWatermarkPDFFile } from 'src/hooks/usePdfAPI'
+
 import ButtonSave from '../Common/Button/Save'
+import PDFPage from './page'
 
 interface WatermarkProps {
   file: File

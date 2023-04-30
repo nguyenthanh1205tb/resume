@@ -1,7 +1,9 @@
 import React, { PropsWithChildren, useRef, useState } from 'react'
 import SignatureCv from 'react-signature-canvas'
-import ButtonSave from '../Common/Button/Save'
+
 import ToolStore from 'src/stores/ToolStore'
+
+import ButtonSave from '../Common/Button/Save'
 
 interface SignPDFProps {
   file: File

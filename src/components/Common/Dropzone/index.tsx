@@ -1,6 +1,7 @@
-import React, { PropsWithChildren } from 'react'
-import { useDropzone, Accept, DropzoneOptions } from 'react-dropzone'
 import classNames from 'classnames'
+import React, { PropsWithChildren } from 'react'
+import { Accept, DropzoneOptions, useDropzone } from 'react-dropzone'
+
 import UploadImg from 'src/assets/images/upload.png'
 
 interface DropzoneProps extends DropzoneOptions {

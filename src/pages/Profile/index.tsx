@@ -1,10 +1,11 @@
 import classNames from 'classnames'
+import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
+
 import PageContainer from 'src/components/Common/Container/Page'
 import AuthStore from 'src/stores/AuthStore'
-import Profile from './Profile'
 
-import { observer } from 'mobx-react-lite'
+import Profile from './Profile'
 import Storages from './Storages'
 
 function ProfileSettings() {

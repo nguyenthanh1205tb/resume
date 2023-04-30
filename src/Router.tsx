@@ -1,15 +1,17 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import PublicAuth from 'src/components/Auth/PublicAuth'
+
 import PrivateAuth from 'src/components/Auth/PrivateAuth'
-import ToolsLayout from 'src/layouts/Tools'
+import PublicAuth from 'src/components/Auth/PublicAuth'
 import PublicLayout from 'src/layouts/Public'
-import Tools from 'src/pages/Tools'
-import SignIn from 'src/pages/SignIn'
+import ToolsLayout from 'src/layouts/Tools'
 import Landing from 'src/pages/Landing'
-import FileConvert from 'src/pages/Tools/FileConvert'
-import Profile from 'src/pages/Profile'
 import Privacy from 'src/pages/Privacy'
+import Profile from 'src/pages/Profile'
+import SignIn from 'src/pages/SignIn'
+import Tools from 'src/pages/Tools'
+import FileConvert from 'src/pages/Tools/FileConvert'
+
 import Ocr from './pages/Tools/Ocr'
 import PdfTool from './pages/Tools/Pdf'
 

@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import AuthStore from 'src/stores/AuthStore'
+
 import ProfileImg from 'src/assets/images/profile.png'
+import AuthStore from 'src/stores/AuthStore'
 
 function Profile() {
   const { profile } = AuthStore

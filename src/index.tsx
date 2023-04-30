@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import 'animate.css'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { I18nextProvider } from 'react-i18next'
 import { BrowserRouter } from 'react-router-dom'
-import App from './App'
-import i18next from './utils/i18next'
-import reportWebVitals from './reportWebVitals'
 import 'tailwindcss/tailwind.css'
-import 'animate.css'
+
+import App from './App'
 import './index.css'
+import reportWebVitals from './reportWebVitals'
+import i18next from './utils/i18next'
 
 const container = document.getElementById('root')
 const root = createRoot(container!)

@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { useHistory } from 'react-router-dom'
+
 import ProfileImg from 'src/assets/images/profile.png'
 import { useLogout } from 'src/hooks/useAuthWithFirebase'
 import AuthStore from 'src/stores/AuthStore'

@@ -1,8 +1,9 @@
-import { APIConfigs } from 'src/utils/request/core/ApiConfig'
-import { request } from 'src/utils/request'
-import { GetProfileResponse, Profile } from 'src/configs/Types'
 import { useState } from 'react'
+
+import { GetProfileResponse, Profile } from 'src/configs/Types'
 import AuthStore from 'src/stores/AuthStore'
+import { request } from 'src/utils/request'
+import { APIConfigs } from 'src/utils/request/core/ApiConfig'
 
 export const useGetProfile = () => {
   const { setProfile, removeCredentials } = AuthStore

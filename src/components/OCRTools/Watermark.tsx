@@ -1,10 +1,12 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
-import { FiLoader } from 'react-icons/fi'
-import { FaRegDotCircle } from 'react-icons/fa'
-import { WatermarkListLinkDownload } from 'src/configs/Types'
 import { BiError } from 'react-icons/bi'
-import ButtonSave from '../Common/Button/Save'
+import { FaRegDotCircle } from 'react-icons/fa'
+import { FiLoader } from 'react-icons/fi'
+
+import { WatermarkListLinkDownload } from 'src/configs/Types'
 import { useImgWatermark } from 'src/hooks/useOcrAPI'
+
+import ButtonSave from '../Common/Button/Save'
 
 interface ImgWatermarkProps {
   file: File

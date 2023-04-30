@@ -1,5 +1,6 @@
-import { action, computed, makeAutoObservable, observable, toJS } from 'mobx'
 import jscookie from 'js-cookie'
+import { action, computed, makeAutoObservable, observable, toJS } from 'mobx'
+
 import { Profile } from 'src/configs/Types'
 
 class AuthStore {

@@ -1,10 +1,12 @@
 import classNames from 'classnames'
 import React, { PropsWithChildren, useEffect, useState } from 'react'
+
+import { PageSwap } from 'src/configs/Types'
 import { createDownload, swapTwoPages } from 'src/helpers/Tools'
 import { useSortPDFPages } from 'src/hooks/usePdfAPI'
+
 import ButtonSave from '../Common/Button/Save'
 import PDFPage from './page'
-import { PageSwap } from 'src/configs/Types'
 
 interface SortProps {
   file: File

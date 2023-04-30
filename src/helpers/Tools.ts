@@ -1,5 +1,6 @@
-import { ListFilesConversion, PageSwap } from 'src/configs/Types'
 import _uniq from 'lodash/uniq'
+
+import { ListFilesConversion, PageSwap } from 'src/configs/Types'
 
 export const organizeListFilesConvertibles = async (files: ListFilesConversion) => {
   const l: ListFilesConversion = {}

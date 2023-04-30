@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import React, { Fragment, PropsWithChildren, useEffect } from 'react'
-
 import { RouteComponentProps } from 'react-router'
+
 import AuthStore from 'src/stores/AuthStore'
+
 interface PrivateAuth extends RouteComponentProps {}
 
 function PrivateAuth({ children, history }: PropsWithChildren<PrivateAuth>) {

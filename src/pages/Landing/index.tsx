@@ -1,14 +1,15 @@
 import React from 'react'
+import { FiArrowRight } from 'react-icons/fi'
 import { Link, useHistory } from 'react-router-dom'
-import PageContainer from 'src/components/Common/Container/Page'
-import HeroSVG from 'src/assets/images/hero.svg'
-import HeroSearch from 'src/components/Common/Search'
+
 import DocumentImg from 'src/assets/images/document.png'
-import PDFImg from 'src/assets/images/pdf.png'
-import ImageImg from 'src/assets/images/image.png'
 import Group1Img from 'src/assets/images/group1.png'
 import Group2Img from 'src/assets/images/group2.png'
-import { FiArrowRight } from 'react-icons/fi'
+import HeroSVG from 'src/assets/images/hero.svg'
+import ImageImg from 'src/assets/images/image.png'
+import PDFImg from 'src/assets/images/pdf.png'
+import PageContainer from 'src/components/Common/Container/Page'
+import HeroSearch from 'src/components/Common/Search'
 
 function Landing() {
   const tools = [

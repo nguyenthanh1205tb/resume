@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from 'react'
+
 import {
   AddWatermarkPDFRequest,
   AddWatermarkPDFResponse,
@@ -25,7 +27,7 @@ import {
 } from 'src/configs/Types'
 import { request } from 'src/utils/request'
 import { APIConfigs } from 'src/utils/request/core/ApiConfig'
-import { useState } from 'react'
+
 import { useErrorHandle } from './useErrorHandle'
 
 const splitPagesQueries = (p: number[]) => {

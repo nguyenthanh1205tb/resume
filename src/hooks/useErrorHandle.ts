@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from 'react-toastify'
+
 import { ErrorStatusMessage } from 'src/configs/Types'
 
 export const useErrorHandle = () => {

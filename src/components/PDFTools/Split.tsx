@@ -1,14 +1,16 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react'
 import { DndProvider } from 'react-dnd'
-import { BsArrowLeftRight } from 'react-icons/bs'
-import DragItem from '../Common/Drag/DragItem'
-import DropBox from '../Common/Drag/DropBox'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { RecordKS } from 'src/configs/Types'
+import { BsArrowLeftRight } from 'react-icons/bs'
 // import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
 import { IoIosCloseCircle } from 'react-icons/io'
-import ButtonSave from '../Common/Button/Save'
+
+import { RecordKS } from 'src/configs/Types'
 import { useSplitPDF } from 'src/hooks/usePdfAPI'
+
+import ButtonSave from '../Common/Button/Save'
+import DragItem from '../Common/Drag/DragItem'
+import DropBox from '../Common/Drag/DropBox'
 
 interface SplitProps {
   file: File

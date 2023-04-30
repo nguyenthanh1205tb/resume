@@ -1,4 +1,5 @@
 import React from 'react'
+
 import PageContainer from 'src/components/Common/Container/Page'
 
 function Privacy() {

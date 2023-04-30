@@ -1,17 +1,20 @@
-import { auth } from 'src/utils/firebase'
 import {
-  signInWithEmailAndPassword,
   GoogleAuthProvider,
+  UserCredential,
+  getIdToken,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signInWithRedirect,
-  UserCredential,
   signOut,
-  getIdToken,
 } from '@firebase/auth'
 import { useState } from 'react'
+
 import AuthStore from 'src/stores/AuthStore'
-import { useGetProfile } from './useUserAPI'
 import CommonStore from 'src/stores/CommonStore'
+import { auth } from 'src/utils/firebase'
+
+import { useGetProfile } from './useUserAPI'
+
 type LoginResponse = {
   loading: boolean
   data: null | UserCredential

@@ -1,10 +1,12 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react'
-import PDFPage from './page'
-import { createDownload, swapTwoPages } from 'src/helpers/Tools'
 import classNames from 'classnames'
+import React, { PropsWithChildren, useEffect, useState } from 'react'
+
 import { PageSwap } from 'src/configs/Types'
+import { createDownload, swapTwoPages } from 'src/helpers/Tools'
 import { useMergePDF } from 'src/hooks/usePdfAPI'
+
 import ButtonSave from '../Common/Button/Save'
+import PDFPage from './page'
 
 interface MergeProps {
   files: File[]
