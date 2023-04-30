@@ -10,20 +10,14 @@ import { useGetProfile } from './hooks/useUserAPI'
 import CommonStore from './stores/CommonStore'
 
 function App() {
-  const { getProfile, response: profileResponse } = useGetProfile()
+  const { getProfile } = useGetProfile()
   const { loadingPage, setLoadingPage } = CommonStore
 
   useEffect(() => {
-    if (!profileResponse.loading) {
-      setLoadingPage(false)
-    }
-  }, [profileResponse])
-
-  useEffect(() => {
-    setLoadingPage(true)
     const token = jscookie.get('token')
     if (token && token !== 'undefined') {
-      getProfile()
+      setLoadingPage(true)
+      getProfile().finally(() => setLoadingPage(false))
     }
   }, [])
 

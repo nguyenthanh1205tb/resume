@@ -24,7 +24,7 @@ const tools = [
     type: FILE_TYPES.pdf,
     key: 'merge',
     disabled: false,
-    path: '/pdf?tool=merge&multi=true',
+    path: '/pdf-tools?tool=merge&multi=true',
   },
   {
     name: 'Split PDF',
@@ -33,7 +33,7 @@ const tools = [
     type: FILE_TYPES.pdf,
     key: 'split',
     disabled: false,
-    path: '/pdf?tool=split',
+    path: '/pdf-tools?tool=split',
   },
   {
     name: 'Watermark',
@@ -42,7 +42,7 @@ const tools = [
     type: FILE_TYPES.pdf,
     key: 'watermark',
     disabled: false,
-    path: '/pdf?tool=watermark',
+    path: '/pdf-tools?tool=watermark',
   },
   {
     name: 'Rotate PDF',
@@ -51,7 +51,7 @@ const tools = [
     type: FILE_TYPES.pdf,
     key: 'rotate',
     disabled: false,
-    path: '/pdf?tool=rotate',
+    path: '/pdf-tools?tool=rotate',
   },
   {
     name: 'Unlock PDF',
@@ -60,7 +60,7 @@ const tools = [
     type: FILE_TYPES.pdf,
     key: 'unlock',
     disabled: false,
-    path: '/pdf?tool=unlock&&multi=true',
+    path: '/pdf-tools?tool=unlock&multi=true',
   },
   {
     name: 'Protect PDF',
@@ -69,7 +69,7 @@ const tools = [
     type: FILE_TYPES.pdf,
     key: 'protect',
     disabled: false,
-    path: '/pdf?tool=protect&multi=true',
+    path: '/pdf-tools?tool=protect&multi=true',
   },
   // {
   //   name: 'Organize PDF',
@@ -78,7 +78,7 @@ const tools = [
   //   type: FILE_TYPES.pdf,
   //   key: 'organize',
   //   disabled: true,
-  //   path: '/pdf?tool=organize',
+  //   path: '/pdf-tools?tool=organize',
   // },
   {
     name: 'PDF to Word',
@@ -87,7 +87,7 @@ const tools = [
     type: FILE_TYPES.pdf,
     key: 'to-word',
     disabled: false,
-    path: '/pdf?tool=to-word&&multi=true',
+    path: '/pdf-tools?tool=to-word&multi=true',
   },
   {
     name: 'Delete pages PDF',
@@ -96,7 +96,7 @@ const tools = [
     type: FILE_TYPES.pdf,
     key: 'delete',
     disabled: false,
-    path: '/pdf?tool=delete',
+    path: '/pdf-tools?tool=delete',
   },
   {
     name: 'Sort pages PDF',
@@ -105,7 +105,7 @@ const tools = [
     type: FILE_TYPES.pdf,
     key: 'sort',
     disabled: false,
-    path: '/pdf?tool=sort',
+    path: '/pdf-tools?tool=sort',
   },
   {
     name: 'Extract Images',
@@ -114,7 +114,7 @@ const tools = [
     type: FILE_TYPES.pdf,
     key: 'extract-images',
     disabled: false,
-    path: '/pdf?tool=extract-images&&multi=true',
+    path: '/pdf-tools?tool=extract-images&multi=true',
   },
   {
     name: 'Remove Images',
@@ -123,7 +123,7 @@ const tools = [
     type: FILE_TYPES.pdf,
     key: 'remove-images',
     disabled: false,
-    path: '/pdf?tool=remove-images&&multi=true',
+    path: '/pdf-tools?tool=remove-images&multi=true',
   },
   {
     name: 'Sign PDF',
@@ -132,7 +132,7 @@ const tools = [
     type: FILE_TYPES.pdf,
     key: 'sign',
     disabled: false,
-    path: '/pdf?tool=sign',
+    path: '/pdf-tools?tool=sign',
   },
 ]
 class ToolStore {

@@ -9,7 +9,6 @@ import Landing from 'src/pages/Landing'
 import Privacy from 'src/pages/Privacy'
 import Profile from 'src/pages/Profile'
 import SignIn from 'src/pages/SignIn'
-import Tools from 'src/pages/Tools'
 import FileConvert from 'src/pages/Tools/FileConvert'
 
 import Ocr from './pages/Tools/Ocr'
@@ -33,15 +32,14 @@ function Router() {
           <PublicLayout>
             <Switch>
               <Route exact path="/" component={Landing} />
-              <Route exact path="/pdf" component={PdfTool} />
               <Route exact path="/file-convert" component={FileConvert} />
               <Route exact path="/ocr" component={Ocr} />
               <Route
                 exact
                 path="/pdf-tools"
-                render={() => (
+                render={props => (
                   <ToolsLayout>
-                    <Tools />
+                    <PdfTool {...props} />
                   </ToolsLayout>
                 )}
               />

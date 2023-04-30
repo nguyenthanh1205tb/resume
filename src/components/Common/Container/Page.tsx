@@ -1,9 +1,14 @@
+import classNames from 'classnames'
 import React, { PropsWithChildren } from 'react'
 
-interface PageContainerProps {}
-function PageContainer({ children }: PropsWithChildren<PageContainerProps>) {
+interface PageContainerProps {
+  fluid?: boolean
+}
+function PageContainer({ children, fluid }: PropsWithChildren<PageContainerProps>) {
   return (
-    <div className="m-auto md:px-8 sm:px-4" style={{ maxWidth: '1024px' }}>
+    <div
+      className={classNames('m-auto md:px-8 sm:px-4', { '!px-0': fluid })}
+      style={{ maxWidth: !fluid ? '1024px' : '100%' }}>
       {children}
     </div>
   )
