@@ -29,5 +29,5 @@ export const APIConfigs = () =>
     PASSWORD: undefined,
     HEADERS: undefined,
     ENCODE_PATH: undefined,
-    X_API_KEY: 'Vc3XORbwEbGBI_8OxRMyRK9bJ4XFNivlGcoPmarE5h0',
+    X_API_KEY: process.env.REACT_APP_X_API_KEY,
   } as APIConfig)

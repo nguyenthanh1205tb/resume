@@ -6,20 +6,18 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import Router from './Router'
 import LoadingPage from './components/Common/Loading/Page'
-import { useGetListFilesConversion } from './hooks/useFileAPI'
 import { useGetProfile } from './hooks/useUserAPI'
 import CommonStore from './stores/CommonStore'
 
 function App() {
   const { getProfile, response: profileResponse } = useGetProfile()
-  const { getListFilesConversion, response } = useGetListFilesConversion()
   const { loadingPage, setLoadingPage } = CommonStore
 
   useEffect(() => {
-    if (!response.loading && !profileResponse.loading) {
+    if (!profileResponse.loading) {
       setLoadingPage(false)
     }
-  }, [response, profileResponse])
+  }, [profileResponse])
 
   useEffect(() => {
     setLoadingPage(true)
@@ -27,7 +25,6 @@ function App() {
     if (token && token !== 'undefined') {
       getProfile()
     }
-    getListFilesConversion()
   }, [])
 
   return (

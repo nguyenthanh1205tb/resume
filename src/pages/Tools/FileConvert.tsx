@@ -16,12 +16,13 @@ import Dropzone from 'src/components/Common/Dropzone'
 import Table, { TableColumns, TableDataSources } from 'src/components/Common/Table'
 import { ConvertFileToAnyResponse } from 'src/configs/Types'
 import { createDownload } from 'src/helpers/Tools'
-import { useConvertFileToAny } from 'src/hooks/usePdfAPI'
+import { useConvertFileToAny, useGetListFilesConversion } from 'src/hooks/useFileAPI'
 import AuthStore from 'src/stores/AuthStore'
 import ToolStore from 'src/stores/ToolStore'
 import { CancelablePromise } from 'src/utils/request/core/CancelablePromise'
 
 function FileConvert() {
+  const { getListFilesConversion } = useGetListFilesConversion()
   const { isLogin } = AuthStore
   const { filesAccepted, filesConvertible } = ToolStore
   const { convertFileToAny } = useConvertFileToAny()
@@ -224,6 +225,10 @@ function FileConvert() {
       setAccept(acp)
     }
   }, [filesAccepted])
+
+  useEffect(() => {
+    getListFilesConversion()
+  }, [])
 
   return (
     <PageContainer>

@@ -1,31 +1,34 @@
 import { useState } from 'react'
 
-import { GetListFilesConversionResponse, ListFilesConversion } from 'src/configs/Types'
+import {
+  ConvertFileToAnyRequest,
+  ConvertFileToAnyResponse,
+  GetListFilesConversionResponse,
+  ListFilesConversion,
+} from 'src/configs/Types'
 import ToolStore from 'src/stores/ToolStore'
 import { request } from 'src/utils/request'
 import { APIConfigs } from 'src/utils/request/core/ApiConfig'
 
-export const useFileConvertAny = () => {
-  const [response, setResponse] = useState({
-    loading: false,
-    data: null,
-    error: null as Error | null,
-  })
+import { useErrorHandle } from './useErrorHandle'
 
-  const fileConvertAny = async (type: string) => {
-    setResponse({ loading: false, data: null, error: null })
+export const useConvertFileToAny = () => {
+  const { showError } = useErrorHandle()
+  const convertFileToAny = (payload: ConvertFileToAnyRequest) => {
     try {
-      const result = await request(APIConfigs(), {
+      const req = request<ConvertFileToAnyResponse>(APIConfigs(), {
         url: '/convert/any',
         method: 'POST',
+        formData: payload,
       })
-      console.log(result)
-    } catch (error) {
-      setResponse({ loading: false, data: null, error: new Error(`Convert to ${type} fail`) })
+      return req
+    } catch (error: any) {
+      const msg = 'Convert fail'
+      showError(error, msg)
     }
   }
 
-  return { fileConvertAny }
+  return { convertFileToAny }
 }
 
 export const useGetListFilesConversion = () => {
@@ -45,7 +48,6 @@ export const useGetListFilesConversion = () => {
       })
       setListFilesConversion(result.data)
       setResponse({ loading: false, data: result.data, error: null })
-      return result.data
       return result.data
     } catch (error) {
       setResponse({ loading: false, data: null, error: new Error('Get lis file conversion fail') })

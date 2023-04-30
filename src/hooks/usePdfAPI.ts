@@ -5,8 +5,6 @@ import {
   AddWatermarkPDFRequest,
   AddWatermarkPDFResponse,
   CommonDataResponse,
-  ConvertFileToAnyRequest,
-  ConvertFileToAnyResponse,
   ExtractImageRequest,
   ExtractImageResponse,
   MergePDFRequest,
@@ -53,25 +51,6 @@ const splitPagesQueries = (p: number[]) => {
     }
   })
   return queries
-}
-
-export const useConvertFileToAny = () => {
-  const { showError } = useErrorHandle()
-  const convertFileToAny = (payload: ConvertFileToAnyRequest) => {
-    try {
-      const req = request<ConvertFileToAnyResponse>(APIConfigs(), {
-        url: '/convert/any',
-        method: 'POST',
-        formData: payload,
-      })
-      return req
-    } catch (error: any) {
-      const msg = 'Convert fail'
-      showError(error, msg)
-    }
-  }
-
-  return { convertFileToAny }
 }
 
 export const useDeletePDFPages = () => {
