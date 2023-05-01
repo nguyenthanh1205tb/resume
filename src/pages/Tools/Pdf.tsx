@@ -49,7 +49,7 @@ interface PdfToolProps extends RouteComponentProps {}
 function PdfTool({ location }: PropsWithChildren<PdfToolProps>) {
   const { tools, listSignatures } = ToolStore
   const history = useHistory()
-  const [pdfFile, setPDFFile] = useState<File | File>()
+  const [pdfFile, setPDFFile] = useState<File | null>()
   const [listPDFFiles, setListPDFFiles] = useState<File[]>([])
   const [totalPages, setTotalPages] = useState<number>()
   const [nameTool, setNameTool] = useState<string>()
@@ -111,6 +111,8 @@ function PdfTool({ location }: PropsWithChildren<PdfToolProps>) {
   }
 
   const goToPdf = async (path: string, id: string) => {
+    setListPDFFiles([])
+    setPDFFile(null)
     history.push(path)
     await new Promise(resolve => setTimeout(() => resolve(true), 100))
     const pdfC = PDFToolContainer.current
