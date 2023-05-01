@@ -4,7 +4,6 @@ import { observer } from 'mobx-react'
 import { PDFDocumentProxy } from 'pdfjs-dist'
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai'
-import { BsArrowLeftCircle, BsArrowRightCircle } from 'react-icons/bs'
 import { FiLoader } from 'react-icons/fi'
 import { Document, LoadingProcessData, Page, pdfjs } from 'react-pdf'
 import { RouteComponentProps, useHistory } from 'react-router-dom'
@@ -48,12 +47,11 @@ const TITLE_TOOLS: RecordKS<string> = {
 interface PdfToolProps extends RouteComponentProps {}
 
 function PdfTool({ location }: PropsWithChildren<PdfToolProps>) {
-  const { tools } = ToolStore
+  const { tools, listSignatures } = ToolStore
   const history = useHistory()
   const [pdfFile, setPDFFile] = useState<File | File>()
   const [listPDFFiles, setListPDFFiles] = useState<File[]>([])
   const [totalPages, setTotalPages] = useState<number>()
-  const [page, setPage] = useState<number>(1)
   const [nameTool, setNameTool] = useState<string>()
   const [isMulti, setIsMulti] = useState<boolean>(false)
   const [loadingProgress, setLoadingProgress] = useState<number>(0)
@@ -223,30 +221,47 @@ function PdfTool({ location }: PropsWithChildren<PdfToolProps>) {
                             '!block': openPDFDocument,
                           },
                         )}>
-                        <div className="flex text-2xl pl-20 space-x-4">
-                          <div className="cursor-pointer" onClick={closePDF}>
-                            <AiFillCloseCircle size={36} />
+                        <div className="flex justify-center">
+                          <div>
+                            <div className="flex text-2xl space-x-4 fixed top-5 left-5">
+                              <div className="cursor-pointer" onClick={closePDF}>
+                                <AiFillCloseCircle size={36} />
+                              </div>
+                            </div>
+                            <Document
+                              file={pdfFile}
+                              onLoadSuccess={onLoadPDFSuccess}
+                              onLoadError={onLoadPDFFailure}
+                              onLoadProgress={onLoadingPDF}
+                              loading="">
+                              {nameTool === TOOLS.sign ? (
+                                <div className="mt-8 flex flex-col space-y-4 mx-auto ml-20">
+                                  {Array.from(Array(totalPages)).map((_, i) => (
+                                    <div className="border shadow-lg border-gray-200" key={i}>
+                                      <Page
+                                        scale={1.2}
+                                        pageNumber={i + 1}
+                                        renderTextLayer={false}
+                                        renderAnnotationLayer={false}
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                              ) : null}
+                            </Document>
                           </div>
-                          <div className="flex items-center space-x-4">
-                            <div className="cursor-pointer">
-                              <BsArrowLeftCircle size={30} />
-                            </div>
-                            <p>Page 1/{totalPages}</p>
-                            <div className="cursor-pointer">
-                              <BsArrowRightCircle size={30} />
-                            </div>
+                          <div className="w-72"></div>
+                          <div className="flex flex-col w-72 fixed top-5 right-5 space-y-4 h-3/4 overflow-auto bg-gray-50 shadow-sm p-4">
+                            <p className="mb-2">Your list signatures</p>
+                            {listSignatures.map((sign, i) => (
+                              <div
+                                key={i}
+                                className="shadow-sm bg-white cursor-pointer border border-gray-100 rounded-lg">
+                                <img src={sign} />
+                              </div>
+                            ))}
                           </div>
                         </div>
-                        <Document
-                          file={pdfFile}
-                          onLoadSuccess={onLoadPDFSuccess}
-                          onLoadError={onLoadPDFFailure}
-                          onLoadProgress={onLoadingPDF}
-                          loading="">
-                          {nameTool === TOOLS.sign ? (
-                            <Page scale={1.5} pageNumber={page} renderTextLayer={false} renderAnnotationLayer={false} />
-                          ) : null}
-                        </Document>
                       </div>
                     </>
                   ) : null}
