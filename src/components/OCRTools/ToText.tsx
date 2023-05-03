@@ -9,7 +9,7 @@ import { CgSpinner } from 'react-icons/cg'
 import DownloadWhitePng from 'src/assets/images/download-white.png'
 import { RecordKS } from 'src/configs/Types'
 import { createDownload } from 'src/helpers/Tools'
-import { useImgToPDF, useImgToText } from 'src/hooks/useOcrAPI'
+import { useImgToText } from 'src/hooks/useOcrAPI'
 
 import ButtonSave from '../Common/Button/Save'
 import Table, { TableColumns, TableDataSources } from '../Common/Table'
@@ -18,8 +18,7 @@ interface ToTextProps {
   files: File[]
 }
 function ToText({ files }: PropsWithChildren<ToTextProps>) {
-  const { convertImageTotEXT } = useImgToText()
-  const { convertImgToPDF } = useImgToPDF()
+  const { convertImageToText } = useImgToText()
   const [dataSource, setDataSources] = useState<TableDataSources>([])
 
   const setValueDataSources = (i: number, data: RecordKS) => {
@@ -29,7 +28,7 @@ function ToText({ files }: PropsWithChildren<ToTextProps>) {
 
   const toWord = async (k: number, d: RecordKS) => {
     if (d.loading) return
-    const result = convertImageTotEXT({ clientImage: d.file as File })
+    const result = convertImageToText({ clientImage: d.file as File })
     result.then(link => {
       if (link) {
         setValueDataSources(k, { link: link, loading: false })
@@ -39,35 +38,10 @@ function ToText({ files }: PropsWithChildren<ToTextProps>) {
     })
   }
 
-  const toPDF = async (k: number, d: RecordKS) => {
-    if (d.loading) return
-    const result = convertImgToPDF({ clientImage: d.file as File })
-    result.then(link => {
-      if (link) {
-        setValueDataSources(k, { link: link, loading: false })
-      } else {
-        setValueDataSources(k, { loading: false, error: true })
-      }
-    })
-  }
-
-  const onSave = async () => {
+  const onSave = () => {
     for (const key in dataSource) {
       const d = dataSource[key]
-      const to = d.to
-      if (!to || to === '') {
-        setValueDataSources(parseInt(key), { loading: false, error: true, link: '' })
-      } else {
-        setValueDataSources(parseInt(key), { loading: true, error: false, link: '' })
-        switch (to) {
-          case 'docx':
-            toWord(parseInt(key), d)
-            break
-          case 'pdf':
-            toPDF(parseInt(key), d)
-            break
-        }
-      }
+      toWord(parseInt(key), d)
     }
   }
 

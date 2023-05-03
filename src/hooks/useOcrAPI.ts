@@ -100,7 +100,7 @@ export const useImgToText = () => {
     data: null as ImgToTextResponse | null,
     error: null as Error | null,
   })
-  const convertImageTotEXT = async (payload: ImgToTextRequest) => {
+  const convertImageToText = async (payload: ImgToTextRequest) => {
     setResponse({ loading: true, data: null, error: null })
     try {
       const result = await request<ImgToWatermarkResponse>(APIConfigs(), {
@@ -116,5 +116,5 @@ export const useImgToText = () => {
       showError(error, msg)
     }
   }
-  return { convertImageTotEXT, response }
+  return { convertImageToText, response }
 }
