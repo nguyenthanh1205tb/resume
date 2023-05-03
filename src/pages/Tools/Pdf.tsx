@@ -58,28 +58,6 @@ function PdfTool({ location }: PropsWithChildren<PdfToolProps>) {
   const [openPDFDocument, setOpenPDFDocument] = useState<boolean>(false)
   const PDFToolContainer = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    pdfjs.GlobalWorkerOptions.workerSrc = '//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js'
-  }, [])
-
-  useEffect(() => {
-    const queries = getParams(history.location.search)
-    const nt = queries.get('tool')
-    const multi = queries.get('multi')
-    if (nt) setNameTool(nt)
-    if (multi) setIsMulti(multi === 'true' ? true : false)
-  }, [location])
-
-  useEffect(() => {
-    const body = document.querySelector('body')
-    if (!body) return
-    if (openPDFDocument) {
-      body.style.overflow = 'hidden'
-    } else {
-      body.style.overflow = 'auto'
-    }
-  }, [openPDFDocument])
-
   const onDrop = (f: File[]) => {
     if (isMulti) {
       setListPDFFiles(f)
@@ -110,10 +88,7 @@ function PdfTool({ location }: PropsWithChildren<PdfToolProps>) {
     setOpenPDFDocument(false)
   }
 
-  const goToPdf = async (path: string, id: string) => {
-    setListPDFFiles([])
-    setPDFFile(null)
-    history.push(path)
+  const slideToTool = async (id: string) => {
     await new Promise(resolve => setTimeout(() => resolve(true), 100))
     const pdfC = PDFToolContainer.current
     const el = document.getElementById(id)
@@ -121,6 +96,38 @@ function PdfTool({ location }: PropsWithChildren<PdfToolProps>) {
     const elOffset = el.offsetLeft
     pdfC.scrollTo({ behavior: 'smooth', left: elOffset - 15 })
   }
+
+  const goToPdf = (path: string, id: string) => {
+    setListPDFFiles([])
+    setPDFFile(null)
+    history.push(path)
+    slideToTool(id)
+  }
+
+  useEffect(() => {
+    const queries = getParams(history.location.search)
+    const nt = queries.get('tool')
+    const multi = queries.get('multi')
+    if (nt) {
+      slideToTool(`pdf-tool-${nt}`)
+      setNameTool(nt)
+    }
+    if (multi) setIsMulti(multi === 'true' ? true : false)
+  }, [location])
+
+  useEffect(() => {
+    const body = document.querySelector('body')
+    if (!body) return
+    if (openPDFDocument) {
+      body.style.overflow = 'hidden'
+    } else {
+      body.style.overflow = 'auto'
+    }
+  }, [openPDFDocument])
+
+  useEffect(() => {
+    pdfjs.GlobalWorkerOptions.workerSrc = '//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js'
+  }, [])
 
   return (
     <>
@@ -143,7 +150,7 @@ function PdfTool({ location }: PropsWithChildren<PdfToolProps>) {
                 },
               )}
               onClick={() => !tool.disabled && goToPdf(tool.path, `pdf-tool-item-${index}`)}
-              id={`pdf-tool-item-${index}`}>
+              id={`pdf-tool-${tool.key}`}>
               <div className="flex items-center">
                 <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-600">
                   <img src={tool.img} className="w-5" />

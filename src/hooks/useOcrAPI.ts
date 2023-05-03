@@ -3,6 +3,8 @@ import { useState } from 'react'
 import {
   ImgToPDFRequest,
   ImgToPDFResponse,
+  ImgToTextRequest,
+  ImgToTextResponse,
   ImgToWatermarkRequest,
   ImgToWatermarkResponse,
   ImgToWordRequest,
@@ -89,4 +91,30 @@ export const useImgWatermark = () => {
     }
   }
   return { addImgWatermark, response }
+}
+
+export const useImgToText = () => {
+  const { showError } = useErrorHandle()
+  const [response, setResponse] = useState({
+    loading: false as boolean,
+    data: null as ImgToTextResponse | null,
+    error: null as Error | null,
+  })
+  const convertImageTotEXT = async (payload: ImgToTextRequest) => {
+    setResponse({ loading: true, data: null, error: null })
+    try {
+      const result = await request<ImgToWatermarkResponse>(APIConfigs(), {
+        url: '/b/p',
+        method: 'POST',
+        formData: payload,
+      })
+      setResponse({ loading: false, data: result, error: null })
+      return result.data.link
+    } catch (error) {
+      const msg = 'Convert image to text fail'
+      setResponse({ loading: false, data: null, error: new Error(msg, { cause: { error } }) })
+      showError(error, msg)
+    }
+  }
+  return { convertImageTotEXT, response }
 }

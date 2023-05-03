@@ -32,6 +32,7 @@ export enum TOOLS {
   'remove-images' = 'remove-images',
   'img-convert-to-word&pdf' = 'img-conversions',
   'img-watermark' = 'img-watermark',
+  'img-to-text' = 'img-to-text',
 }
 
 export enum FILE_TYPES {
@@ -234,6 +235,16 @@ export interface ImgToWatermarkRequest {
   msg: string
 }
 export interface ImgToWatermarkResponse extends Omit<CommonResponse, 'data'> {
+  data: {
+    link: string
+  }
+}
+
+export interface ImgToTextRequest {
+  clientImage: File
+  lang?: string
+}
+export interface ImgToTextResponse extends Omit<CommonResponse, 'data'> {
   data: {
     link: string
   }

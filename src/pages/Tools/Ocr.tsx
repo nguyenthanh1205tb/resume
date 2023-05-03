@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import ImgWatermark from 'src/assets/images/img-watermark.png'
+import ImgToText from 'src/assets/images/text.png'
 import ImgConversion from 'src/assets/images/transfer.png'
 import PageContainer from 'src/components/Common/Container/Page'
 import Dropzone from 'src/components/Common/Dropzone'
 // OCR TOOLS IMPORT FILE
 import ImageToWord from 'src/components/OCRTools/Conversion'
+import ImageToText from 'src/components/OCRTools/ToText'
 import ImageWatermark from 'src/components/OCRTools/Watermark'
 import { RecordKS, TOOLS } from 'src/configs/Types'
 import { getParams } from 'src/helpers'
@@ -29,11 +31,20 @@ const listOCRTools = [
     disabled: false,
     path: `/ocr?tool=${TOOLS['img-watermark']}&multi=false`,
   },
+  {
+    name: 'Image to text',
+    desc: 'Scan and convert your image to text',
+    img: ImgToText,
+    key: TOOLS['img-to-text'],
+    disabled: false,
+    path: `/ocr?tool=${TOOLS['img-to-text']}&multi=true`,
+  },
 ]
 
 const TITLE_TOOLS: RecordKS<string> = {
   [TOOLS['img-convert-to-word&pdf']]: 'Image conversions',
   [TOOLS['img-watermark']]: 'Add watermark image',
+  [TOOLS['img-to-text']]: 'Convert image to text',
 }
 
 function Ocr() {
@@ -125,6 +136,7 @@ function Ocr() {
               {listImagesFiles.length ? (
                 <div>
                   {nameTool === TOOLS['img-convert-to-word&pdf'] ? <ImageToWord files={listImagesFiles} /> : null}
+                  {nameTool === TOOLS['img-to-text'] ? <ImageToText files={listImagesFiles} /> : null}
                 </div>
               ) : null}
               {imgFile ? <ImageWatermark file={imgFile} /> : null}
