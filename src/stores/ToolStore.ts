@@ -82,7 +82,7 @@ const tools = [
   // },
   {
     name: 'PDF to Word',
-    desc: 'Easily convert your PDF files into easy to edit DOCX documents. The converted WORD document is almost 100% accurate.',
+    desc: 'Easily convert your PDF files into easy to edit DOCX documents.',
     img: ConvertImg,
     type: FILE_TYPES.pdf,
     key: 'to-word',
