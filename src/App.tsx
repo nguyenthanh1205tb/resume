@@ -1,29 +1,22 @@
-import jscookie from 'js-cookie'
+// import jscookie from 'js-cookie'
 import { observer } from 'mobx-react'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import Router from './Router'
-import LoadingPage from './components/Common/Loading/Page'
-import { useGetProfile } from './hooks/useUserAPI'
-import CommonStore from './stores/CommonStore'
+
+// import LoadingPage from './components/Common/Loading/Page'
+// import CommonStore from './stores/CommonStore'
+
+// import CommonStore from './stores/CommonStore'
 
 function App() {
-  const { getProfile } = useGetProfile()
-  const { loadingPage, setLoadingPage } = CommonStore
-
-  useEffect(() => {
-    const token = jscookie.get('token')
-    if (token && token !== 'undefined') {
-      setLoadingPage(true)
-      getProfile().finally(() => setLoadingPage(false))
-    }
-  }, [])
+  // const { loadingPage, setLoadingPage } = CommonStore
 
   return (
     <>
-      {loadingPage && <LoadingPage />}
+      {/* {loadingPage && <LoadingPage />} */}
       <ToastContainer
         position="top-right"
         hideProgressBar
