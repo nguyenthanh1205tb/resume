@@ -89,3 +89,5 @@
 
 //   return { removeCredentials }
 // }
+
+export default {}
