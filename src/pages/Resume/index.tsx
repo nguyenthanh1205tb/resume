@@ -76,8 +76,11 @@ function Resume({}: ResumeProps) {
             </h5>
             <span className="timeline__period">10/2021 — 10/2022</span>
             <p className="timeline__description">
-              Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas
-              molestias exceptur.
+              <ul>
+                <li>- I take the main responsibility to transfer from the design to code by Reactjs.</li>
+                <li>- Cooperate, and discuss with other teams to develop the company&lsquo;s AI services.</li>
+                <li>- Responsible for reviewing code and making sure the quality code is fine to read and maintain.</li>
+              </ul>
             </p>
           </article>
           <article className="timeline__item">
