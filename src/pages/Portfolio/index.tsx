@@ -33,7 +33,7 @@ function Portfolio({}: PortfolioProps) {
       </div>
       <div className="grid grid-cols-3 gap-4">
         {data.map((item, i) => (
-          <div key={i} className="gallery-grid__item category-design">
+          <div key={i} className="category-design">
             <a className="text-white" href={item.link} target="_blank" rel="noreferrer">
               <div className="gallery-grid__image-wrap">
                 {item.thumb !== '' ? (
