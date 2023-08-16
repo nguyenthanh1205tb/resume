@@ -1856,7 +1856,7 @@ button:focus {
 
 .gallery-grid__item {
   margin-bottom: 1.75rem;
-  width: calc(33.333% - 20px);
+  width: 100%;
 }
 
 .gallery-grid__item:hover .gallery-grid__image {
@@ -2034,7 +2034,7 @@ button:focus {
   .filter__item:last-child {
     padding-right: 0;
   }
-  .filter__item.active a {
+  .filter__item.active p {
     cursor: default;
     opacity: 1 !important;
     background: var(--color-gradient-text);
@@ -3242,10 +3242,13 @@ button:focus {
   border-left-color: var(--color-border);
   border-left-width: 1px;
   border-left-style: solid;
-  padding-bottom: 0.5625rem;
+  padding-bottom: 2.5625rem;
   padding-left: 2.5rem;
   position: relative;
 }
+/* .exp .timeline__item:not(:hover) {
+  opacity: 0.3;
+} */
 
 .timeline__item::before {
   content: '';

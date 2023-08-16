@@ -21,16 +21,11 @@ function PublicAuth() {
     {
       path: '/portfolio',
       name: 'Portfolio',
-      disable: true,
+      disable: false,
     },
     {
       path: '/blog',
       name: 'Blog',
-      disable: true,
-    },
-    {
-      path: '/contact',
-      name: 'Contact',
       disable: true,
     },
   ]
@@ -48,7 +43,7 @@ function PublicAuth() {
                   </figure>
                   <div className="text-xl-center">
                     <h3 className="title title--h3 sidebar__name">Aaron Nguyen</h3>
-                    <div className="badge">Frontend Engineer</div>
+                    <div className="badge">Frontend Developer</div>
                   </div>
                   {/* <button className="btn btn--small btn--icon-right sidebar__btn js-btn-toggle">
                     <span>Show Contacts</span>
@@ -64,7 +59,10 @@ function PublicAuth() {
                       </span>
                       <div className="contacts-block__info">
                         <span className="overhead">Email</span>
-                        <a className="text-overflow" href="mailto:ricardo@example.com" title="ricardo@example.com">
+                        <a
+                          className="text-overflow"
+                          href="mailto:nguyenhthanh1205tb@example.com"
+                          title="nguyenhthanh1205tb@example.com">
                           nguyenhthanh1205tb@example.com
                         </a>
                       </div>
