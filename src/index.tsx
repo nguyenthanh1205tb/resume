@@ -8,7 +8,7 @@ import 'tailwindcss/tailwind.css'
 
 import App from './App'
 import './assets/css/bootstrap.min.css'
-import './assets/css/default-skin.css'
+// import './assets/css/default-skin.css'
 import './assets/css/magnific-popup.css'
 import './assets/css/photoswipe.css'
 import './assets/css/simplebar.min.css'

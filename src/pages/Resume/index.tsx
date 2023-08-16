@@ -36,7 +36,7 @@ function Resume({}: ResumeProps) {
           </span>
           Experience
         </h2>
-        <div className="timeline">
+        <div className="timeline exp">
           {/* Item */}
           <article className="timeline__item">
             <h5 className="title title--h4 timeline__title">
