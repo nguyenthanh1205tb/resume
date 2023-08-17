@@ -8,8 +8,6 @@ import 'tailwindcss/tailwind.css'
 
 import App from './App'
 import './assets/css/bootstrap.min.css'
-// import './assets/css/magnific-popup.css'
-// import './assets/css/simplebar.min.css'
 import './assets/icons/feather.css'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
