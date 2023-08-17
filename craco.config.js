@@ -4,11 +4,7 @@
 const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
-  style: {
-    postcss: {
-      plugins: [],
-    },
-  },
+  style: {},
   optimization: {
     minimize: true,
     minimizer: [
