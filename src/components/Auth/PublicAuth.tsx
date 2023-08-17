@@ -1,21 +1,19 @@
 import classnames from 'classnames'
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
 import AvatarImg from 'src/assets/images/my-avatar.png'
 import { useCurrentPath } from 'src/hooks/useHelp'
 
 function PublicAuth() {
+  const parentStickyEl = useRef<HTMLDivElement>(null)
+  const stickyEl = useRef<HTMLDivElement>(null)
+  const anonymousSidebarBlock = useRef<HTMLDivElement>(null)
   const navs = [
     {
       path: '/about',
       name: 'About',
-      disable: false,
-    },
-    {
-      path: '/resume',
-      name: 'Resume',
       disable: false,
     },
     {
@@ -30,13 +28,37 @@ function PublicAuth() {
     },
   ]
 
+  const scrollingBody = () => {
+    if (!parentStickyEl || !parentStickyEl.current) return
+    if (!stickyEl || !stickyEl.current) return
+    if (!anonymousSidebarBlock || !anonymousSidebarBlock.current) return
+    const docScrollPosition = window.document.documentElement.scrollTop
+    const docWidth = window.document.documentElement.clientWidth
+    const anonymousSidebarBlockWidth = anonymousSidebarBlock.current.clientWidth
+    if (docWidth > 1200) {
+      if (docScrollPosition >= parentStickyEl.current.offsetTop) {
+        stickyEl.current.classList.add('sticky-bar')
+        stickyEl.current.classList.add('is-stuck')
+        stickyEl.current.style.width = `${anonymousSidebarBlockWidth}px`
+      } else {
+        stickyEl.current.classList.remove('sticky-bar')
+        stickyEl.current.classList.remove('is-stuck')
+        stickyEl.current.style.width = '100%'
+      }
+    }
+  }
+
+  useEffect(() => {
+    window.document.body.onscroll = scrollingBody
+  }, [])
+
   return (
     <div className="container">
       <main className="main">
         <div className="container gutter-top gutter-bottom">
-          <div className="row sticky-parent">
+          <div className="row" ref={parentStickyEl}>
             <aside className="col-12 col-md-12 col-xl-3">
-              <div className="sidebar box-outer sticky-column">
+              <div className="sidebar box-outer" ref={stickyEl}>
                 <div className="sidebar__base-info">
                   <figure className="avatar-box">
                     <img src={AvatarImg} alt="Ricardo Black" />
@@ -120,6 +142,7 @@ function PublicAuth() {
                   </div>
                 </div>
               </div>
+              <div className="anonymous-block-sidebar" ref={anonymousSidebarBlock}></div>
             </aside>
             <div className="col-12 col-md-12 col-xl-9">
               <div className="box-outer">
