@@ -2,9 +2,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const TerserPlugin = require('terser-webpack-plugin')
+const purgecss = require('@fullhuman/postcss-purgecss')
 
 module.exports = {
-  style: {},
+  style: {
+    postcss: {
+      plugins: [
+        purgecss({
+          content: ['./src/**/*.html', './src/**/*.tsx', './src/**/*.ts'],
+        }),
+      ],
+    },
+  },
   optimization: {
     minimize: true,
     minimizer: [
