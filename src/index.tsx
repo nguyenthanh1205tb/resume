@@ -5,11 +5,11 @@ import { createRoot } from 'react-dom/client'
 import { I18nextProvider } from 'react-i18next'
 import { BrowserRouter } from 'react-router-dom'
 import 'tailwindcss/tailwind.css'
-
-import App from './App'
 import './assets/css/bootstrap.min.css'
 import './assets/icons/feather.css'
 import './index.css'
+
+import App from './App'
 import reportWebVitals from './reportWebVitals'
 import i18next from './utils/i18next'
 
