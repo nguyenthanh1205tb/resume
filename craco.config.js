@@ -9,7 +9,7 @@ module.exports = {
     postcss: {
       plugins: [
         purgecss({
-          content: ['./src/**/*.html', './src/**/*.tsx', './src/**/*.ts'],
+          content: ['./public/*.html', './src/**/*.tsx', './src/**/*.ts'],
         }),
       ],
     },
