@@ -51,8 +51,8 @@ function Portfolio({}: PortfolioProps) {
             </a>
           </div>
         ))}
-        {Array.from(new Array(12 - data.length), i => (
-          <div key={i} className="">
+        {Array.from(new Array(12 - data.length), (_, i) => (
+          <div key={data.length + i}>
             <div>
               <div className="gallery-grid__image-wrap border !border-dashed !border-zinc-700 flex items-center justify-center">
                 <p className="text-2xl opacity-10 font-bold">Empty</p>
