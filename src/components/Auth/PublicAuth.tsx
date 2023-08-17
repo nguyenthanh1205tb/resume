@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
-import AvatarImg from 'src/assets/images/my-avatar.png'
+import AvatarImg from 'src/assets/images/my-avatar.webp'
 import { useCurrentPath } from 'src/hooks/useHelp'
 
 function PublicAuth() {
