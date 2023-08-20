@@ -67,10 +67,6 @@ function PublicAuth() {
                     <h3 className="title title--h3 sidebar__name">Aaron Nguyen</h3>
                     <div className="badge">Frontend Developer</div>
                   </div>
-                  {/* <button className="btn btn--small btn--icon-right sidebar__btn js-btn-toggle">
-                    <span>Show Contacts</span>
-                    <i className="feathericon-chevron-down" />
-                  </button> */}
                 </div>
                 <div className="sidebar__additional-info js-show">
                   <div className="separation" />
