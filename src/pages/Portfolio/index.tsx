@@ -9,12 +9,14 @@ function Portfolio({}: PortfolioProps) {
       desc: 'Conversion tool',
       thumb: ViescanPNG,
       link: 'https://www.viescan.tech/',
+      isDone: false,
     },
     {
       name: 'Business 01',
       desc: 'Demo template website',
       thumb: '',
       link: 'https://demo-flc-business-01.alpinus.tech',
+      isDone: false,
     },
   ]
   return (
@@ -45,7 +47,14 @@ function Portfolio({}: PortfolioProps) {
                 )}
               </div>
               <div className="gallery-grid__caption">
-                <h3 className="title gallery-grid__title">{item.name}</h3>
+                <div className="flex items-center justify-between mt-2">
+                  <h3 className="title gallery-grid__title mt-0">{item.name}</h3>
+                  {!item.isDone ? (
+                    <div className="text-xs py-1 px-2 bg-blue-500 rounded-md">in progress</div>
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
                 <span className="gallery-grid__category">{item.desc}</span>
               </div>
             </a>
