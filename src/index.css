@@ -281,10 +281,12 @@ a {
   color: var(--color-accent);
   cursor: pointer;
   text-decoration: none;
+  outline: none;
 }
 
 a:hover {
   outline: none;
+  color: var(--color-accent);
 }
 
 a.decoration--none {

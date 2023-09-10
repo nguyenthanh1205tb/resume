@@ -1,31 +1,53 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ViescanPNG from 'src/assets/images/projects/viescan.png'
+import { Project } from 'src/configs/Types'
+import { wait } from 'src/helpers'
+import BadgedProject from './Components/Badged'
+import DetailsProject from './Components/Details'
 
 interface PortfolioProps {}
+const data: Project[] = [
+  {
+    name: 'Viescan',
+    shortDesc: 'Conversion tool',
+    desc: 'Viescan is a web conversion tools, we can use this web for merge pdf page, delete pages on pdf file, add watermark for pdf file, and more. Besides Viescan provide a OCR (Optical Character Recognition) tools and file conversion. And the important thing is FREE, this web is free to use.',
+    thumb: ViescanPNG,
+    link: 'https://www.viescan.tech/',
+    otherLink: [{ name: 'dev link', link: 'https://dev.viescan.tech/' }],
+    isDone: false,
+  },
+  {
+    name: 'Business demo 01',
+    shortDesc: 'Demo template website',
+    desc: 'This is a demo website for business',
+    thumb: '',
+    link: 'https://demo-flc-business-01.alpinus.tech',
+    isDone: false,
+    isDemo: true,
+  },
+]
 function Portfolio({}: PortfolioProps) {
-  const data = [
-    {
-      name: 'Viescan',
-      desc: 'Conversion tool',
-      thumb: ViescanPNG,
-      link: 'https://www.viescan.tech/',
-      isDone: false,
-    },
-    {
-      name: 'Business 01',
-      desc: 'Demo template website',
-      thumb: '',
-      link: 'https://demo-flc-business-01.alpinus.tech',
-      isDone: false,
-    },
-  ]
+  const [isOpenProjectDetails, setIsOpenProjectDetails] = useState(false)
+  const [projectClicked, setProjectClicked] = useState<Project | null>(null)
+
+  const onOpenProjectDetail = async (project: Project) => {
+    setProjectClicked(project)
+    await wait(100)
+    setIsOpenProjectDetails(true)
+  }
+  const onCloseProjectDetail = async () => {
+    setIsOpenProjectDetails(false)
+    await wait(200)
+    setProjectClicked(null)
+  }
+
   return (
     <div>
       <div className="pb-3">
         <h1 className="title title--h1 title__separate">Portfolio</h1>
       </div>
       <div className="select">
-        <span className="placeholder">Select category</span>
+        <span className="placeholder">All</span>
         <ul className="filter">
           <li className="filter__item">Category</li>
           <li className="filter__item active">
@@ -33,10 +55,10 @@ function Portfolio({}: PortfolioProps) {
           </li>
         </ul>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {data.map((item, i) => (
-          <div key={i} className="category-design">
-            <a className="text-white" href={item.link} target="_blank" rel="noreferrer">
+          <div key={i} className="category-design cursor-pointer" onClick={() => onOpenProjectDetail(item)}>
+            <div className="text-white">
               <div className="gallery-grid__image-wrap">
                 {item.thumb !== '' ? (
                   <img className="gallery-grid__image cover lazyload" src={item.thumb} alt="" />
@@ -49,15 +71,11 @@ function Portfolio({}: PortfolioProps) {
               <div className="gallery-grid__caption">
                 <div className="flex items-center justify-between mt-2">
                   <h3 className="title gallery-grid__title mt-0">{item.name}</h3>
-                  {!item.isDone ? (
-                    <div className="text-xs py-1 px-2 bg-blue-500 rounded-md">in progress</div>
-                  ) : (
-                    <div></div>
-                  )}
+                  {!item.isDone ? <BadgedProject>in progress</BadgedProject> : <div></div>}
                 </div>
-                <span className="gallery-grid__category">{item.desc}</span>
+                <span className="gallery-grid__category">{item.shortDesc}</span>
               </div>
-            </a>
+            </div>
           </div>
         ))}
         {Array.from(new Array(12 - data.length), (_, i) => (
@@ -74,6 +92,7 @@ function Portfolio({}: PortfolioProps) {
           </div>
         ))}
       </div>
+      <DetailsProject isOpen={isOpenProjectDetails} onClose={onCloseProjectDetail} data={projectClicked} />
     </div>
   )
 }

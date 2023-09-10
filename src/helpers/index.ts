@@ -3,5 +3,5 @@ export const getParams = (search: string) => {
 }
 
 export const wait = (time: number) => {
-  return new Promise(resolve => setTimeout(() => resolve(true), time))
+  return new Promise<boolean>(resolve => setTimeout(() => resolve(true), time))
 }
