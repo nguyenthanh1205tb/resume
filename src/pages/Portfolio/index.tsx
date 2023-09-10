@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import ViescanPNG from 'src/assets/images/projects/viescan.png'
+import DemoBusiness01Thumb from 'src/assets/images/projects/demo-business-01.svg'
+import DemoEcommerce01Thumb from 'src/assets/images/projects/demo-ecommerce-01.svg'
+import ViescanThumb from 'src/assets/images/projects/viescan.svg'
 import { Project } from 'src/configs/Types'
 import { wait } from 'src/helpers'
 import BadgedProject from './Components/Badged'
@@ -11,17 +13,26 @@ const data: Project[] = [
     name: 'Viescan',
     shortDesc: 'Conversion tool',
     desc: 'Viescan is a web conversion tools, we can use this web for merge pdf page, delete pages on pdf file, add watermark for pdf file, and more. Besides Viescan provide a OCR (Optical Character Recognition) tools and file conversion. And the important thing is FREE, this web is free to use.',
-    thumb: ViescanPNG,
+    thumb: ViescanThumb,
     link: 'https://www.viescan.tech/',
     otherLink: [{ name: 'dev link', link: 'https://dev.viescan.tech/' }],
     isDone: false,
   },
   {
-    name: 'Business demo 01',
+    name: 'Alpinus Business',
     shortDesc: 'Demo template website',
-    desc: 'This is a demo website for business',
-    thumb: '',
+    desc: 'This is a demo website for business.',
+    thumb: DemoBusiness01Thumb,
     link: 'https://demo-flc-business-01.alpinus.tech',
+    isDone: false,
+    isDemo: true,
+  },
+  {
+    name: 'Irene shop',
+    shortDesc: 'Demo template website',
+    desc: 'This is a demo website for shop online, ecommerce domain.',
+    thumb: DemoEcommerce01Thumb,
+    link: 'https://demo-flc-ecommerce-01.alpinus.tech/',
     isDone: false,
     isDemo: true,
   },
