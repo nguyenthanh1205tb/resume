@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import DemoBusiness01Thumb from 'src/assets/images/projects/demo-business-01.svg'
 import DemoEcommerce01Thumb from 'src/assets/images/projects/demo-ecommerce-01.svg'
 import ViescanThumb from 'src/assets/images/projects/viescan.svg'
 import { Project } from 'src/configs/Types'
@@ -18,15 +17,15 @@ const data: Project[] = [
     otherLink: [{ name: 'dev link', link: 'https://dev.viescan.tech/' }],
     isDone: false,
   },
-  {
-    name: 'Alpinus Business',
-    shortDesc: 'Demo template website',
-    desc: 'This is a demo website for business.',
-    thumb: DemoBusiness01Thumb,
-    link: 'https://demo-flc-business-01.alpinus.tech',
-    isDone: false,
-    isDemo: true,
-  },
+  // {
+  //   name: 'Alpinus Business',
+  //   shortDesc: 'Demo template website',
+  //   desc: 'This is a demo website for business.',
+  //   thumb: DemoBusiness01Thumb,
+  //   link: 'https://demo-flc-business-01.alpinus.tech',
+  //   isDone: false,
+  //   isDemo: true,
+  // },
   {
     name: 'Irene shop',
     shortDesc: 'Demo template website',
