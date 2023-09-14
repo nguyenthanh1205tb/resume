@@ -11,7 +11,7 @@ const data: Project[] = [
   {
     name: 'Viescan',
     shortDesc: 'Conversion tool',
-    desc: 'Viescan is a web conversion tools, we can use this web for merge pdf page, delete pages on pdf file, add watermark for pdf file, and more. Besides Viescan provide a OCR (Optical Character Recognition) tools and file conversion. And the important thing is FREE, this web is free to use.',
+    desc: 'Viescan is a web conversion tool, we can use this web to merge PDF pages, delete pages on PDF files, add watermarks for PDF files, and more. Besides Viescan provides OCR (Optical Character Recognition) tools and file conversion. And the important thing is FREE, this web is free to use.',
     thumb: ViescanThumb,
     link: 'https://www.viescan.tech/',
     otherLink: [{ name: 'dev link', link: 'https://dev.viescan.tech/' }],
